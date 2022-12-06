@@ -1,0 +1,41 @@
+Time Complexity 
+    Example: Getting a game from a friend 
+                (Inputs : 5KB & 50GB)
+                1)5KB : Preferred through the internet  (Algorithm 1 )
+                2)50gb : Preferred by a physical visit  (Algorithm 2)
+
+                --> As the inputs changes , the runtime of Algorithms changes as well.
+                --> In the second Algorithm, whether the input is 5KB or 100gb(ignoring the copying time) , the algorithm will not have any change.
+                    It will have the same time.
+
+                --> Algorithm 1 : input changes, Algorithm changes 
+                --> Algorithm 2 : intput changes , Algorithm remains same.
+
+                --> Time(Algorithm 2) : k1(for changing clothes) + k2(time to reach home) + k3(some time spent at frnds home) + k4(returning time)
+                    -The algo is not affected by the size of the game.
+                                        : k1*n(raised to 0) + k2+k3+k4
+                                        [Most impactful term is k1*n(raised to 0) ] 
+                                        (Every other term is 0 , so we remove nd get n(raised to 0) which is equal to 1.)
+                Imp :Big O(1) : Constant time pe run hone wala Algorithm
+
+
+                --> Time(Algorithm 1) : l1(Turn on computer time) + l2(assuming constantInternet speed time )
+                                        : l1+n/l2
+                                        : l1 +l2' (n/l2 : l2')
+                                        :l1*n(raised to 0) + l2*n(raised to 1)
+                                        : [Most impactful term : approx n(raised to 1)]
+                                        : O*n(raised to 1) = O(n) [read as big O of n]
+                                        : O(n) = linear 
+                    -Size of game : n KB
+                    Speed of the internet connection : l2 kb/sec(Speed = distance/time)
+                    Time taken by the game : n/l2
+
+NOTE :  LINEAR --> o(N)
+        Constant --> O(1)
+
+
+O : MATHEMATICAL DEFINITION -In this it is known as Big O  
+                            -o(N) is aslso equal to O(n*n) which is also equal to O(n*n*n) an so on......
+    INDUSTRY DEFINITION - Known as : Order of 
+                        -Expects the minimum of the MATHEMATICAL DEFINITION.
+

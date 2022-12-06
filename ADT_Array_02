@@ -1,0 +1,11 @@
+ADT's : Set of values + Set of operations
+
+ - (Primitive data type) int --> 9+12 = 20(the way in which the ans has came is not known. Therefore , details are hidden.)
+                                                                                            
+ -myArray(Creating my own data type like int so that i can give my own properties) --> total_size (variables)     max()  (methods)
+                                                                                    --> used_size        +        get(i)
+                                                                                    -->base_address               set(i,num)  
+
+
+
+ 

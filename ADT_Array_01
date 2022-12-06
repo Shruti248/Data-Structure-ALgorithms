@@ -1,0 +1,26 @@
+ABSTRACT DATA TYPE & ARRAY 
+
+-->ADT : Minimal requirements & some operations 
+-ADT IS THE MODEL TO CREATE DATA STRUCTURES.(By seeing this one can implement the data structure.)
+
+NOTE : ADT IS MRF(Minimal requirement Functionility)
+
+ARRAYs as and Abstrat Data type.
+ -->Minimum Functionilities of arrays
+  -get(i) : will get the element of i th position
+  -set(i) : setting any number at position i 
+ -->Methods (operations that can be performed on arrays)
+    -insert
+    -delete
+    -add
+    -resize  
+
+Abstraction is hiding the details.(that is implementation is hidden abt how it is done)
+
+Array : Collection of elements accessible by an index.
+ --> Thre is faster access of elements of the array than the othere data structures.
+ -->Limitations:
+    -insertion is difficult if there is not sufficient space(that is first we have to copy to another array & increase the size then we can insert)
+    -In deletion , we need to move all the other elements which is after it & will take a lot of time.(also wastage of memory)
+
+We will implement array & ADT using structure.

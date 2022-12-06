@@ -1,0 +1,15 @@
+Asymptotic Noations : Camparision of 2 algo
+
+3 types :-
+    1)Big O 
+    2)Big Omega
+    3)Big Theta
+
+-->Big O 
+    A function f(n) is said to be O(Gn) iff there exists Constant c & a Constant n0 such that 
+            0 <=f(n) <= c g(n)      for n>=n0
+
+    When camparing 2 algo :-
+        f(n) = time 
+        n = input size
+        g(n) = function that comes inside O
