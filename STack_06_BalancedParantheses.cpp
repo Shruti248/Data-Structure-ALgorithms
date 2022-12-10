@@ -49,6 +49,8 @@ bool isValid(string s)
                 ans = false;
                 break;
             }
+        }else{
+            ans=false;
         }
     }
 

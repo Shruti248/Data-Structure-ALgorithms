@@ -11,18 +11,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int precedence(char c){
-    if(c=='^'){
+int precedence(char c)
+{
+    if (c == '^')
+    {
         return 3;
-    }else if(c=='*'  || c=='/'){
+    }
+    else if (c == '*' || c == '/')
+    {
         return 2;
-    }else if(c=='+'  || c=='-'){
+    }
+    else if (c == '+' || c == '-')
+    {
         return 1;
-    }else{
-        return -1;   //when there is opening bracket , return -1
+    }
+    else
+    {
+        return -1; // when there is opening bracket , return -1
     }
 }
-
 
 string infix_to_postfix(string infix_expression)
 {
@@ -46,41 +53,49 @@ string infix_to_postfix(string infix_expression)
                 postfix_expression += st.top();
                 st.pop();
             }
-            if(!st.empty()){
+            if (!st.empty())
+            {
                 st.pop(); // for the opening bracket
             }
         }
         else
         {
             // Checking that the precendence of the current operator is greater than the operator in stack
-           while(!st.empty() && precedence(infix_expression[i]) <= precedence(st.top())){
-                postfix_expression+=st.top();
+            while (!st.empty() && precedence(infix_expression[i]) <= precedence(st.top()))
+            {
+                postfix_expression += st.top();
                 st.pop();
-           }
-        //    pushing the current operator
-        st.push(infix_expression[i]);
+            }
+            //    pushing the current operator
+            st.push(infix_expression[i]);
         }
     }
 
     while (!st.empty())
     {
-        postfix_expression+=st.top();
+        postfix_expression += st.top();
         st.pop();
     }
-    
+
     return postfix_expression;
 }
-
-
 
 int main()
 {
 
-    string infix_expression;
-    cin >> infix_expression;
+    int n;
+    cin >> n;
+    string infix_expression[n];
 
-    // cout<<"Postfix expression for infix expresssion "<<infix_expression<<" : "<<infix_to_postfix(infix_expression)<<endl;
+    for (int i = 0; i < n; i++)
+    {
 
-    cout<<infix_to_postfix(infix_expression)<<endl;
+        cin >> infix_expression[i];
+    }
+    for (int i = 0; i < n; i++)
+    {
+        cout << infix_to_postfix(infix_expression[i]) << endl;
+    }
+
     return 0;
 }
