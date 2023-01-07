@@ -38,7 +38,7 @@ public:
             mid = ceil(low + high) / 2;
             if (k == arr[mid])
             {
-                return arr[mid];
+                return mid;
             }
             if (k > arr[mid])
             {
