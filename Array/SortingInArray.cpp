@@ -34,8 +34,11 @@ public:
     // Bubble sort is a sorting algorithm that compares two adjacent elements and swaps them until they are in the intended order.
     void bubbleSort(int arr[], int size)
     {
+        // check if swapping occurs
+            int swapped = 0;
         for (int iterations = 0; iterations < size; iterations++)
         {
+            
             for (int i = 0; i < size - iterations; i++)
             {
                 if (arr[i] > arr[i + 1])
@@ -44,8 +47,15 @@ public:
                     int temp = arr[i];
                     arr[i] = arr[i + 1];
                     arr[i + 1] = temp;
+
+                    swapped = 1;
                 }
             }
+            // no swapping means the array is already sorted
+            // so no need of further comparison
+            if (swapped == 0)
+                break;
+           
         }
 
         // Print Sorted Array
@@ -54,6 +64,8 @@ public:
         {
             cout << arr[i] << " ";
         }
+        //  cout<<"Swapped : "<<swapped<<endl;
+        
         cout << endl
              << endl;
     }
