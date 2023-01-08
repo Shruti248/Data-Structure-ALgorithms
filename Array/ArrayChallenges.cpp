@@ -158,6 +158,36 @@ public:
         }
     }
 
+    // LEETCODE : Contains Duplicate
+    void ArrayContainsDuplicate(int arr[] , int n){
+        // 1) Brute Force Approach
+        // bool ContainsDuplicateElement = 0;
+        // for(int i = 0 ; i < n ; i++){
+        //     for(int j = i+1 ; j<n ; j++){
+        //         if(arr[i] == arr[j]){
+        //             cout<<"Duplicate Element is : "<<arr[i]<<endl;
+        //             ContainsDuplicateElement = 1;
+        //         }
+        //     }
+        // }
+        // if(ContainsDuplicateElement == 0){
+        //     cout<<"No Duplicate Elemets"<<endl;
+        // }
+
+        // 2) Sorting Approach --> Accepted Solution
+        sort(arr , arr+n);
+        bool ContainsDuplicateElement = 0;
+        for(int i = 0 ; i< n-1 ; i++){
+            if(arr[i] == arr[i+1]){
+                cout<<"Contains Duplicate Elements : "<<arr[i]<<endl;
+                ContainsDuplicateElement =1;
+            }
+        }
+        if(ContainsDuplicateElement == 0){
+            cout<<"No Duplicate Elements."<<endl;
+        }
+    }
+
 };
 
 int main()
@@ -173,11 +203,12 @@ int main()
     }
     Solution s;
     // s.maxTillI(arr, n);
-    s.sumOfAllSubArrays(arr , n);
-    s.subArrayWiththeLargestSum(arr , n);
+    // s.sumOfAllSubArrays(arr , n);
+    // s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
     // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
+    s.ArrayContainsDuplicate(arr , n);
     return 0;
 }
