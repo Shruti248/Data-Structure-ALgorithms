@@ -62,6 +62,25 @@ public:
             cout<<result[i]<<" ";
         }
     }
+
+    // GFG : Max Min Problem
+    void maximumAndMinimumElementInArray(int arr[] ,int n){
+        int min = 19999;
+        int max = -19999;
+
+        for(int i = 0 ; i<n ; i++){
+            if(arr[i] < min){
+                min = arr[i];
+            }
+            if(arr[i] > max ){
+                max = arr[i];
+            }
+        }
+        cout<<"Minimum Element in the Array : "<<min<<endl;
+        cout<<"Maximum Element in the Array : "<<max<<endl;
+        cout<<"Sum of Minimum & Maximum ELement : "<<min+max<<endl;
+    }
+
 };
 
 int main()
@@ -74,7 +93,8 @@ int main()
         cin >> arr[i];
     }
     Solution s;
-    // s.maxTillI(arr, n);
+    s.maxTillI(arr, n);
     s.sumOfAllSubArrays(arr , n);
+    s.maximumAndMinimumElementInArray(arr , n);
     return 0;
 }
