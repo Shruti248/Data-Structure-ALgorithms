@@ -60,19 +60,20 @@ public:
                 result.push_back(sum);
             }
         }
-        cout<<"Sum of Subarrays : ";
+        cout << "Sum of Subarrays : ";
         for (int i = 0; i < result.size(); i++)
         {
             cout << result[i] << " ";
         }
-        cout<<endl;
+        cout << endl;
     }
 
     // LEETCODE Question : Maximum Subarray
     // Brute Force Approach Takes O(N2). --> Implemented Approach
     // DP Using Memoization , Tabulation  : O(N) --> Accepted Solution in Leetcode
     // Refer : https://leetcode.com/problems/maximum-subarray/solutions/1595195/c-python-7-simple-solutions-w-explanation-brute-force-dp-kadane-divide-conquer/
-    void subArrayWiththeLargestSum(int arr[] , int n ){
+    void subArrayWiththeLargestSum(int arr[], int n)
+    {
         int sum = 0;
         int maxSum = -2147483648;
         for (int i = 0; i < n; i++)
@@ -81,13 +82,14 @@ public:
             for (int j = i; j < n; j++)
             {
                 sum += arr[j];
-                if(sum > maxSum){
+                if (sum > maxSum)
+                {
                     maxSum = sum;
                 }
             }
         }
 
-        cout<<"Largest Sum of All the Subarrays : "<<maxSum<<endl;
+        cout << "Largest Sum of All the Subarrays : " << maxSum << endl;
     }
 
     // GFG : Max Min Problem
@@ -159,7 +161,8 @@ public:
     }
 
     // LEETCODE : Contains Duplicate
-    void ArrayContainsDuplicate(int arr[] , int n){
+    void ArrayContainsDuplicate(int arr[], int n)
+    {
         // 1) Brute Force Approach
         // bool ContainsDuplicateElement = 0;
         // for(int i = 0 ; i < n ; i++){
@@ -175,19 +178,44 @@ public:
         // }
 
         // 2) Sorting Approach --> Accepted Solution
-        sort(arr , arr+n);
+        sort(arr, arr + n);
         bool ContainsDuplicateElement = 0;
-        for(int i = 0 ; i< n-1 ; i++){
-            if(arr[i] == arr[i+1]){
-                cout<<"Contains Duplicate Elements : "<<arr[i]<<endl;
-                ContainsDuplicateElement =1;
+        for (int i = 0; i < n - 1; i++)
+        {
+            if (arr[i] == arr[i + 1])
+            {
+                cout << "Contains Duplicate Elements : " << arr[i] << endl;
+                ContainsDuplicateElement = 1;
             }
         }
-        if(ContainsDuplicateElement == 0){
-            cout<<"No Duplicate Elements."<<endl;
+        if (ContainsDuplicateElement == 0)
+        {
+            cout << "No Duplicate Elements." << endl;
         }
     }
 
+    // LEETCODE : Best day to Buy & Sell Stocks
+    // each element of the array represents the price of the stock at ith day. FInd Maximum Profit or else return 0.
+    void BestDayToBuyAndSellStocks(int arr[], int n)
+    {
+        int min = INT_MAX;
+        int overallProfit = 0;
+        int profitIfSoldToday = 0;
+
+        for(int i = 0 ; i<n ; i++){
+            //  if we found new buy value which is more smaller then previous one
+            if(arr[i] < min){
+                // update our least so far
+                min = arr[i];
+            }
+            profitIfSoldToday = arr[i] - min;
+            if(overallProfit < profitIfSoldToday){
+                overallProfit = profitIfSoldToday;
+            }
+        }
+        cout<<"Overall Profit : "<<overallProfit;
+            
+    }
 };
 
 int main()
@@ -209,6 +237,7 @@ int main()
     // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
-    s.ArrayContainsDuplicate(arr , n);
+    // s.ArrayContainsDuplicate(arr, n);
+    s.BestDayToBuyAndSellStocks(arr, n);
     return 0;
 }
