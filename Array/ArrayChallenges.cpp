@@ -60,11 +60,34 @@ public:
                 result.push_back(sum);
             }
         }
-
+        cout<<"Sum of Subarrays : ";
         for (int i = 0; i < result.size(); i++)
         {
             cout << result[i] << " ";
         }
+        cout<<endl;
+    }
+
+    // LEETCODE Question : Maximum Subarray
+    // Brute Force Approach Takes O(N2). --> Implemented Approach
+    // DP Using Memoization , Tabulation  : O(N) --> Accepted Solution in Leetcode
+    // Refer : https://leetcode.com/problems/maximum-subarray/solutions/1595195/c-python-7-simple-solutions-w-explanation-brute-force-dp-kadane-divide-conquer/
+    void subArrayWiththeLargestSum(int arr[] , int n ){
+        int sum = 0;
+        int maxSum = -2147483648;
+        for (int i = 0; i < n; i++)
+        {
+            sum = 0;
+            for (int j = i; j < n; j++)
+            {
+                sum += arr[j];
+                if(sum > maxSum){
+                    maxSum = sum;
+                }
+            }
+        }
+
+        cout<<"Largest Sum of All the Subarrays : "<<maxSum<<endl;
     }
 
     // GFG : Max Min Problem
@@ -150,9 +173,10 @@ int main()
     }
     Solution s;
     // s.maxTillI(arr, n);
-    // s.sumOfAllSubArrays(arr , n);
+    s.sumOfAllSubArrays(arr , n);
+    s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
-    s.RevereseTheArray(arr, n);
+    // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
     return 0;
