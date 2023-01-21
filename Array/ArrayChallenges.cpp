@@ -372,6 +372,16 @@ public:
         cout << arr[n - k] << endl;
     }
 
+    // Kth Smallest element of the Array : LeetCode
+    // Later Optimized Solution
+    void kthSmallestElement(int arr[], int n, int k)
+    {
+        sort(arr, arr + n);
+
+        cout << arr[k-1] << endl;
+    }
+
+
     // Leetcode
     // Product of all the element of teh array except itself
 
@@ -469,11 +479,12 @@ int main()
     // cin>>target;
     // cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
 
-    // int k;
-    // cin>>k;
+    int k;
+    cin>>k;
     // s.kthLargestElement(arr , n , k);
+    s.kthSmallestElement(arr , n , k);
 
     // s.productofArrayExceptItself(arr, n);
-    s.maximumProductSubarray(arr, n);
+    // s.maximumProductSubarray(arr, n);
     return 0;
 }
