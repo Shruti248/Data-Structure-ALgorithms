@@ -286,6 +286,22 @@ public:
         }
         return NumberofRecordBreakingDays;
     }
+
+    // Amazon Oracle
+    // Element that occurs more than once and whose index of first occurrence is smallest
+    int FirstRepeatingElement(int arr[] , int n){
+        int ans;
+
+        for(int i = 0 ; i< n-1 ; i++){
+            for(int j = i+1 ; j<n ; j++){
+                if(arr[i] == arr[j]){
+                    // ans = arr[i]; //element 
+                    ans = i + 1; //index
+                    return ans;
+                }
+            }
+        }
+    }
 };
 
 int main()
@@ -311,6 +327,7 @@ int main()
     // s.BestDayToBuyAndSellStocks(arr, n);
     // s.RepeatAndMissingNumberArray(arr , n);
     // cout << s.LongestArithemicSubarray(arr, n);
-    cout << s.recordBreaker(arr, n) << endl;
+    // cout << s.recordBreaker(arr, n) << endl;
+    cout<<s.FirstRepeatingElement(arr , n)<<endl;
     return 0;
 }
