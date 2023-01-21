@@ -45,7 +45,17 @@ public:
     // Number of subsequneces with n elements : 2raised to n
 
     // NOTE : EVery subarray is an subsequnece but every subsequnece is not a subarray
-
+        void allPossibleSubarrays(int arr[] , int n){
+        for(int i = 0 ; i<n ; i++){
+            for(int j = i ; j<n ; j++){
+                // printing all the elements that range from i to j
+                for(int k = i ; k<=j ; k++){
+                    cout<<arr[k]<<" ";
+                }
+                cout<<endl;
+            }
+        }
+    }
     // PROBLEM : Given an array of size n , output sum of each subarray of the given array
     void sumOfAllSubArrays(int arr[], int n)
     {
@@ -452,6 +462,7 @@ int main()
     }
     Solution s;
     // s.maxTillI(arr, n);
+    s.allPossibleSubarrays(arr , n);
     // s.sumOfAllSubArrays(arr , n);
     // s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
@@ -479,12 +490,13 @@ int main()
     // cin>>target;
     // cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
 
-    int k;
-    cin>>k;
+    // int k;
+    // cin>>k;
     // s.kthLargestElement(arr , n , k);
-    s.kthSmallestElement(arr , n , k);
+    // s.kthSmallestElement(arr , n , k);
 
     // s.productofArrayExceptItself(arr, n);
     // s.maximumProductSubarray(arr, n);
+
     return 0;
 }
