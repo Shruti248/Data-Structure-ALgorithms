@@ -202,19 +202,66 @@ public:
         int overallProfit = 0;
         int profitIfSoldToday = 0;
 
-        for(int i = 0 ; i<n ; i++){
+        for (int i = 0; i < n; i++)
+        {
             //  if we found new buy value which is more smaller then previous one
-            if(arr[i] < min){
+            if (arr[i] < min)
+            {
                 // update our least so far
                 min = arr[i];
             }
             profitIfSoldToday = arr[i] - min;
-            if(overallProfit < profitIfSoldToday){
+            if (overallProfit < profitIfSoldToday)
+            {
                 overallProfit = profitIfSoldToday;
             }
         }
-        cout<<"Overall Profit : "<<overallProfit;
-            
+        cout << "Overall Profit : " << overallProfit;
+    }
+
+    // InterviewBit RepeatAndMissingNumberArray : given array from 1 to n , find A which is repeated TWICE and B which is MISSING.
+    void RepeatAndMissingNumberArray(int arr[], int n)
+    {
+    }
+
+    // Google Kickstart Question
+    int LongestArithemicSubarray(int arr[], int n)
+    {
+        int previousCommonDifference = arr[1] - arr[0];
+        int currentArithmeticSubarrayLength = 2;
+        int maxArithmeticSubarrayLength = 2; // ans
+
+        // Minimum length of array is 2 for AP
+        if (n < 2)
+        {
+            cout << "Minimum Length of an AP is 2." << endl;
+            return -1;
+        }
+        cout << "before loop" << endl;
+        for (int i = 2; i < n; i++)
+        {
+            if (arr[i] - arr[i - 1] == previousCommonDifference)
+            {
+                cout << "True pd" << endl;
+                currentArithmeticSubarrayLength++;
+                cout << currentArithmeticSubarrayLength << endl;
+            }
+            else
+            {
+                cout << "false pd" << endl;
+                previousCommonDifference = arr[i] - arr[i - 1];
+                currentArithmeticSubarrayLength = 2;
+                cout << currentArithmeticSubarrayLength << endl;
+            }
+
+            if (currentArithmeticSubarrayLength > maxArithmeticSubarrayLength)
+            {
+                cout << "Length" << endl;
+                maxArithmeticSubarrayLength = currentArithmeticSubarrayLength;
+            }
+        }
+
+        return maxArithmeticSubarrayLength;
     }
 };
 
@@ -238,6 +285,8 @@ int main()
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
     // s.ArrayContainsDuplicate(arr, n);
-    s.BestDayToBuyAndSellStocks(arr, n);
+    // s.BestDayToBuyAndSellStocks(arr, n);
+    // s.RepeatAndMissingNumberArray(arr , n);
+    cout << s.LongestArithemicSubarray(arr, n);
     return 0;
 }
