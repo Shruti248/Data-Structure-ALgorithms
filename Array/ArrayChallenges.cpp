@@ -45,37 +45,86 @@ public:
     // Number of subsequneces with n elements : 2raised to n
 
     // NOTE : EVery subarray is an subsequnece but every subsequnece is not a subarray
-        void allPossibleSubarrays(int arr[] , int n){
-        for(int i = 0 ; i<n ; i++){
-            for(int j = i ; j<n ; j++){
+    void allPossibleSubarrays(int arr[], int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
+            {
                 // printing all the elements that range from i to j
-                for(int k = i ; k<=j ; k++){
-                    cout<<arr[k]<<" ";
+                for (int k = i; k <= j; k++)
+                {
+                    cout << arr[k] << " ";
                 }
-                cout<<endl;
+                cout << endl;
             }
         }
     }
     // PROBLEM : Given an array of size n , output sum of each subarray of the given array
     void sumOfAllSubArrays(int arr[], int n)
     {
-        vector<int> result;
-        int sum = 0;
+        // vector<int> result;
+        // int sum = 0;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     sum = 0;
+        //     for (int j = i; j < n; j++)
+        //     {
+        //         sum += arr[j];
+        //         result.push_back(sum);
+        //     }
+        // }
+        // cout << "Sum of Subarrays : ";
+        // for (int i = 0; i < result.size(); i++)
+        // {
+        //     cout << result[i] << " ";
+        // }
+        // cout << endl;
+
+        // OPTIMZED APPROACH : Cummulative sum approach
+        // Loop will be reduced
+
+        // MORE OPTIMIZED APPROACH
+        // Kadane's Algorithm
+        // Maximum positive integers in a row & less negative integer
+        // if negative , then change the variable curr sum to 0 , so that it will not be included
+
+        // EG :  -1 4 -6 7 -4
+        // curr sum : 0(for -1) 4(0+4 = 4) 0(for -6 ) 7(0+7) 0(for-4)
+        // maximum sum will be found from this
+
+        // Does not Work Effectively for small negative numbers that does not make a great difference
+        // int curr_sum=0;
+        // int max_sum = INT_MIN;
+        // for(int i = 0 ; i<n ; i++){
+        //     if(arr[i] < 0){
+        //         curr_sum = 0;
+        //     }else{
+        //         curr_sum +=arr[i];
+        //     }
+
+        //     if(curr_sum > max_sum){
+        //         max_sum = curr_sum;
+        //     }
+        // }
+
+        // cout<<"Max Sum : "<<max_sum<<endl;
+
+        int max_so_far = INT_MIN;
+        int max_ending_here = 0;
+        int max_element = INT_MIN;
+
         for (int i = 0; i < n; i++)
         {
-            sum = 0;
-            for (int j = i; j < n; j++)
-            {
-                sum += arr[j];
-                result.push_back(sum);
-            }
+            max_ending_here = max(max_ending_here + arr[i], 0);
+            max_so_far = max(max_ending_here, max_so_far);
+            max_element = max(max_element, arr[i]);
         }
-        cout << "Sum of Subarrays : ";
-        for (int i = 0; i < result.size(); i++)
-        {
-            cout << result[i] << " ";
-        }
-        cout << endl;
+
+        if (max_so_far == 0)
+            max_so_far = max_element;
+
+        cout<<"Max Sum : "<<max_so_far<<endl;
     }
 
     // LEETCODE Question : Maximum Subarray
@@ -388,9 +437,8 @@ public:
     {
         sort(arr, arr + n);
 
-        cout << arr[k-1] << endl;
+        cout << arr[k - 1] << endl;
     }
-
 
     // Leetcode
     // Product of all the element of teh array except itself
@@ -462,8 +510,8 @@ int main()
     }
     Solution s;
     // s.maxTillI(arr, n);
-    s.allPossibleSubarrays(arr , n);
-    // s.sumOfAllSubArrays(arr , n);
+    // s.allPossibleSubarrays(arr , n);
+    s.sumOfAllSubArrays(arr, n);
     // s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
     // s.RevereseTheArray(arr, n);
