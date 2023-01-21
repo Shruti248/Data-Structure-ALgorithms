@@ -222,6 +222,7 @@ public:
     // InterviewBit RepeatAndMissingNumberArray : given array from 1 to n , find A which is repeated TWICE and B which is MISSING.
     void RepeatAndMissingNumberArray(int arr[], int n)
     {
+       
     }
 
     // Google Kickstart Question
@@ -356,6 +357,14 @@ public:
 
     }
 
+    // Kth Kargest element of the Array : LeetCode
+    // Later Optimized Solution
+    void kthLargestElement(int arr[] , int n , int k){
+        sort(arr , arr+n);
+
+        cout<<arr[n-k]<<endl;
+    }
+
 };
 
 int main()
@@ -393,9 +402,13 @@ int main()
     // cin>>numberofStudents;
     // s.chocolateDistributionProblem(arr , n , numberofStudents);
 
-    int pivot , target;
-    cin>>pivot;
-    cin>>target;
-    cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
+    // int pivot , target;
+    // cin>>pivot;
+    // cin>>target;
+    // cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
+
+    int k;
+    cin>>k;
+    s.kthLargestElement(arr , n , k);
     return 0;
 }
