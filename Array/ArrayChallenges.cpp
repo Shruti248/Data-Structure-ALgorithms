@@ -309,6 +309,13 @@ public:
         }
     }
 
+    // Google , Facebook , Amazon, Visa
+    // Find continuous subarray which adds to a given number s.
+    // Output : Starting and ending index
+    int subarrayWithgivenSum(int arr[], int n, int givenSum)
+    {
+       
+    }
 
     void chocolateDistributionProblem(int arr[] , int n , int numberofStudents){
 
@@ -324,6 +331,31 @@ public:
         }
         cout<<minimumDifference<<endl;
     }
+
+    int searchInRotatedSortedArray(int arr[] , int n , int pivot , int target){
+        vector<int> rotatedArray;
+
+        for(int i = pivot ; i < n ; i++){
+            rotatedArray.push_back(arr[i]);
+        }
+        for(int i = 0 ; i<pivot ; i++){
+            rotatedArray.push_back(arr[i]);
+        }
+        // cout<<"Rotated Array : "<<endl;
+        // for(int i = 0 ; i< rotatedArray.size() ; i++){
+        //     cout<<rotatedArray[i]<<" ";
+        // }
+
+        for(int i = 0 ; i < rotatedArray.size() ; i++){
+            if(rotatedArray[i] == target){
+                return i; //index of the target
+            }
+        }
+
+        return -1;
+
+    }
+
 };
 
 int main()
@@ -357,8 +389,13 @@ int main()
     // cin >> Sum;
     // cout << s.subarrayWithgivenSum(arr, n, Sum) << endl;
     
-    int numberofStudents;
-    cin>>numberofStudents;
-    s.chocolateDistributionProblem(arr , n , numberofStudents);
+    // int numberofStudents;
+    // cin>>numberofStudents;
+    // s.chocolateDistributionProblem(arr , n , numberofStudents);
+
+    int pivot , target;
+    cin>>pivot;
+    cin>>target;
+    cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
     return 0;
 }
