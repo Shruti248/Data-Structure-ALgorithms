@@ -222,7 +222,6 @@ public:
     // InterviewBit RepeatAndMissingNumberArray : given array from 1 to n , find A which is repeated TWICE and B which is MISSING.
     void RepeatAndMissingNumberArray(int arr[], int n)
     {
-       
     }
 
     // Google Kickstart Question
@@ -315,31 +314,37 @@ public:
     // Output : Starting and ending index
     int subarrayWithgivenSum(int arr[], int n, int givenSum)
     {
-       
     }
 
-    void chocolateDistributionProblem(int arr[] , int n , int numberofStudents){
+    void chocolateDistributionProblem(int arr[], int n, int numberofStudents)
+    {
 
-        if(numberofStudents == 0 || n == 0){
-            cout<<"No Chocolates or Students."<<endl;
+        if (numberofStudents == 0 || n == 0)
+        {
+            cout << "No Chocolates or Students." << endl;
         }
-        sort(arr , arr+n);
+        sort(arr, arr + n);
         int minimumDifference = INT_MAX;
-        for(int i = 0 ; i<n-numberofStudents ; i++){
-            if(arr[i + numberofStudents - 1] - arr[i] < minimumDifference){
+        for (int i = 0; i < n - numberofStudents; i++)
+        {
+            if (arr[i + numberofStudents - 1] - arr[i] < minimumDifference)
+            {
                 minimumDifference = arr[i + numberofStudents - 1] - arr[i];
             }
         }
-        cout<<minimumDifference<<endl;
+        cout << minimumDifference << endl;
     }
 
-    int searchInRotatedSortedArray(int arr[] , int n , int pivot , int target){
+    int searchInRotatedSortedArray(int arr[], int n, int pivot, int target)
+    {
         vector<int> rotatedArray;
 
-        for(int i = pivot ; i < n ; i++){
+        for (int i = pivot; i < n; i++)
+        {
             rotatedArray.push_back(arr[i]);
         }
-        for(int i = 0 ; i<pivot ; i++){
+        for (int i = 0; i < pivot; i++)
+        {
             rotatedArray.push_back(arr[i]);
         }
         // cout<<"Rotated Array : "<<endl;
@@ -347,24 +352,55 @@ public:
         //     cout<<rotatedArray[i]<<" ";
         // }
 
-        for(int i = 0 ; i < rotatedArray.size() ; i++){
-            if(rotatedArray[i] == target){
-                return i; //index of the target
+        for (int i = 0; i < rotatedArray.size(); i++)
+        {
+            if (rotatedArray[i] == target)
+            {
+                return i; // index of the target
             }
         }
 
         return -1;
-
     }
 
     // Kth Kargest element of the Array : LeetCode
     // Later Optimized Solution
-    void kthLargestElement(int arr[] , int n , int k){
-        sort(arr , arr+n);
+    void kthLargestElement(int arr[], int n, int k)
+    {
+        sort(arr, arr + n);
 
-        cout<<arr[n-k]<<endl;
+        cout << arr[n - k] << endl;
     }
 
+    // Leetcode
+    // Product of all the element of teh array except itself
+
+    int calculateProduct(int arr[], int start, int end)
+    {
+        int product = 1;
+        for (int i = start; i < end; i++)
+        {
+            product *= arr[i];
+        }
+        return product;
+    }
+
+    void productofArrayExceptItself(int arr[], int n)
+    {
+        vector<int> resultantArray;
+        int resultantProduct = 1;
+
+        for (int i = 0; i < n; i++)
+        {
+            resultantProduct = calculateProduct(arr, 0, i) * calculateProduct(arr, i + 1, n);
+            resultantArray.push_back(resultantProduct);
+        }
+
+        for (int i = 0; i < resultantArray.size(); i++)
+        {
+            cout << resultantArray[i] << " ";
+        }
+    }
 };
 
 int main()
@@ -397,7 +433,7 @@ int main()
     // int Sum;
     // cin >> Sum;
     // cout << s.subarrayWithgivenSum(arr, n, Sum) << endl;
-    
+
     // int numberofStudents;
     // cin>>numberofStudents;
     // s.chocolateDistributionProblem(arr , n , numberofStudents);
@@ -407,8 +443,10 @@ int main()
     // cin>>target;
     // cout<<s.searchInRotatedSortedArray(arr , n , pivot , target)<<endl;
 
-    int k;
-    cin>>k;
-    s.kthLargestElement(arr , n , k);
+    // int k;
+    // cin>>k;
+    // s.kthLargestElement(arr , n , k);
+
+    s.productofArrayExceptItself(arr, n);
     return 0;
 }
