@@ -401,6 +401,32 @@ public:
             cout << resultantArray[i] << " ";
         }
     }
+
+    // LeetCode
+    // return Maximum Product
+    void maximumProductSubarray(int arr[], int n)
+    {
+        vector<int> result;
+        int product = 1;
+        for (int i = 0; i < n; i++)
+        {
+            product = 1;
+            for (int j = i; j < n; j++)
+            {
+                product *= arr[j];
+                result.push_back(product);
+            }
+        }
+        // cout << "Product of Subarrays : ";
+        // for (int i = 0; i < result.size(); i++)
+        // {
+        //     cout << result[i] << " ";
+        // }
+
+        sort(result.begin(), result.end());
+
+        cout << result.back();
+    }
 };
 
 int main()
@@ -447,6 +473,7 @@ int main()
     // cin>>k;
     // s.kthLargestElement(arr , n , k);
 
-    s.productofArrayExceptItself(arr, n);
+    // s.productofArrayExceptItself(arr, n);
+    s.maximumProductSubarray(arr, n);
     return 0;
 }
