@@ -63,25 +63,51 @@ public:
     // PROBLEM : Given an array of size n , output sum of each subarray of the given array
     void sumOfAllSubArrays(int arr[], int n)
     {
-        // vector<int> result;
+        vector<int> result;
+        int sum = 0;
+        for (int i = 0; i < n; i++)
+        {
+            sum = 0;
+            for (int j = i; j < n; j++)
+            {
+                sum += arr[j];
+                result.push_back(sum);
+            }
+        }
+        cout << "Sum of Subarrays : ";
+        for (int i = 0; i < result.size(); i++)
+        {
+            cout << result[i] << " ";
+        }
+        cout << endl;
+
+
+    }
+
+    // LEETCODE Question : Maximum Subarray
+    // Brute Force Approach Takes O(N2). --> Implemented Approach
+    // DP Using Memoization , Tabulation  : O(N) --> Accepted Solution in Leetcode
+    // Refer : https://leetcode.com/problems/maximum-subarray/solutions/1595195/c-python-7-simple-solutions-w-explanation-brute-force-dp-kadane-divide-conquer/
+    void subArrayWiththeLargestSum(int arr[], int n)
+    {
         // int sum = 0;
+        // int maxSum = -2147483648;
         // for (int i = 0; i < n; i++)
         // {
         //     sum = 0;
         //     for (int j = i; j < n; j++)
         //     {
         //         sum += arr[j];
-        //         result.push_back(sum);
+        //         if (sum > maxSum)
+        //         {
+        //             maxSum = sum;
+        //         }
         //     }
         // }
-        // cout << "Sum of Subarrays : ";
-        // for (int i = 0; i < result.size(); i++)
-        // {
-        //     cout << result[i] << " ";
-        // }
-        // cout << endl;
 
-        // OPTIMZED APPROACH : Cummulative sum approach
+        // cout << "Largest Sum of All the Subarrays : " << maxSum << endl;
+
+                // OPTIMZED APPROACH : Cummulative sum approach
         // Loop will be reduced
 
         // MORE OPTIMIZED APPROACH
@@ -125,30 +151,6 @@ public:
             max_so_far = max_element;
 
         cout<<"Max Sum : "<<max_so_far<<endl;
-    }
-
-    // LEETCODE Question : Maximum Subarray
-    // Brute Force Approach Takes O(N2). --> Implemented Approach
-    // DP Using Memoization , Tabulation  : O(N) --> Accepted Solution in Leetcode
-    // Refer : https://leetcode.com/problems/maximum-subarray/solutions/1595195/c-python-7-simple-solutions-w-explanation-brute-force-dp-kadane-divide-conquer/
-    void subArrayWiththeLargestSum(int arr[], int n)
-    {
-        int sum = 0;
-        int maxSum = -2147483648;
-        for (int i = 0; i < n; i++)
-        {
-            sum = 0;
-            for (int j = i; j < n; j++)
-            {
-                sum += arr[j];
-                if (sum > maxSum)
-                {
-                    maxSum = sum;
-                }
-            }
-        }
-
-        cout << "Largest Sum of All the Subarrays : " << maxSum << endl;
     }
 
     // GFG : Max Min Problem
@@ -511,8 +513,8 @@ int main()
     Solution s;
     // s.maxTillI(arr, n);
     // s.allPossibleSubarrays(arr , n);
-    s.sumOfAllSubArrays(arr, n);
-    // s.subArrayWiththeLargestSum(arr , n);
+    // s.sumOfAllSubArrays(arr, n);
+    s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
     // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
