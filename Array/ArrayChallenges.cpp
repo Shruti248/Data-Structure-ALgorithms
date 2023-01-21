@@ -263,6 +263,29 @@ public:
 
         return maxArithmeticSubarrayLength;
     }
+
+    // Google KIckstart Question
+    // Record Breaking Day : Strictly Greater than the previous days & Strictly greater than the following Days
+    int recordBreaker(int arr[], int n)
+    {
+        vector<int> recordBreakingDay;
+        int NumberofRecordBreakingDays = 0;
+        int mx = -1;
+
+        if (n == 1)
+        {
+            cout << "1" << endl;
+            return 0;
+        }
+
+        for(int i = 0 ; i< n ; i++){
+            if(arr[i] > mx && arr[i] > arr[i+1]){
+                NumberofRecordBreakingDays++;
+            }
+            mx = max(mx , arr[i]);
+        }
+        return NumberofRecordBreakingDays;
+    }
 };
 
 int main()
@@ -287,6 +310,7 @@ int main()
     // s.ArrayContainsDuplicate(arr, n);
     // s.BestDayToBuyAndSellStocks(arr, n);
     // s.RepeatAndMissingNumberArray(arr , n);
-    cout << s.LongestArithemicSubarray(arr, n);
+    // cout << s.LongestArithemicSubarray(arr, n);
+    cout << s.recordBreaker(arr, n) << endl;
     return 0;
 }
