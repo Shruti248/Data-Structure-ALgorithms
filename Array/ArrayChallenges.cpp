@@ -278,29 +278,51 @@ public:
             return 0;
         }
 
-        for(int i = 0 ; i< n ; i++){
-            if(arr[i] > mx && arr[i] > arr[i+1]){
+        for (int i = 0; i < n; i++)
+        {
+            if (arr[i] > mx && arr[i] > arr[i + 1])
+            {
                 NumberofRecordBreakingDays++;
             }
-            mx = max(mx , arr[i]);
+            mx = max(mx, arr[i]);
         }
         return NumberofRecordBreakingDays;
     }
 
     // Amazon Oracle
     // Element that occurs more than once and whose index of first occurrence is smallest
-    int FirstRepeatingElement(int arr[] , int n){
+    int FirstRepeatingElement(int arr[], int n)
+    {
         int ans;
 
-        for(int i = 0 ; i< n-1 ; i++){
-            for(int j = i+1 ; j<n ; j++){
-                if(arr[i] == arr[j]){
-                    // ans = arr[i]; //element 
-                    ans = i + 1; //index
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = i + 1; j < n; j++)
+            {
+                if (arr[i] == arr[j])
+                {
+                    // ans = arr[i]; //element
+                    ans = i + 1; // index
                     return ans;
                 }
             }
         }
+    }
+
+
+    void chocolateDistributionProblem(int arr[] , int n , int numberofStudents){
+
+        if(numberofStudents == 0 || n == 0){
+            cout<<"No Chocolates or Students."<<endl;
+        }
+        sort(arr , arr+n);
+        int minimumDifference = INT_MAX;
+        for(int i = 0 ; i<n-numberofStudents ; i++){
+            if(arr[i + numberofStudents - 1] - arr[i] < minimumDifference){
+                minimumDifference = arr[i + numberofStudents - 1] - arr[i];
+            }
+        }
+        cout<<minimumDifference<<endl;
     }
 };
 
@@ -328,6 +350,15 @@ int main()
     // s.RepeatAndMissingNumberArray(arr , n);
     // cout << s.LongestArithemicSubarray(arr, n);
     // cout << s.recordBreaker(arr, n) << endl;
-    cout<<s.FirstRepeatingElement(arr , n)<<endl;
+    // cout<<s.FirstRepeatingElement(arr , n)<<endl;
+
+    // left
+    // int Sum;
+    // cin >> Sum;
+    // cout << s.subarrayWithgivenSum(arr, n, Sum) << endl;
+    
+    int numberofStudents;
+    cin>>numberofStudents;
+    s.chocolateDistributionProblem(arr , n , numberofStudents);
     return 0;
 }
