@@ -527,6 +527,21 @@ public:
 
         cout << result.back();
     }
+
+    // If sum of 2 elements is equal to k , return true else false
+    bool pairSumProblem(int arr[] , int n , int givenSumofTwoPairs){
+        // Brute Force Approach : Checking All possible Solutions
+        // O(n2) : Nested Loop
+        for(int i = 0 ; i<n ; i++){
+            for(int j = i ; j<n ; j++){
+                if(arr[i] + arr[j] == givenSumofTwoPairs){
+                    cout<<"Pair is : "<<arr[i]<<" "<<arr[j]<<endl;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 };
 
 int main()
@@ -546,7 +561,7 @@ int main()
     // s.sumOfAllSubArrays(arr, n);
     // s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
-    s.maximumCircularSubarraySum(arr , n);
+    // s.maximumCircularSubarraySum(arr , n);
     // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
@@ -578,6 +593,11 @@ int main()
 
     // s.productofArrayExceptItself(arr, n);
     // s.maximumProductSubarray(arr, n);
+
+    int givenSumofTwoPairs;
+    cin>>givenSumofTwoPairs;
+
+    cout<<s.pairSumProblem(arr , n , givenSumofTwoPairs)<<endl;
 
     return 0;
 }
