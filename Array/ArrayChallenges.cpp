@@ -80,8 +80,6 @@ public:
             cout << result[i] << " ";
         }
         cout << endl;
-
-
     }
 
     // LEETCODE Question : Maximum Subarray
@@ -107,7 +105,7 @@ public:
 
         // cout << "Largest Sum of All the Subarrays : " << maxSum << endl;
 
-                // OPTIMZED APPROACH : Cummulative sum approach
+        // OPTIMZED APPROACH : Cummulative sum approach
         // Loop will be reduced
 
         // MORE OPTIMIZED APPROACH
@@ -150,37 +148,42 @@ public:
         if (max_so_far == 0)
             max_so_far = max_element;
 
-        cout<<"Max Sum : "<<max_so_far<<endl;
+        cout << "Max Sum : " << max_so_far << endl;
     }
 
-    int kadane(int arr[] , int n){
+    int kadane(int arr[], int n)
+    {
         int currentSum = 0;
-        int maxSum=INT_MIN;
-        for(int i = 0 ; i<n ; i++){
-            currentSum+=arr[i];
-            if(currentSum<0){
-                currentSum=0;
+        int maxSum = INT_MIN;
+        for (int i = 0; i < n; i++)
+        {
+            currentSum += arr[i];
+            if (currentSum < 0)
+            {
+                currentSum = 0;
             }
-            maxSum = max(maxSum , currentSum);
+            maxSum = max(maxSum, currentSum);
         }
         return maxSum;
     }
 
-    void maximumCircularSubarraySum(int arr[] , int n){
+    void maximumCircularSubarraySum(int arr[], int n)
+    {
         int wrapSum;
         int nonwrapSum;
 
-        nonwrapSum = kadane(arr , n);
+        nonwrapSum = kadane(arr, n);
 
         int totalSum = 0;
-        for(int i = 0 ; i<n ; i++){
-            totalSum+=arr[i];
+        for (int i = 0; i < n; i++)
+        {
+            totalSum += arr[i];
             arr[i] = -arr[i];
         }
 
         wrapSum = totalSum + kadane(arr, n);
 
-        cout<<max(wrapSum , nonwrapSum);
+        cout << max(wrapSum, nonwrapSum);
     }
 
     // GFG : Max Min Problem
@@ -529,15 +532,45 @@ public:
     }
 
     // If sum of 2 elements is equal to k , return true else false
-    bool pairSumProblem(int arr[] , int n , int givenSumofTwoPairs){
+    bool pairSumProblem(int arr[], int n, int givenSumofTwoPairs)
+    {
         // Brute Force Approach : Checking All possible Solutions
         // O(n2) : Nested Loop
-        for(int i = 0 ; i<n ; i++){
-            for(int j = i ; j<n ; j++){
-                if(arr[i] + arr[j] == givenSumofTwoPairs){
-                    cout<<"Pair is : "<<arr[i]<<" "<<arr[j]<<endl;
-                    return true;
-                }
+        // for(int i = 0 ; i<n ; i++){
+        //     for(int j = i ; j<n ; j++){
+        //         if(arr[i] + arr[j] == givenSumofTwoPairs){
+        //             cout<<"Pair is : "<<arr[i]<<" "<<arr[j]<<endl;
+        //             return true;
+        //         }
+        //     }
+        // }
+        // return false;
+
+        // Optimized Solution
+        // O(n)
+        // Sort , low & high pointer
+        // check sum for low and high pointer & you will understand if you need to move the low pointe rforward or the high pointer
+
+        int low = 0;
+        int high = n - 1;
+
+        // Sort
+        sort(arr, arr + n);
+
+        while (low < high)
+        {
+            if (arr[low] + arr[high] == givenSumofTwoPairs)
+            {
+                // You can also return indices or array elements over here.
+                return true;
+            }
+            else if (arr[low] + arr[high] < givenSumofTwoPairs)
+            {
+                low++;
+            }
+            else if (arr[low] + arr[high] > givenSumofTwoPairs)
+            {
+                high--;
             }
         }
         return false;
@@ -595,9 +628,9 @@ int main()
     // s.maximumProductSubarray(arr, n);
 
     int givenSumofTwoPairs;
-    cin>>givenSumofTwoPairs;
+    cin >> givenSumofTwoPairs;
 
-    cout<<s.pairSumProblem(arr , n , givenSumofTwoPairs)<<endl;
+    cout << s.pairSumProblem(arr, n, givenSumofTwoPairs) << endl;
 
     return 0;
 }
