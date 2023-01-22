@@ -153,6 +153,36 @@ public:
         cout<<"Max Sum : "<<max_so_far<<endl;
     }
 
+    int kadane(int arr[] , int n){
+        int currentSum = 0;
+        int maxSum=INT_MIN;
+        for(int i = 0 ; i<n ; i++){
+            currentSum+=arr[i];
+            if(currentSum<0){
+                currentSum=0;
+            }
+            maxSum = max(maxSum , currentSum);
+        }
+        return maxSum;
+    }
+
+    void maximumCircularSubarraySum(int arr[] , int n){
+        int wrapSum;
+        int nonwrapSum;
+
+        nonwrapSum = kadane(arr , n);
+
+        int totalSum = 0;
+        for(int i = 0 ; i<n ; i++){
+            totalSum+=arr[i];
+            arr[i] = -arr[i];
+        }
+
+        wrapSum = totalSum + kadane(arr, n);
+
+        cout<<max(wrapSum , nonwrapSum);
+    }
+
     // GFG : Max Min Problem
     void maximumAndMinimumElementInArray(int arr[], int n)
     {
@@ -514,8 +544,9 @@ int main()
     // s.maxTillI(arr, n);
     // s.allPossibleSubarrays(arr , n);
     // s.sumOfAllSubArrays(arr, n);
-    s.subArrayWiththeLargestSum(arr , n);
+    // s.subArrayWiththeLargestSum(arr , n);
     // s.maximumAndMinimumElementInArray(arr , n);
+    s.maximumCircularSubarraySum(arr , n);
     // s.RevereseTheArray(arr, n);
     // s.reverseArrayContainingCharacters(arr , n);
     // s.ReverseArrayContainingString(arr, n);
