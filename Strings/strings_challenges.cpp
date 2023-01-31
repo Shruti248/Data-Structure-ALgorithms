@@ -121,6 +121,25 @@ public:
         // }
         // return ans;
     }
+
+    bool validPalindrome(string str)
+    {
+       string temp = "";
+        for (char c : str) {
+            if (isalnum(c)) {
+                temp += tolower(c);
+            }
+        }
+
+        int left = 0, right = temp.length() - 1;
+        while (left < right) {
+            if (temp[left++] != temp[right--]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 };
 
 int main()
@@ -134,7 +153,8 @@ int main()
     // s.maximumOccurenceOfCharacters(str);
 
     getline(cin, str);
-    s.lengthOfLastWord(str);
+    // s.lengthOfLastWord(str);
+    cout << s.validPalindrome(str);
 
     return 0;
 }
