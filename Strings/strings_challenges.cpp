@@ -124,16 +124,44 @@ public:
 
     bool validPalindrome(string str)
     {
-       string temp = "";
-        for (char c : str) {
-            if (isalnum(c)) {
+        string temp = "";
+        for (char c : str)
+        {
+            if (isalnum(c))
+            {
                 temp += tolower(c);
             }
         }
 
         int left = 0, right = temp.length() - 1;
-        while (left < right) {
-            if (temp[left++] != temp[right--]) {
+        while (left < right)
+        {
+            if (temp[left++] != temp[right--])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool isAnagram(string str, string str2)
+    {
+        if (str.length() != str2.length())
+        {
+            return false;
+        }
+
+        unordered_map<char, int> charCount;
+
+        for (char c : str)
+        {
+            charCount[c]++;
+        }
+        for (char c : str2)
+        {
+            if (--charCount[c] < 0)
+            {
                 return false;
             }
         }
@@ -146,15 +174,18 @@ int main()
 {
     Solution s;
     string str;
-
+    string str2;
     // cin>>str;
     // s.stringToUpperCaseAndLowerCase(str);
     // s.formTheBiggestNumberFromTheNumericString(str);
     // s.maximumOccurenceOfCharacters(str);
 
     getline(cin, str);
+    cout << "str2 : " << endl;
+    getline(cin, str2);
     // s.lengthOfLastWord(str);
-    cout << s.validPalindrome(str);
+    // cout << s.validPalindrome(str);
+    cout << s.isAnagram(str, str2);
 
     return 0;
 }
