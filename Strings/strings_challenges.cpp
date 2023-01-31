@@ -36,6 +36,13 @@ class Solution{
 
         }
 
+        void formTheBiggestNumberFromTheNumericString(string str){
+            sort(str.begin() , str.end() , greater<int>()); //3rd argument : bcoz we want to sort the characters in decreasing order
+
+            cout<<str<<endl;
+        }
+
+
 };
 
 int main(){
@@ -43,7 +50,8 @@ int main(){
     string str;
 
     cin>>str;
-    s.stringToUpperCaseAndLowerCase(str);
+    // s.stringToUpperCaseAndLowerCase(str);
+    s.formTheBiggestNumberFromTheNumericString(str);
 
 
     return 0;
