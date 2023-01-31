@@ -42,6 +42,38 @@ class Solution{
             cout<<str<<endl;
         }
 
+        void maximumOccurenceOfCharacters(string str){
+            int frequency[26];
+
+            for(int i = 0 ; i<26 ; i++){
+                frequency[i] = 0;
+            }
+
+            for(int i = 0 ; i<str.size() ; i++){
+                // 0 : a 
+                // 1:b 
+                // 2: c
+                // Therefore it will increase the frequency at the particular index for each character
+                frequency[str[i]-'a']++;
+            }
+
+            // Maximum of frequency
+            char ans = 'a';
+            int maxF = 0;
+
+            for(int i = 0 ; i<26 ; i++){
+                if(frequency[i] > maxF){
+                    maxF = frequency[i];
+                    ans = i+'a';
+                }
+            }
+
+            cout<<maxF<<endl;
+            cout<<ans<<endl;
+
+            // This will return maximum occurence of the first charcater , that is if 2 maximum are equal , first will be returned....
+        }
+
 
 };
 
@@ -51,7 +83,8 @@ int main(){
 
     cin>>str;
     // s.stringToUpperCaseAndLowerCase(str);
-    s.formTheBiggestNumberFromTheNumericString(str);
+    // s.formTheBiggestNumberFromTheNumericString(str);
+    s.maximumOccurenceOfCharacters(str);
 
 
     return 0;
