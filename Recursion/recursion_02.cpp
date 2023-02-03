@@ -167,7 +167,7 @@ public:
         towerOfHanoi(n - 1, helper, dest, src);
     }
 
-    // Remove All consecutive Duplicates from the string
+    // Remove All Adjacent Duplicates from the string
     string removeDuplicates(string s)
     {
         // Base case
@@ -184,6 +184,25 @@ public:
         }
         return ch+ans;
     }
+
+    // Move All x to the end of the string
+    void moveXtoEndOfString(string s){
+        if(s.length() == 0){
+            return;
+        }
+
+        string XString = "";
+        if(s[0] == 'x'){
+            XString = XString + s[0];
+            moveXtoEndOfString(s.substr(1));
+        }else{
+            cout<<s[0];
+            moveXtoEndOfString(s.substr(1));
+        }
+
+        cout<<XString;
+    }
+
 };
 int main()
 {
@@ -214,6 +233,8 @@ int main()
     // cin >> src >> dest >> helper;
 
     // s.towerOfHanoi(n, src, dest, helper);
-    cout<<s.removeDuplicates(str);
+    // cout<<s.removeDuplicates(str);
+
+    s.moveXtoEndOfString(str);
     return 0;
 }
