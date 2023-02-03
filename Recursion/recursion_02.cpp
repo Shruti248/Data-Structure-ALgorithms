@@ -120,6 +120,30 @@ public:
         reverseAString(restString);
         cout << s[0];
     }
+
+    // Replace pi with 3.14 in string
+    // ith and i+1 element : pi --> Replace   & Print rest characters
+    // Rest , call again
+    void replacePI(string s)
+    {
+        // Base case
+        if (s.length() == 0)
+        {
+            return;
+        }
+
+        // Recursive Case
+        if (s[0] == 'p' && s[1] == 'i')
+        {
+            cout << "3.14";
+            replacePI(s.substr(2));
+        }
+        else
+        {
+            cout << s[0];
+            replacePI(s.substr(1));
+        }
+    }
 };
 int main()
 {
@@ -142,8 +166,9 @@ int main()
     // cout << s.lastOccurence(arr, n, i, key)<<endl;
 
     string str;
-    cin>>str;
-    s.reverseAString(str);
+    cin >> str;
+    // s.reverseAString(str);
+    s.replacePI(str);
 
     return 0;
 }
