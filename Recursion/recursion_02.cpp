@@ -144,12 +144,34 @@ public:
             replacePI(s.substr(1));
         }
     }
+
+    // Tower of Hanoi
+    //  A : Source  , B : Helper Rod , C : Destination
+
+    // n-1 from A to helper
+    // A to C : nth
+    // n-1 from helper to C
+
+    void towerOfHanoi(int n, char src, char dest, char helper)
+    {
+
+        // Base
+        if (n == 0)
+        {
+            return;
+        }
+        // bcoz n-1 moves from src to helper
+        towerOfHanoi(n - 1, src, helper, dest);
+        cout << "Move From " << src << " to " << dest << endl;
+        // n-1 from helper to C
+        towerOfHanoi(n - 1, helper, dest, src);
+    }
 };
 int main()
 {
     Solution s;
-    // int n;
-    // cin >> n;
+    int n;
+    cin >> n;
     // int arr[n];
     // for (int i = 0; i < n; i++)
     // {
@@ -165,10 +187,15 @@ int main()
     // cout << s.firstOccurence(arr, n, i, key)<<endl;
     // cout << s.lastOccurence(arr, n, i, key)<<endl;
 
-    string str;
-    cin >> str;
+    // string str;
+    // cin >> str;
     // s.reverseAString(str);
-    s.replacePI(str);
+    // s.replacePI(str);
+
+    char src, dest, helper;
+    cin >> src >> dest >> helper;
+
+    s.towerOfHanoi(n, src, dest, helper);
 
     return 0;
 }
