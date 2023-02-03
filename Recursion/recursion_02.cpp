@@ -166,12 +166,30 @@ public:
         // n-1 from helper to C
         towerOfHanoi(n - 1, helper, dest, src);
     }
+
+    // Remove All consecutive Duplicates from the string
+    string removeDuplicates(string s)
+    {
+        // Base case
+        if (s.length() == 0)
+        {
+            return ""; 
+        }
+        // Recursive Case
+        char ch = s[0];
+        string ans = removeDuplicates(s.substr(1));
+
+        if(ch == ans[0]){
+            return ans;
+        }
+        return ch+ans;
+    }
 };
 int main()
 {
     Solution s;
-    int n;
-    cin >> n;
+    // int n;
+    // cin >> n;
     // int arr[n];
     // for (int i = 0; i < n; i++)
     // {
@@ -187,15 +205,15 @@ int main()
     // cout << s.firstOccurence(arr, n, i, key)<<endl;
     // cout << s.lastOccurence(arr, n, i, key)<<endl;
 
-    // string str;
-    // cin >> str;
+    string str;
+    cin >> str;
     // s.reverseAString(str);
     // s.replacePI(str);
 
-    char src, dest, helper;
-    cin >> src >> dest >> helper;
+    // char src, dest, helper;
+    // cin >> src >> dest >> helper;
 
-    s.towerOfHanoi(n, src, dest, helper);
-
+    // s.towerOfHanoi(n, src, dest, helper);
+    cout<<s.removeDuplicates(str);
     return 0;
 }
