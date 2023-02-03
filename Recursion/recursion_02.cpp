@@ -225,6 +225,28 @@ public:
         allPossibleSubstrings(restString , ans+ch);
     }
 
+    // Subsequences 
+    void substringsWithASCIINumber(string s , string ans){
+
+        if(s.length() ==0){
+            cout<<ans<<endl;
+            return;
+        }
+        // 3 recursive calls are made 
+        // Once we do not add the character
+        // Adding the charcater
+        // Adding the ascii value of the character
+
+        char ch = s[0];
+        int code  = ch;
+        string restString = s.substr(1);
+
+        substringsWithASCIINumber(restString , ans);
+        substringsWithASCIINumber(restString , ans+ch);
+        substringsWithASCIINumber(restString , ans+to_string(code));
+
+    }
+
 
 };
 int main()
@@ -260,6 +282,7 @@ int main()
 
     // s.moveXtoEndOfString(str);
     string ans = "";
-    s.allPossibleSubstrings(str , ans);
+    // s.allPossibleSubstrings(str , ans);
+    s.substringsWithASCIINumber(str , ans);
     return 0;
 }
