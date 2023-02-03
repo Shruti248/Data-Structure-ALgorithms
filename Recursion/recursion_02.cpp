@@ -203,6 +203,29 @@ public:
         cout<<XString;
     }
 
+    // Generate All Substrings of a STring 
+    // Length of strig = n 
+    // Number of substrigs = 2^n
+
+    // ABC : "" , A , AB , B , C , AC , BC , ABC 
+    // At every step , we are adding a character and also not adding it...
+
+    void allPossibleSubstrings(string s , string ans){
+
+        if(s.length() == 0){
+            cout<<ans<<endl;
+            return;
+        }
+
+        char ch = s[0];
+
+        string restString = s.substr(1);
+
+        allPossibleSubstrings(restString , ans);
+        allPossibleSubstrings(restString , ans+ch);
+    }
+
+
 };
 int main()
 {
@@ -235,6 +258,8 @@ int main()
     // s.towerOfHanoi(n, src, dest, helper);
     // cout<<s.removeDuplicates(str);
 
-    s.moveXtoEndOfString(str);
+    // s.moveXtoEndOfString(str);
+    string ans = "";
+    s.allPossibleSubstrings(str , ans);
     return 0;
 }
