@@ -247,6 +247,25 @@ public:
 
     }
 
+    // Print All Possible words from phone digits
+
+    void keyPadArray(string s , string ans){
+        string keyPadArr[] ={"" , "./", "abc" , "def" , "ghi" , "jkl" , "mno" , "pqrs" , "tuv" , "wxyz"};
+
+        if(s.length() ==0){
+            cout<<ans<<endl;
+            return;
+        }
+
+        char ch = s[0];
+        string code = keyPadArr[ch-'0'];
+        string restString = s.substr(1);
+
+        for(int i = 0 ; i<code.length() ; i++){
+            keyPadArray(restString , ans + code[i]);
+        }
+    }
+
 
 };
 int main()
@@ -283,6 +302,7 @@ int main()
     // s.moveXtoEndOfString(str);
     string ans = "";
     // s.allPossibleSubstrings(str , ans);
-    s.substringsWithASCIINumber(str , ans);
+    // s.substringsWithASCIINumber(str , ans);
+    s.keyPadArray(str , ans);
     return 0;
 }
