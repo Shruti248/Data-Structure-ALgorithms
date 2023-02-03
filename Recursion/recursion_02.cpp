@@ -36,17 +36,46 @@ public:
         // Same as above commented portion
         return (arr[0] < arr[1] && restArray);
     }
+
+    // Print numbers till n
+    // 1) Decreasing Order
+            // n , n-1 .... 0
+    // 2) Increasing order
+
+    void printNumbers(int n){
+        // Decreasing Order
+        // if(n==0){
+        //     return;
+        // }
+
+        // cout<<n<<endl;
+        // printNumbers(n-1);
+
+        // Increasing Order
+        if(n == 0){
+            return;
+        }
+
+        printNumbers(n-1);
+        cout<<n<<endl; 
+        
+
+    }
 };
 int main()
 {
     Solution s;
     int n;
     cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin>>arr[i];
-    }
-    cout<<s.isArraySorted(arr , n);
+    // int arr[n];
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr[i];
+    // }
+    // cout << s.isArraySorted(arr, n);
+
+    s.printNumbers(n);
+
+
     return 0;
 }
