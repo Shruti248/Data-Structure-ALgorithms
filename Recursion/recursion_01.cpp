@@ -50,7 +50,7 @@ public:
     // Find the factorial of a number n
     // n! = n*n-1*n-2.....1;
     // n! = n*n-1!
-      // n-1! = n*n-2!
+    // n-1! = n*n-2!
 
     // n = 0 STOP return 1
     int factorial(int n)
@@ -65,7 +65,33 @@ public:
         // return n * prevRes;
 
         // Same as above
-        return n*factorial(n-1);
+        return n * factorial(n - 1);
+    }
+
+    // Print the nth Fibonacci Number
+    // Addistion of the previous 2 numbers gives the next number....
+    // 0 , 1 , 1 , 2 , 3 , 5 , 8 , 13.....
+    // Fib(n) (nth fibonnacci number)= Fib(n-1)+fib(n-2)
+
+    // Base condition
+    // Fib(0) = 0 , Fib(1) = 1
+    int fibonacci(int n)
+    {
+        // if (n == 0)
+        // {
+        //     return 0;
+        // }
+        // if (n == 1)
+        // {
+        //     return 1;
+        // }
+
+        // Same as above
+        if (n == 0 || n == 1)
+        {
+            return n;
+        }
+        return fibonacci(n - 1) + fibonacci(n - 2);
     }
 };
 
@@ -78,6 +104,7 @@ int main()
     // int p;
     // cin >> p;
     // cout << s.powerOfN(n, p);
-    cout << s.factorial(n);
+    // cout << s.factorial(n);
+    cout << s.fibonacci(n);
     return 0;
 }
