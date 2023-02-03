@@ -104,26 +104,46 @@ public:
         }
         return -1;
     }
+
+    // Reverse a strig using Recursion
+    void reverseAString(string s)
+    {
+        // Return an empty strig
+        // Base
+        if (s.length() == 0)
+        {
+            return;
+        }
+
+        // after 1st index , complete string
+        string restString = s.substr(1);
+        reverseAString(restString);
+        cout << s[0];
+    }
 };
 int main()
 {
     Solution s;
-    int n;
-    cin >> n;
-    int arr[n];
-    for (int i = 0; i < n; i++)
-    {
-        cin >> arr[i];
-    }
+    // int n;
+    // cin >> n;
+    // int arr[n];
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cin >> arr[i];
+    // }
     // cout << s.isArraySorted(arr, n);
 
     // s.printNumbers(n);
 
-    int i, key;
-    cin >> i;
-    cin >> key;
-    cout << s.firstOccurence(arr, n, i, key)<<endl;
-    cout << s.lastOccurence(arr, n, i, key)<<endl;
+    // int i, key;
+    // cin >> i;
+    // cin >> key;
+    // cout << s.firstOccurence(arr, n, i, key)<<endl;
+    // cout << s.lastOccurence(arr, n, i, key)<<endl;
+
+    string str;
+    cin>>str;
+    s.reverseAString(str);
 
     return 0;
 }
