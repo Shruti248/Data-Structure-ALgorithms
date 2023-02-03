@@ -46,6 +46,27 @@ public:
         int prevRes = powerOfN(n, p - 1);
         return n * prevRes;
     }
+
+    // Find the factorial of a number n
+    // n! = n*n-1*n-2.....1;
+    // n! = n*n-1!
+      // n-1! = n*n-2!
+
+    // n = 0 STOP return 1
+    int factorial(int n)
+    {
+
+        if (n == 0)
+        {
+            return 1;
+        }
+
+        // int prevRes = factorial(n - 1);
+        // return n * prevRes;
+
+        // Same as above
+        return n*factorial(n-1);
+    }
 };
 
 int main()
@@ -54,8 +75,9 @@ int main()
     int n;
     cin >> n;
     // cout<<s.Sum(n);
-    int p;
-    cin >> p;
-    cout << s.powerOfN(n, p);
+    // int p;
+    // cin >> p;
+    // cout << s.powerOfN(n, p);
+    cout << s.factorial(n);
     return 0;
 }
