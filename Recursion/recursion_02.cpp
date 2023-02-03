@@ -39,10 +39,11 @@ public:
 
     // Print numbers till n
     // 1) Decreasing Order
-            // n , n-1 .... 0
+    // n , n-1 .... 0
     // 2) Increasing order
 
-    void printNumbers(int n){
+    void printNumbers(int n)
+    {
         // Decreasing Order
         // if(n==0){
         //     return;
@@ -52,14 +53,56 @@ public:
         // printNumbers(n-1);
 
         // Increasing Order
-        if(n == 0){
+        if (n == 0)
+        {
             return;
         }
 
-        printNumbers(n-1);
-        cout<<n<<endl; 
-        
+        printNumbers(n - 1);
+        cout << n << endl;
+    }
 
+    // Find First And Last Occurence of the Number in a Array
+    // 1) First occurence
+    // -- Traverse using recursion from first
+    // 2) Last Occurence
+    // -- Traverse from start only -- opposite of first
+
+    int firstOccurence(int arr[], int n, int i /**search from position*/, int key)
+    {
+
+        if (i == n)
+        {
+            return -1;
+        }
+
+        if (arr[i] == key)
+        {
+            return i;
+        }
+        return firstOccurence(arr, n, i + 1, key);
+    }
+
+    // First it will traverse all the way to last and then it will check from there
+    int lastOccurence(int arr[], int n, int i, int key)
+    {
+
+        if (i == n)
+        {
+            return -1;
+        }
+        int restArray = lastOccurence(arr, n, i + 1, key);
+
+        if (restArray != -1)
+        {
+            return restArray;
+        }
+
+        if (arr[i] == key)
+        {
+            return i;
+        }
+        return -1;
     }
 };
 int main()
@@ -67,15 +110,20 @@ int main()
     Solution s;
     int n;
     cin >> n;
-    // int arr[n];
-    // for (int i = 0; i < n; i++)
-    // {
-    //     cin >> arr[i];
-    // }
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
     // cout << s.isArraySorted(arr, n);
 
-    s.printNumbers(n);
+    // s.printNumbers(n);
 
+    int i, key;
+    cin >> i;
+    cin >> key;
+    cout << s.firstOccurence(arr, n, i, key)<<endl;
+    cout << s.lastOccurence(arr, n, i, key)<<endl;
 
     return 0;
 }
