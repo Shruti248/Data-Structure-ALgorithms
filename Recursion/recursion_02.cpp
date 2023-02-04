@@ -173,47 +173,55 @@ public:
         // Base case
         if (s.length() == 0)
         {
-            return ""; 
+            return "";
         }
         // Recursive Case
         char ch = s[0];
         string ans = removeDuplicates(s.substr(1));
 
-        if(ch == ans[0]){
+        if (ch == ans[0])
+        {
             return ans;
         }
-        return ch+ans;
+        return ch + ans;
     }
 
     // Move All x to the end of the string
-    void moveXtoEndOfString(string s){
-        if(s.length() == 0){
+    void moveXtoEndOfString(string s)
+    {
+        if (s.length() == 0)
+        {
             return;
         }
 
         string XString = "";
-        if(s[0] == 'x'){
+        if (s[0] == 'x')
+        {
             XString = XString + s[0];
             moveXtoEndOfString(s.substr(1));
-        }else{
-            cout<<s[0];
+        }
+        else
+        {
+            cout << s[0];
             moveXtoEndOfString(s.substr(1));
         }
 
-        cout<<XString;
+        cout << XString;
     }
 
-    // Generate All Substrings of a STring 
-    // Length of strig = n 
+    // Generate All Substrings of a STring
+    // Length of strig = n
     // Number of substrigs = 2^n
 
-    // ABC : "" , A , AB , B , C , AC , BC , ABC 
+    // ABC : "" , A , AB , B , C , AC , BC , ABC
     // At every step , we are adding a character and also not adding it...
 
-    void allPossibleSubstrings(string s , string ans){
+    void allPossibleSubstrings(string s, string ans)
+    {
 
-        if(s.length() == 0){
-            cout<<ans<<endl;
+        if (s.length() == 0)
+        {
+            cout << ans << endl;
             return;
         }
 
@@ -221,52 +229,77 @@ public:
 
         string restString = s.substr(1);
 
-        allPossibleSubstrings(restString , ans);
-        allPossibleSubstrings(restString , ans+ch);
+        allPossibleSubstrings(restString, ans);
+        allPossibleSubstrings(restString, ans + ch);
     }
 
-    // Subsequences 
-    void substringsWithASCIINumber(string s , string ans){
+    // Subsequences
+    void substringsWithASCIINumber(string s, string ans)
+    {
 
-        if(s.length() ==0){
-            cout<<ans<<endl;
+        if (s.length() == 0)
+        {
+            cout << ans << endl;
             return;
         }
-        // 3 recursive calls are made 
+        // 3 recursive calls are made
         // Once we do not add the character
         // Adding the charcater
         // Adding the ascii value of the character
 
         char ch = s[0];
-        int code  = ch;
+        int code = ch;
         string restString = s.substr(1);
 
-        substringsWithASCIINumber(restString , ans);
-        substringsWithASCIINumber(restString , ans+ch);
-        substringsWithASCIINumber(restString , ans+to_string(code));
-
+        substringsWithASCIINumber(restString, ans);
+        substringsWithASCIINumber(restString, ans + ch);
+        substringsWithASCIINumber(restString, ans + to_string(code));
     }
 
     // Print All Possible words from phone digits
 
-    void keyPadArray(string s , string ans){
-        string keyPadArr[] ={"" , "./", "abc" , "def" , "ghi" , "jkl" , "mno" , "pqrs" , "tuv" , "wxyz"};
+    void keyPadArray(string s, string ans)
+    {
+        string keyPadArr[] = {"", "./", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
-        if(s.length() ==0){
-            cout<<ans<<endl;
+        if (s.length() == 0)
+        {
+            cout << ans << endl;
             return;
         }
 
         char ch = s[0];
-        string code = keyPadArr[ch-'0'];
+        string code = keyPadArr[ch - '0'];
         string restString = s.substr(1);
 
-        for(int i = 0 ; i<code.length() ; i++){
-            keyPadArray(restString , ans + code[i]);
+        for (int i = 0; i < code.length(); i++)
+        {
+            keyPadArray(restString, ans + code[i]);
         }
     }
 
+    // Print all the possible permutations of the string
+    // ABC : ABC , ACB , BAC , BCA , CAB , CBA
+    // 3 Possibile cases : (A , BC ) (B , AC) , (C , AB)-----> Single elements will remain fix and in oher the recursive call for the possible permutations will be made
 
+    void PossilePermutations(string s , string ans)
+    {
+        if(s.length() == 0){
+            cout<<ans<<endl;
+            return;
+        }
+
+        // ith character is fixed and the rest of the string is the character before and after that...
+        for(int i = 0 ; i<s.length() ; i++){
+            // Fixed character
+            char ch = s[i];
+
+            string restString = s.substr(0,i) /**0 to ith index substring*/ + s.substr(i+1) /**i+1 to the last substring*/;
+            
+            PossilePermutations(restString , ans+ch);
+        }
+
+    }
 };
 int main()
 {
@@ -303,6 +336,7 @@ int main()
     string ans = "";
     // s.allPossibleSubstrings(str , ans);
     // s.substringsWithASCIINumber(str , ans);
-    s.keyPadArray(str , ans);
+    // s.keyPadArray(str, ans);
+    s.PossilePermutations(str , ans);
     return 0;
 }
