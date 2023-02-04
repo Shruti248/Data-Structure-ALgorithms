@@ -417,6 +417,27 @@ public:
         // Maximum of either including the item or excluding will be the ans
         return max(knapsack(value, weight, n - 1, W - weight[n - 1]) + value[n - 1], knapsack(value, weight, n - 1, W));
     }
+
+    // Number of ways to make sum by taking different ways of denominations
+    int NumberOfWaysOfmakingChange(int coins[], int n, int sum)
+    {
+        // No Coin to include 
+        if (sum == 0)
+        {
+            return 1;
+        }
+        // No Solution Exists
+        if(sum<0){
+            return 0;
+        }
+
+        if (n <= 0)
+        {
+            return 0;
+        }
+
+        return (NumberOfWaysOfmakingChange(coins, n - 1, sum) + NumberOfWaysOfmakingChange(coins, n, sum - coins[n - 1]));
+    }
 };
 int main()
 {
@@ -468,15 +489,25 @@ int main()
     cin >> n;
     // cout<<s.tilingWays(n);
     // cout << s.friendsPairing(n);
-    int weight[n], value[n];
+    // int weight[n], value[n];
+    // for (int i = 0; i < n; i++)
+    // {
+    //     cout << "Weight , value of " << i + 1 << " : ";
+    //     cin >> weight[i] >> value[i];
+    // }
+    // int W;
+    // cout << "Total Weight : ";
+    // cin >> W;
+    // cout << s.knapsack(value, weight, n, W);
+
+    int coins[n];
     for (int i = 0; i < n; i++)
     {
-        cout << "Weight , value of " << i + 1 << " : ";
-        cin >> weight[i] >> value[i];
+        cin >> coins[i];
     }
-    int W;
-    cout << "Total Weight : ";
-    cin >> W;
-    cout << s.knapsack(value, weight, n, W);
+    int sum;
+    cout << "Sum : ";
+    cin >> sum;
+    cout << s.NumberOfWaysOfmakingChange(coins, n, sum);
     return 0;
 }
