@@ -282,51 +282,81 @@ public:
     // ABC : ABC , ACB , BAC , BCA , CAB , CBA
     // 3 Possibile cases : (A , BC ) (B , AC) , (C , AB)-----> Single elements will remain fix and in oher the recursive call for the possible permutations will be made
 
-    void PossilePermutations(string s , string ans)
+    void PossilePermutations(string s, string ans)
     {
-        if(s.length() == 0){
-            cout<<ans<<endl;
+        if (s.length() == 0)
+        {
+            cout << ans << endl;
             return;
         }
 
         // ith character is fixed and the rest of the string is the character before and after that...
-        for(int i = 0 ; i<s.length() ; i++){
+        for (int i = 0; i < s.length(); i++)
+        {
             // Fixed character
             char ch = s[i];
 
-            string restString = s.substr(0,i) /**0 to ith index substring*/ + s.substr(i+1) /**i+1 to the last substring*/;
-            
-            PossilePermutations(restString , ans+ch);
+            string restString = s.substr(0, i) /**0 to ith index substring*/ + s.substr(i + 1) /**i+1 to the last substring*/;
+
+            PossilePermutations(restString, ans + ch);
         }
     }
 
     // Count the number of paths possible from start to end point in gameboard
     // Steps are decide dby dice (1 to 6 range)
     //  0 to 3 : At 0 = 0+3 , 0+1+2 , 0+2+1 , 0+1+1+1 ---> 4 ways
-    // 1 to 3 : At 1 : 1+2 , 1+1+1 
+    // 1 to 3 : At 1 : 1+2 , 1+1+1
     // 2 to 3 : At 2 : 2+1
     // 3 to 3 : At 3 : 1 (Starting and ending points are same)
 
-    // Henace to get all the combinations from 0 to n 
+    // Henace to get all the combinations from 0 to n
     // We will check how many possibilities are there from 0 , 1 to n ....0 , 2 to n and so on..
 
-    int countPath(int startingPoint , int EndingPoint){
-        if(startingPoint == EndingPoint){
+    int countPath(int startingPoint, int EndingPoint)
+    {
+        if (startingPoint == EndingPoint)
+        {
             // if both ppoints are same , only one possibilityy
             return 1;
         }
 
-        if(startingPoint > EndingPoint){
+        if (startingPoint > EndingPoint)
+        {
             return 0;
         }
 
         // Bcoz dies number varies from 1 to 6
         int count = 0;
-        for(int i = 1 ; i<=6 ; i++){
-            count += countPath(startingPoint + i , EndingPoint);
+        for (int i = 1; i <= 6; i++)
+        {
+            count += countPath(startingPoint + i, EndingPoint);
         }
 
         return count;
+    }
+
+    // Count the number of paths in the maze (2D)
+    // Condition : Either move in right or downward direction
+    // Eg : Strt : (0 ,0) And ending : n-1 , n-2
+    // If moving right : i+1 --> x direction, If moving down : j+1 --> y direction
+
+    //  Base : i ==n-1 && j ==n-1 : end of maze
+
+    int countPathintheMaze(int n, int i, int j)
+    {
+
+        if (i == n - 1 && j == n - 1)
+        {
+            return 1;
+        }
+
+        if (i >= n || j >= n)
+        {
+            return 0;
+        }
+
+        // Since we are moving in 2 direction ...We need to make recursive calls for both
+        return countPathintheMaze(n, i + 1, j) + countPathintheMaze(n, i, j + 1);
     }
 };
 int main()
@@ -366,9 +396,13 @@ int main()
     // s.substringsWithASCIINumber(str , ans);
     // s.keyPadArray(str, ans);
     // s.PossilePermutations(str , ans);
-    int StartingPoint , EndingPoint;
-    cin>>StartingPoint>>EndingPoint;
+    // int StartingPoint , EndingPoint;
+    // cin>>StartingPoint>>EndingPoint;
 
-    cout<<s.countPath(StartingPoint , EndingPoint);
+    // cout<<s.countPath(StartingPoint , EndingPoint);
+
+    int n /**Size of maze*/, i /**ith strting index*/, j /**jth starting index*/;
+    cin >> n >> i >> j;
+    cout << s.countPathintheMaze(n, i, j);
     return 0;
 }
