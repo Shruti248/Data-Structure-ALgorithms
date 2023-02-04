@@ -359,31 +359,63 @@ public:
         return countPathintheMaze(n, i + 1, j) + countPathintheMaze(n, i, j + 1);
     }
 
-    // Tiling Problem 
+    // Tiling Problem
     // Given a 2xn boarch of size 2x1 , count the number of ways to tile the given board using this tiles
     // Refer : https://drive.google.com/file/d/1OBfk1DntixqOyn6Sn2RAU81xbgzOWCpc/view
-    int tilingWays(int n){
-        if(n==0){
+    int tilingWays(int n)
+    {
+        if (n == 0)
+        {
             return 0;
         }
 
-        if(n==1){
+        if (n == 1)
+        {
             return 1;
         }
 
-        return tilingWays(n-1)+tilingWays(n-2);
+        return tilingWays(n - 1) + tilingWays(n - 2);
         // this forms the fibonacci sequence only
     }
 
-    // Friends Pairing Problem 
+    // Friends Pairing Problem
     // Find the number of ways in which n friends can remain single or be paired up
-    int friendsPairing(int n){
+    int friendsPairing(int n)
+    {
 
-        if(n==0 || n==1 || n==2){
+        if (n == 0 || n == 1 || n == 2)
+        {
             return n;
         }
 
-        return friendsPairing(n-1) + friendsPairing(n-2)*(n-1)/**Bcoz the nth person have n-1 ways to pair with the persons*/;
+        return friendsPairing(n - 1) + friendsPairing(n - 2) * (n - 1) /**Bcoz the nth person have n-1 ways to pair with the persons*/;
+    }
+
+    // 0 1 Kanpsack Problem
+    // Put n items with gievn weight and value in the kanpsack of capacity W to get the maximum total value in the knapsack
+    int knapsack(int value[], int weight[], int n, int W)
+    {
+
+        // Base
+        if (n == 0 || W == 0)
+        {
+            return 0;
+        }
+
+        // If weight of nth item is greater then W : Not ALlowed
+        if (weight[n - 1] > W)
+        {
+            // Therefore exlude the item
+            return knapsack(value, weight, n - 1, W);
+        }
+        // Including Item
+        // knapsack(value, weight, n - 1, W - weight[n - 1] + value[n - 1]);
+
+        // Excluding Item
+        // knapsack(value, weight, n - 1, W);
+
+        // Maximum of either including the item or excluding will be the ans
+        return max(knapsack(value, weight, n - 1, W - weight[n - 1]) + value[n - 1], knapsack(value, weight, n - 1, W));
     }
 };
 int main()
@@ -433,8 +465,18 @@ int main()
     // cout << s.countPathintheMaze(n, i, j);
 
     int n;
-    cin>>n;
+    cin >> n;
     // cout<<s.tilingWays(n);
-    cout<<s.friendsPairing(n);
+    // cout << s.friendsPairing(n);
+    int weight[n], value[n];
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Weight , value of " << i + 1 << " : ";
+        cin >> weight[i] >> value[i];
+    }
+    int W;
+    cout << "Total Weight : ";
+    cin >> W;
+    cout << s.knapsack(value, weight, n, W);
     return 0;
 }
