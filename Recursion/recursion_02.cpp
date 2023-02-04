@@ -298,7 +298,35 @@ public:
             
             PossilePermutations(restString , ans+ch);
         }
+    }
 
+    // Count the number of paths possible from start to end point in gameboard
+    // Steps are decide dby dice (1 to 6 range)
+    //  0 to 3 : At 0 = 0+3 , 0+1+2 , 0+2+1 , 0+1+1+1 ---> 4 ways
+    // 1 to 3 : At 1 : 1+2 , 1+1+1 
+    // 2 to 3 : At 2 : 2+1
+    // 3 to 3 : At 3 : 1 (Starting and ending points are same)
+
+    // Henace to get all the combinations from 0 to n 
+    // We will check how many possibilities are there from 0 , 1 to n ....0 , 2 to n and so on..
+
+    int countPath(int startingPoint , int EndingPoint){
+        if(startingPoint == EndingPoint){
+            // if both ppoints are same , only one possibilityy
+            return 1;
+        }
+
+        if(startingPoint > EndingPoint){
+            return 0;
+        }
+
+        // Bcoz dies number varies from 1 to 6
+        int count = 0;
+        for(int i = 1 ; i<=6 ; i++){
+            count += countPath(startingPoint + i , EndingPoint);
+        }
+
+        return count;
     }
 };
 int main()
@@ -321,8 +349,8 @@ int main()
     // cout << s.firstOccurence(arr, n, i, key)<<endl;
     // cout << s.lastOccurence(arr, n, i, key)<<endl;
 
-    string str;
-    cin >> str;
+    // string str;
+    // cin >> str;
     // s.reverseAString(str);
     // s.replacePI(str);
 
@@ -333,10 +361,14 @@ int main()
     // cout<<s.removeDuplicates(str);
 
     // s.moveXtoEndOfString(str);
-    string ans = "";
+    // string ans = "";
     // s.allPossibleSubstrings(str , ans);
     // s.substringsWithASCIINumber(str , ans);
     // s.keyPadArray(str, ans);
-    s.PossilePermutations(str , ans);
+    // s.PossilePermutations(str , ans);
+    int StartingPoint , EndingPoint;
+    cin>>StartingPoint>>EndingPoint;
+
+    cout<<s.countPath(StartingPoint , EndingPoint);
     return 0;
 }
