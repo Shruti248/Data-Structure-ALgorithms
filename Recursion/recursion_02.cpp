@@ -374,6 +374,17 @@ public:
         return tilingWays(n-1)+tilingWays(n-2);
         // this forms the fibonacci sequence only
     }
+
+    // Friends Pairing Problem 
+    // Find the number of ways in which n friends can remain single or be paired up
+    int friendsPairing(int n){
+
+        if(n==0 || n==1 || n==2){
+            return n;
+        }
+
+        return friendsPairing(n-1) + friendsPairing(n-2)*(n-1)/**Bcoz the nth person have n-1 ways to pair with the persons*/;
+    }
 };
 int main()
 {
@@ -423,6 +434,7 @@ int main()
 
     int n;
     cin>>n;
-    cout<<s.tilingWays(n);
+    // cout<<s.tilingWays(n);
+    cout<<s.friendsPairing(n);
     return 0;
 }
