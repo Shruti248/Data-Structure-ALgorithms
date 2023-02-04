@@ -358,6 +358,22 @@ public:
         // Since we are moving in 2 direction ...We need to make recursive calls for both
         return countPathintheMaze(n, i + 1, j) + countPathintheMaze(n, i, j + 1);
     }
+
+    // Tiling Problem 
+    // Given a 2xn boarch of size 2x1 , count the number of ways to tile the given board using this tiles
+    // Refer : https://drive.google.com/file/d/1OBfk1DntixqOyn6Sn2RAU81xbgzOWCpc/view
+    int tilingWays(int n){
+        if(n==0){
+            return 0;
+        }
+
+        if(n==1){
+            return 1;
+        }
+
+        return tilingWays(n-1)+tilingWays(n-2);
+        // this forms the fibonacci sequence only
+    }
 };
 int main()
 {
@@ -401,8 +417,12 @@ int main()
 
     // cout<<s.countPath(StartingPoint , EndingPoint);
 
-    int n /**Size of maze*/, i /**ith strting index*/, j /**jth starting index*/;
-    cin >> n >> i >> j;
-    cout << s.countPathintheMaze(n, i, j);
+    // int n /**Size of maze*/, i /**ith strting index*/, j /**jth starting index*/;
+    // cin >> n >> i >> j;
+    // cout << s.countPathintheMaze(n, i, j);
+
+    int n;
+    cin>>n;
+    cout<<s.tilingWays(n);
     return 0;
 }
