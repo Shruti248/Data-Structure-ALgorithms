@@ -21,7 +21,9 @@ public:
                 continue;
             }
             combination.push_back(candidates[i]);
-            isSafe(candidates, target - candidates[i], combination, i, result);
+            // isSafe(candidates, target - candidates[i], combination, i, result);
+            // To remove repeation of numbers to find the target SUm : Leetcode : COmbination SUm 2 
+            isSafe(candidates, target - candidates[i], combination, i+1, result);
             combination.pop_back();
         }
     }
