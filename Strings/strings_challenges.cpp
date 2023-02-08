@@ -168,6 +168,34 @@ public:
 
         return true;
     }
+
+    // Print all the duolicates in the given string : Geeks for geeks
+    void duplicatesOfAString(string s)
+    {
+        int arr[26];
+
+        for (int i = 0; i < 26; i++)
+        {
+            // Initializing
+            arr[i] = 0;
+        }
+
+        for (int i = 0; i < s.size(); i++)
+        {
+            char ch = s[i];
+            int index = ch - 'a';
+            arr[index]++;
+        }
+
+        for (int i = 0; i < 26; i++)
+        {
+            if (arr[i] > 1)
+            {
+                // Repeating
+                cout << (char)(i + 'a') << " : " << arr[i] << " ";
+            }
+        }
+    }
 };
 
 int main()
@@ -175,17 +203,18 @@ int main()
     Solution s;
     string str;
     string str2;
-    // cin>>str;
+    cin >> str;
     // s.stringToUpperCaseAndLowerCase(str);
     // s.formTheBiggestNumberFromTheNumericString(str);
     // s.maximumOccurenceOfCharacters(str);
 
-    getline(cin, str);
-    cout << "str2 : " << endl;
-    getline(cin, str2);
+    // getline(cin, str);
+    // cout << "str2 : " << endl;
+    // getline(cin, str2);
     // s.lengthOfLastWord(str);
     // cout << s.validPalindrome(str);
-    cout << s.isAnagram(str, str2);
+    // cout << s.isAnagram(str, str2);
+    s.duplicatesOfAString(str);
 
     return 0;
 }
