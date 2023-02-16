@@ -51,11 +51,14 @@ void insertAtHead(node *&head, int val)
     head = n;
 }
 
-bool search(node* head , int key){
-    node* temp = head ;
-    
-    while(temp!=NULL){
-        if(temp->data == key){
+bool search(node *head, int key)
+{
+    node *temp = head;
+
+    while (temp != NULL)
+    {
+        if (temp->data == key)
+        {
             return true;
         }
         temp = temp->next;
@@ -72,21 +75,62 @@ void display(node *head)
         cout << temp->data << "->";
         temp = temp->next;
     }
-    cout <<"NULL"<< endl;
+    cout << "NULL" << endl;
 }
+
+void deleteAtHead(node *&head)
+{
+    node *toDelete = head;
+    head = head->next;
+
+    delete toDelete;
+}
+
+// Deletion of the linkedList when the data to be deleted is given
+void deletion(node* &head, int key)
+{
+
+    if (head == NULL)
+    {
+        return;
+    }
+    // If the node to be deleted is the one and only node
+    // Make another function
+    if (head->next == NULL)
+    {
+        deleteAtHead(head);
+        return;
+    }
+    node *temp = head;
+
+    while (temp->next->data != key)
+    {
+        temp = temp->next;
+    }
+
+    node *toDelete = temp->next;
+    temp->next = temp->next->next;
+
+    delete toDelete;
+}
+
 int main()
 {
-    node* head = NULL;
-    // insertAtTail(head , 1);
-    // insertAtTail(head , 2);
-    // insertAtTail(head , 3);
-    // display(head);
-
-    insertAtHead(head, 1);
-    insertAtHead(head, 2);
-    insertAtHead(head, 3);
+    node *head = NULL;
+    insertAtTail(head , 1);
+    insertAtTail(head , 2);
+    insertAtTail(head , 3);
     display(head);
 
-    cout<<search(head , 3);
+    // insertAtHead(head, 1);
+    // insertAtHead(head, 2);
+    // insertAtHead(head, 3);
+    // display(head);
+
+    // cout<<search(head , 3)<<endl;
+
+    deletion(head, 0);
+    // deleteAtHead(head);
+    display(head);
     return 0;
 }
