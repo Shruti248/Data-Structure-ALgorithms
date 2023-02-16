@@ -51,6 +51,18 @@ void insertAtHead(node *&head, int val)
     head = n;
 }
 
+bool search(node* head , int key){
+    node* temp = head ;
+    
+    while(temp!=NULL){
+        if(temp->data == key){
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;
+}
+
 // Print
 void display(node *head)
 {
@@ -64,7 +76,7 @@ void display(node *head)
 }
 int main()
 {
-    node *head = NULL;
+    node* head = NULL;
     // insertAtTail(head , 1);
     // insertAtTail(head , 2);
     // insertAtTail(head , 3);
@@ -74,5 +86,7 @@ int main()
     insertAtHead(head, 2);
     insertAtHead(head, 3);
     display(head);
+
+    cout<<search(head , 3);
     return 0;
 }
