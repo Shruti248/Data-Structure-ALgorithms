@@ -121,6 +121,64 @@ public:
 
         return dummy->next;
     }
+
+
+    // At a particular position propvided , cycle will be formed..
+    void makeCycle(node* &head , int pos){
+        node* temp = head ;
+        node* startNode;
+
+        int count = 1;
+
+        while(temp->next !=NULL){
+            if(count == pos){
+                startNode=temp;
+            }
+            temp=temp->next;
+            count++;
+        }
+        // After the loop completes ..It will have temp at the last node & startNode will be the position where the cycle needs to start..
+        // Therefore this line
+        temp->next=startNode;
+    }
+
+
+
+    // IMP IMP IMP 
+    // Detection and removal of  Cycle
+    // Floyd's Algo
+    // Hare and tortoise algo
+
+
+    // 2 nodes have same next...
+
+    // Hare and tortoise algo  : Tortoise moves by 1 step ... Hare moves by 2 step 
+    // If after any number of times , hare and tortoise come to same point tehn it is said that cycle exist in LL..Else not 
+
+    // hare : Fast Pointer
+    // Tortoise : Slow Pointer
+    bool detectCycle(node* &head){
+
+        // Both pointers start from head as ofc
+        node* slow = head ;
+        node* fast = head ;
+
+        while(fast != NULL /**If Already reached to last node**/ && fast->next !=NULL /**fast->next->next this cannot be accessed */){
+            slow = slow->next;
+            fast  = fast->next->next;
+
+            // If both coincide
+            if(fast == slow){
+                // Cycle Present
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
 };
 
 int main()
@@ -132,11 +190,17 @@ int main()
     s.insertAtTail(head, 3);
     s.insertAtTail(head, 4);
     s.insertAtTail(head, 5);
+    s.insertAtTail(head, 6);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
 
-    node *newHead = s.reverseKNodes(head, 2);
-    s.display(newHead);
+    // node *newHead = s.reverseKNodes(head, 2);
+    // s.display(newHead);
+
+    s.makeCycle(head , 3);
+    // s.display(head);
+
+    cout<<s.detectCycle(head);
     return 0;
 }
