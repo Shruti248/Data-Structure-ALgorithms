@@ -122,63 +122,64 @@ public:
         return dummy->next;
     }
 
-
     // At a particular position propvided , cycle will be formed..
-    void makeCycle(node* &head , int pos){
-        node* temp = head ;
-        node* startNode;
+    void makeCycle(node *&head, int pos)
+    {
+        node *temp = head;
+        node *startNode;
 
         int count = 1;
 
-        while(temp->next !=NULL){
-            if(count == pos){
-                startNode=temp;
+        while (temp->next != NULL)
+        {
+            if (count == pos)
+            {
+                startNode = temp;
             }
-            temp=temp->next;
+            temp = temp->next;
             count++;
         }
         // After the loop completes ..It will have temp at the last node & startNode will be the position where the cycle needs to start..
         // Therefore this line
-        temp->next=startNode;
+        temp->next = startNode;
     }
 
-
-
-    // IMP IMP IMP 
+    // IMP IMP IMP
     // Detection and removal of  Cycle
     // Floyd's Algo
     // Hare and tortoise algo
 
-
     // 2 nodes have same next...
 
-    // Hare and tortoise algo  : Tortoise moves by 1 step ... Hare moves by 2 step 
-    // If after any number of times , hare and tortoise come to same point tehn it is said that cycle exist in LL..Else not 
+    // Hare and tortoise algo  : Tortoise moves by 1 step ... Hare moves by 2 step
+    // If after any number of times , hare and tortoise come to same point tehn it is said that cycle exist in LL..Else not
 
     // hare : Fast Pointer
     // Tortoise : Slow Pointer
-    bool detectCycle(node* &head){
+    bool detectCycle(node *&head)
+    {
 
         // Both pointers start from head as ofc
-        node* slow = head ;
-        node* fast = head ;
+        node *slow = head;
+        node *fast = head;
 
-        while(fast != NULL /**If Already reached to last node**/ && fast->next !=NULL /**fast->next->next this cannot be accessed */){
+        while (fast != NULL /**If Already reached to last node**/ && fast->next != NULL /**fast->next->next this cannot be accessed */)
+        {
             slow = slow->next;
-            fast  = fast->next->next;
+            fast = fast->next->next;
 
             // If both coincide
-            if(fast == slow){
+            if (fast == slow)
+            {
                 // Cycle Present
                 return true;
             }
         }
 
         return false;
-
     }
 
-    // PROOF 
+    // PROOF
     // Distance moved by fast ptr : m (head to cycle start)+ n(cycle start to whole loop and back to same point) + l*j(Number of loops)
     // Distance moved by slow ptr : m + n + l*i
 
@@ -190,9 +191,8 @@ public:
     // if l is any integer value , then it will always return to the same point.
     // See the video for more clarification
 
-
     // Remove the cycle
-    // the work will begin at the position where the hare and tortoise have came to the same position 
+    // the work will begin at the position where the hare and tortoise have came to the same position
     // Then we will bring hare(or any one) to the start node(Head);
     // Then move each one of them by one step
     // When both point to the same node...
@@ -202,26 +202,69 @@ public:
     // Hence the cycle is removed..
 
     // Assumed that the cycle is detected beforehand
-    void removeCycle(node* &head){
-        node* slow = head;
-        node* fast = head;
+    void removeCycle(node *&head)
+    {
+        node *slow = head;
+        node *fast = head;
 
-        do{
-            slow=slow->next;
-            fast=fast->next->next;
-        }while(slow!=fast);
+        do
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        } while (slow != fast);
 
-        fast=head;
-        while(slow->next!=fast->next){
+        fast = head;
+        while (slow->next != fast->next)
+        {
             // increment by 1
-            slow=slow->next;
-            fast=fast->next;
+            slow = slow->next;
+            fast = fast->next;
         }
 
         slow->next = NULL;
     }
 
+    // Both Together
+    // Detection and removal of Cycle
+    void detectAndRemoveCycle(node *head)
+    {
+        if (!head || !head->next)
+        {
+            return;
+        }
 
+        // Step 1: Detect the cycle
+        node *slow = head;
+        node *fast = head;
+        while (fast && fast->next)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast)
+            {
+                break;
+            }
+        }
+
+        if (slow != fast)
+        {
+            // No cycle
+            return;
+        }
+
+        // Step 2: Remove the cycle
+        slow = head;
+        while (slow != fast)
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        while (fast->next != slow)
+        {
+            fast = fast->next;
+        }
+        fast->next = NULL;
+    }
 };
 
 int main()
@@ -241,14 +284,16 @@ int main()
     // node *newHead = s.reverseKNodes(head, 2);
     // s.display(newHead);
 
-    s.makeCycle(head , 3);
+    s.makeCycle(head, 3);
     // s.display(head);
 
-    cout<<s.detectCycle(head)<<endl;
-    s.removeCycle(head);
-    cout<<endl;
-    cout<<s.detectCycle(head)<<endl;
-    cout<<endl;
+    // cout << s.detectCycle(head) << endl;
+    // s.removeCycle(head);
+    // cout << endl;
+    // cout << s.detectCycle(head) << endl;
+    // cout << endl;
+    // s.display(head);
+    s.detectAndRemoveCycle(head);
     s.display(head);
     return 0;
 }
