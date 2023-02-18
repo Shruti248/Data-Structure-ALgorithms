@@ -272,19 +272,61 @@ public:
 
     // Dummy Node : NULL Initialized
     // next pointer : next of head
-    // head->next : NULL(dummy) 
+    // head->next : NULL(dummy)
 
-    // Increase both 
-    node* reverseList(node* head){
-        node* dummy = NULL;
-        while(head != NULL){
-            node* next = head->next;
+    // Increase both
+    node *reverseList(node *head)
+    {
+        node *dummy = NULL;
+        while (head != NULL)
+        {
+            node *next = head->next;
             head->next = dummy;
             dummy = head;
             head = next;
         }
 
         return dummy;
+    }
+
+    // Remove nth Node from end of the linked list
+    // Brute Force : O(N) : To compute the length , O(n) : to reach the node : O(2n)
+    // Optimised
+    // 2 Pointers : Slow & fast
+    // Move fast till n...
+    // Initialize slow to head at that point after fast reahing n
+    // Move both by 1 steps
+    // if fast reaches NULL (Last node)...
+    // Means slow->next is the node to be deleted...
+    // Hence modify the slow->next...
+
+    // If the node to be deleted is the head node , modify accordingly..
+
+    // Time complexity : O(n)
+    // Space : O(1)
+
+    node *removeNthNodeFromEnd(node *head, int n)
+    {
+        node* start = new node(0);
+
+        start->next = head;
+        node *fast = start;
+        node *slow = start;
+
+        for (int i = 1; i <= n; i++)
+        {
+            fast = fast->next;
+        }
+
+        while (fast->next != NULL)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        slow->next = slow->next->next;
+
+        return start->next;
     }
 };
 
@@ -317,7 +359,10 @@ int main()
     // s.detectAndRemoveCycle(head);
     // s.display(head);
 
-    node* newHead = s.reverseList(head);
+    // node *newHead = s.reverseList(head);
+    // s.display(newHead);
+
+    node*newHead = s.removeNthNodeFromEnd(head , 4);
     s.display(newHead);
     return 0;
 }
