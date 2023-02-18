@@ -307,7 +307,7 @@ public:
 
     node *removeNthNodeFromEnd(node *head, int n)
     {
-        node* start = new node(0);
+        node *start = new node(0);
 
         start->next = head;
         node *fast = start;
@@ -327,6 +327,30 @@ public:
         slow->next = slow->next->next;
 
         return start->next;
+    }
+
+    // Middle Of teh Linked List
+    // O(N)+O(n/2) : Brute Force
+
+    // hare Tortoise Optimized
+    // Hare : 2 Step
+    // Tortoise : 1 Step
+    // THEREFORE , when hare completes the entire traversal , tortoise will be in the middle...(For Odd)
+    // For Even : We have to return the 2nd of the 2 middle nodes (if 1st is to be retuned stop at second last pointer)
+
+    // Time Complexity : O(n/2)
+    // SPace : O(1)
+
+    node *middleNode(node *head)
+    {
+        node *slow = head;
+        node *fast = head;
+        while (fast != NULL && fast->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
     }
 };
 
@@ -362,7 +386,10 @@ int main()
     // node *newHead = s.reverseList(head);
     // s.display(newHead);
 
-    node*newHead = s.removeNthNodeFromEnd(head , 4);
-    s.display(newHead);
+    // node *newHead = s.removeNthNodeFromEnd(head, 4);
+    // s.display(newHead);
+
+    node* newHead = s.middleNode(head);
+    cout<<newHead->data;
     return 0;
 }
