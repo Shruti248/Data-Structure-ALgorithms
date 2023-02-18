@@ -265,6 +265,27 @@ public:
         }
         fast->next = NULL;
     }
+
+    // Leetcode : Reverse A Linked List
+    // Reverse the arrows---
+    // 1st elemet : NULL
+
+    // Dummy Node : NULL Initialized
+    // next pointer : next of head
+    // head->next : NULL(dummy) 
+
+    // Increase both 
+    node* reverseList(node* head){
+        node* dummy = NULL;
+        while(head != NULL){
+            node* next = head->next;
+            head->next = dummy;
+            dummy = head;
+            head = next;
+        }
+
+        return dummy;
+    }
 };
 
 int main()
@@ -284,7 +305,7 @@ int main()
     // node *newHead = s.reverseKNodes(head, 2);
     // s.display(newHead);
 
-    s.makeCycle(head, 3);
+    // s.makeCycle(head, 3);
     // s.display(head);
 
     // cout << s.detectCycle(head) << endl;
@@ -293,7 +314,10 @@ int main()
     // cout << s.detectCycle(head) << endl;
     // cout << endl;
     // s.display(head);
-    s.detectAndRemoveCycle(head);
-    s.display(head);
+    // s.detectAndRemoveCycle(head);
+    // s.display(head);
+
+    node* newHead = s.reverseList(head);
+    s.display(newHead);
     return 0;
 }
