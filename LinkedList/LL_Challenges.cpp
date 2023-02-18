@@ -178,6 +178,49 @@ public:
 
     }
 
+    // PROOF 
+    // Distance moved by fast ptr : m (head to cycle start)+ n(cycle start to whole loop and back to same point) + l*j(Number of loops)
+    // Distance moved by slow ptr : m + n + l*i
+
+    // Distance by fast ptr = 2*distance by slow ptr
+    // m+n+lj = 2*(m+n+li)
+    // m+n= l(j-2i)
+    // m = l(j-2i) - n
+
+    // if l is any integer value , then it will always return to the same point.
+    // See the video for more clarification
+
+
+    // Remove the cycle
+    // the work will begin at the position where the hare and tortoise have came to the same position 
+    // Then we will bring hare(or any one) to the start node(Head);
+    // Then move each one of them by one step
+    // When both point to the same node...
+    // We come to know that it is the starting point  of the cycle
+
+    // Then the next of the tortoise(slow pointer) is Set to NULL....
+    // Hence the cycle is removed..
+
+    // Assumed that the cycle is detected beforehand
+    void removeCycle(node* &head){
+        node* slow = head;
+        node* fast = head;
+
+        do{
+            slow=slow->next;
+            fast=fast->next->next;
+        }while(slow!=fast);
+
+        fast=head;
+        while(slow->next!=fast->next){
+            // increment by 1
+            slow=slow->next;
+            fast=fast->next;
+        }
+
+        slow->next = NULL;
+    }
+
 
 };
 
@@ -201,6 +244,11 @@ int main()
     s.makeCycle(head , 3);
     // s.display(head);
 
-    cout<<s.detectCycle(head);
+    cout<<s.detectCycle(head)<<endl;
+    s.removeCycle(head);
+    cout<<endl;
+    cout<<s.detectCycle(head)<<endl;
+    cout<<endl;
+    s.display(head);
     return 0;
 }
