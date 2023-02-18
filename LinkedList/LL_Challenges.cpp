@@ -76,6 +76,51 @@ public:
         // New Head
         return prevptr;
     }
+
+    // Reverse K Nodes of a Linked List
+
+    node *reverse(node *head)
+    {
+        node *prev = NULL;
+        node *curr = head;
+
+        while (curr != NULL)
+        {
+            node *next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+    node *reverseKNodes(node *head, int k)
+    {
+        node *dummy = new node(0);
+        dummy->next = head;
+        node *prev = dummy;
+        node *end = dummy;
+
+        while (end->next != NULL)
+        {
+            for (int i = 0; i < k && end != NULL; i++)
+            {
+                end = end->next;
+            }
+            if (end == NULL)
+                break;
+            node *next = end->next;
+            end->next = NULL;
+            node *start = prev->next;
+            prev->next = reverse(start);
+            start->next = next;
+            prev = start;
+            end = prev;
+        }
+
+        return dummy->next;
+    }
 };
 
 int main()
@@ -88,7 +133,10 @@ int main()
     s.insertAtTail(head, 4);
     s.insertAtTail(head, 5);
     s.display(head);
-    node* newHead = s.reverseALinkedList(head);
+    // node* newHead = s.reverseALinkedList(head);
+    // s.display(newHead);
+
+    node *newHead = s.reverseKNodes(head, 2);
     s.display(newHead);
     return 0;
 }
