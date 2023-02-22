@@ -352,6 +352,36 @@ public:
         }
         return slow;
     }
+
+    // Merge two sorted Linked List 
+    // 1) Making entire new list (External Space)
+    // Time complexity & Space COmplexity: O(n1+n2)
+        // -Dummy node  : intialize to 0
+        // H1 & h2 ---Smaller one -- Add to dummy and then increment the head pointer 
+        // Traverse till end ofc 
+    // 2) In place Algo  -- Optimized 
+        // Time : O(n1 , n2)
+        // Space : O(1)
+        // No External Nodes --Using existing one
+        // Eg : 3->4->5->6 (1st LL : 3 5 , 2 LL : 4 6 )
+
+        node* mergeTwoLists(node* l1 , node* l2){
+            // Iterative
+            if(l1 == NULL) return l2;
+            if(l2 == NULL) return l1;
+            if(l1->data > l2->data) std::swap(l1 , l2);
+            node* res = l1;
+            while(l1 != NULL && l2 != NULL){
+                node* tmp = NULL;
+                while(l1 != NULL && l1->data <= l2->data){
+                    tmp = l1;
+                    l1 = l1->next;
+                }
+                tmp->next = l2;
+                std::swap(l1 , l2);
+            }
+            return res;
+        }
 };
 
 int main()
@@ -389,7 +419,17 @@ int main()
     // node *newHead = s.removeNthNodeFromEnd(head, 4);
     // s.display(newHead);
 
-    node* newHead = s.middleNode(head);
-    cout<<newHead->data;
+    // node* newHead = s.middleNode(head);
+    // cout<<newHead->data;
+
+    node *head2 = NULL;
+    s.insertAtTail(head2, 3);
+    s.insertAtTail(head2, 7);
+    s.insertAtTail(head2, 8);
+    s.insertAtTail(head2, 10);
+    s.display(head2);
+
+    node* sorted = s.mergeTwoLists(head , head2);
+    s.display(sorted);
     return 0;
 }
