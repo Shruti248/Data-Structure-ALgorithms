@@ -196,6 +196,39 @@ public:
             }
         }
     }
+
+
+    void longestSubstringWithoutRepeatingCharacters(string s)
+    {
+        int arr[26];
+
+        for (int i = 0; i < 26; i++)
+        {
+            // Initializing
+            arr[i] = 0;
+        }
+
+        for (int i = 0; i < s.size(); i++)
+        {
+            char ch = s[i];
+            int index = ch - 'a';
+            arr[index]++;
+        }
+        string res = "";
+        for (int i = 0; i < s.size(); i++)
+        {
+            char ch = s[i];
+            int index = ch - 'a';
+            if(arr[index] == 1){
+                res+=s[i];
+            }else if(arr[index]>=1){
+                res+=s[i];
+            }
+        }
+
+        cout<<res<<endl;
+
+    }
 };
 
 int main()
@@ -214,7 +247,8 @@ int main()
     // s.lengthOfLastWord(str);
     // cout << s.validPalindrome(str);
     // cout << s.isAnagram(str, str2);
-    s.duplicatesOfAString(str);
+    // s.duplicatesOfAString(str);
+    s.longestSubstringWithoutRepeatingCharacters(str);
 
     return 0;
 }

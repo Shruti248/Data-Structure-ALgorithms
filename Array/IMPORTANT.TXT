@@ -1,0 +1,29 @@
+Linear Search: Time complexity is O(n) and space complexity is O(1)
+Binary Search: Time complexity is O(log n) and space complexity is O(1)
+Bubble sort: Time complexity is O(n^2) and space complexity is O(1)
+insertion sort: Time complexity is O(n^2) and space complexity is O(1)
+selection sort: Time complexity is O(n^2) and space complexity is O(1)
+Quick Sort: Time complexity is O(n*log(n)) and space complexity is O(log(n))
+Merge Sort: Time complexity is O(n*log(n)) and space complexity is O(n)
+Heap Sort: Time complexity is O(n*log(n)) and space complexity is O(1)
+Counting Sort: Time complexity is O(n+k) and space complexity is O(n+k)
+Radix Sort: Time complexity is O(nk) and space complexity is O(n+k)
+Bucket Sort: Time complexity is O(n+k) and space complexity is O(n)
+Kadane's Algorithm: Time complexity is O(n) and space complexity is O(1)
+
+
+
+-------------------------------------------------------------------------------
+Finding the maximum or minimum value in an array: This can be done in O(n) time using a simple linear scan of the array.
+
+Searching for a specific element in an array: This can be done in O(n) time using a linear search, or in O(log n) time using a binary search (assuming the array is sorted).
+
+Sorting an array: There are many different sorting algorithms that can be used, but some of the most efficient options include quicksort (average O(n log n) time), merge sort (O(n log n) time), and heapsort (O(n log n) time).
+
+Removing duplicates from an array: This can be done in O(n) time using a hash set to keep track of the elements that have been seen.
+
+Reversing an array: This can be done in O(n) time using two pointers to swap the elements at the beginning and end of the array.
+
+Finding the largest sum of a sub-array: This can be done in O(n) time using the Kadane's Algorithm.
+-----------------------------------------------------------------------------------
+

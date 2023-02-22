@@ -5,3 +5,5 @@ Youhave 15 rupees
 Find maximum chocolates 
 
  ANS : 15(with rs) + 5(with wrappers i.e 15/3 = 5) + 1(with 3 rappers of the 5 chocloates last bought and 2 are left) + 1(2 left ones + the 1 chocolate recently bought) = 15+5+1+1 = 22
+
+Fastest Horse Puzzle 

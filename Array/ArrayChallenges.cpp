@@ -575,6 +575,10 @@ public:
         }
         return false;
     }
+
+    void arrangeNumberstoFormTheBiggestNumber(int arr[] , int n){
+
+    }
 };
 
 int main()
@@ -627,10 +631,12 @@ int main()
     // s.productofArrayExceptItself(arr, n);
     // s.maximumProductSubarray(arr, n);
 
-    int givenSumofTwoPairs;
-    cin >> givenSumofTwoPairs;
+    // int givenSumofTwoPairs;
+    // cin >> givenSumofTwoPairs;
 
-    cout << s.pairSumProblem(arr, n, givenSumofTwoPairs) << endl;
+    // cout << s.pairSumProblem(arr, n, givenSumofTwoPairs) << endl;
 
+
+    s.arrangeNumberstoFormTheBiggestNumber(arr , n);
     return 0;
 }

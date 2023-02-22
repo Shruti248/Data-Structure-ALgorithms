@@ -382,6 +382,35 @@ public:
             }
             return res;
         }
+
+        // Delete Node In a Linked List 
+        // No head Given 
+        // Only th node to be deleted is given 
+        // Therefore you cannot acess teh previous node and connect the linn and break one ....
+        // You can only access the enxt node 
+        // Therefore Copy the next nodes value into the node to be deleted and continue afterwards....
+
+        // Therefore value is deleted..
+         void deleteNode(node* pos){
+            if(pos == NULL){
+                return;
+            }else{
+                if(pos->next == NULL){
+                    return;
+                }
+            }
+
+            node* temp = pos->next;
+
+            // Copy data of teh next node to the current node
+            pos->data = pos->next->data;
+
+            // Perform coventional deletion
+            pos->next = pos->next->next;
+
+            free(temp);
+         }
+
 };
 
 int main()
@@ -422,14 +451,21 @@ int main()
     // node* newHead = s.middleNode(head);
     // cout<<newHead->data;
 
-    node *head2 = NULL;
-    s.insertAtTail(head2, 3);
-    s.insertAtTail(head2, 7);
-    s.insertAtTail(head2, 8);
-    s.insertAtTail(head2, 10);
-    s.display(head2);
+    // node *head2 = NULL;
+    // s.insertAtTail(head2, 3);
+    // s.insertAtTail(head2, 7);
+    // s.insertAtTail(head2, 8);
+    // s.insertAtTail(head2, 10);
+    // s.display(head2);
 
-    node* sorted = s.mergeTwoLists(head , head2);
-    s.display(sorted);
+    // node* sorted = s.mergeTwoLists(head , head2);
+    // s.display(sorted);
+
+    // 1 2 3 4 5 6 
+    node* del = head->next;
+
+    s.deleteNode(del);
+    s.display(head);
+
     return 0;
 }
