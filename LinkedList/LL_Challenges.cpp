@@ -411,6 +411,38 @@ public:
             free(temp);
          }
 
+        //  Add Two Numbers
+        // Optimal Solution
+        // Time : O(max(n1,n2))
+        // O(n) : Space
+
+        node* addTwoNumbers(node* l1 , node* l2){
+            node* dummy = new node(0);
+            node* temp = dummy;
+            int carry = 0;
+
+            while(l1 != NULL || l2!= NULL || carry){
+                int sum = 0 ;
+                if(l1 != NULL){
+                    sum +=l1->data;
+                    l1=l1->next;
+                }
+
+                if(l2 != NULL){
+                    sum += l2->data;
+                    l2 = l2->next;
+                }
+
+                sum += carry;
+                carry = sum/10;
+                node* Listnode = new node(sum%10);
+                temp->next = Listnode;
+                temp = temp->next;
+            }
+
+            return dummy->next;
+        }
+
 };
 
 int main()
@@ -451,21 +483,24 @@ int main()
     // node* newHead = s.middleNode(head);
     // cout<<newHead->data;
 
-    // node *head2 = NULL;
-    // s.insertAtTail(head2, 3);
-    // s.insertAtTail(head2, 7);
-    // s.insertAtTail(head2, 8);
-    // s.insertAtTail(head2, 10);
-    // s.display(head2);
+    node *head2 = NULL;
+    s.insertAtTail(head2, 3);
+    s.insertAtTail(head2, 7);
+    s.insertAtTail(head2, 8);
+    s.insertAtTail(head2, 10);
+    s.display(head2);
 
     // node* sorted = s.mergeTwoLists(head , head2);
     // s.display(sorted);
 
     // 1 2 3 4 5 6 
-    node* del = head->next;
+    // node* del = head->next;
 
-    s.deleteNode(del);
-    s.display(head);
+    // s.deleteNode(del);
+    // s.display(head);
+
+    node* addTwoNumbers = s.addTwoNumbers(head , head2);
+    s.display(addTwoNumbers);
 
     return 0;
 }
