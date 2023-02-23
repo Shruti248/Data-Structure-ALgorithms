@@ -6,11 +6,13 @@ class node
 public:
     int data;
     node *next;
+    node* random;
 
     node(int val)
     {
         data = val;
         next = NULL;
+        random = NULL;
     }
 };
 class Solution
@@ -532,7 +534,7 @@ public:
     // Space : O(1)
 
     // Above Merge Function is used here ......
-    // GFG Question ------ Try in that 
+    // GFG Question ------ Try in that
     // Node *mergeTwoLists(Node *a, Node *b)
     // {
 
@@ -579,47 +581,49 @@ public:
     //     return root;
     // }
 
-    // Rotate a Linnked LIst -- k times 
+    // Rotate a Linnked LIst -- k times
     // K can be greater then length of the list as well
 
     // Naive approach : Pick up last node , and put in front --- k times --resultant LL
     // Time : O(k*N)
     // Space : O(1)
 
-    // Optimised 
-    // case 1 : k<length    
-    
+    // Optimised
+    // case 1 : k<length
 
     // Case 2 : k>=length
-    // ANy multiple of length : Returns teh original LL 
+    // ANy multiple of length : Returns teh original LL
     // That is : k == multiple of length , return original LL
-    // Else minus the multiple & the ans is the number of rotations 
+    // Else minus the multiple & the ans is the number of rotations
 
-    // DO THis : k = k%length ---Nearest multiple of k 
+    // DO THis : k = k%length ---Nearest multiple of k
 
     // SIMPLE : last node to 1st node connect karvanu : etle apnne curcular LL madi jase , pachi jetla rotations hoi ene last thi count kari ne tya api devanu head ne (k = length - k : Last Node , head = k+1)
 
     // Time : O(N)+O(n-N%k) = O(N)
     // Space : O(1)
 
-    node* rotateRight(node* head , int k){
-        if(!head || !head->next || k ==0 ) return head;
+    node *rotateRight(node *head, int k)
+    {
+        if (!head || !head->next || k == 0)
+            return head;
 
-        // COmpute teh length 
-        node* curr = head;
+        // COmpute teh length
+        node *curr = head;
         int len = 1;
-        while(curr->next && ++len){
+        while (curr->next && ++len)
+        {
             curr = curr->next;
         }
 
         // Go till That Node
         curr->next = head;
-        k=k%len;
-        k=len-k;
+        k = k % len;
+        k = len - k;
 
-        while(k--)
+        while (k--)
             curr = curr->next;
-        
+
         // Make the node Head & break teh connection
         head = curr->next;
         curr->next = NULL;
@@ -627,9 +631,71 @@ public:
         return head;
     }
 
+    // Copy List with Random Pointer : Leetcode
+    // Clone the LL with next and random pointer
 
+    // Brute Force : hashMap <Node , Node>
+    // O(N) + O(N)
+    // Space : O(N)
 
+    // Most Optimized
+    //  1) We are creating copy of nodes & palcing right after it
+    //    2) Pointing random Pointers : iterators->next->random , move      iterator by 2 Step
+    // 3) get teh original & copy ll : Take Dummy Node , and point next to copy nodes (Use  2 Pointers : one for real LL and one for copy -- front and iter pointer )
 
+    // Time : O(1) Step 1 + O(N) Step 2 + O(N) Step 3 = O(3n) = O(n)
+    // SPace : O(1)
+
+    node *copyRandomList(node *head)
+    {
+        node *iter = head;
+        node *front = head;
+
+        // First round: make copy of each node,
+        // and link them together side-by-side in a single list.
+        while (iter != NULL)
+        {
+            front = iter->next;
+
+            node *copy = new node(iter->data);
+            iter->next = copy;
+            copy->next = front;
+
+            iter = front;
+        }
+
+        // Second round: assign random pointers for the copy nodes.
+        iter = head;
+        while (iter != NULL)
+        {
+            if (iter->random != NULL)
+            {
+                iter->next->random = iter->random->next;
+            }
+            iter = iter->next->next;
+        }
+
+        // Third round: restore the original list, and extract the copy list.
+        iter = head;
+        node *pseudoHead = new node(0);
+        node *copy = pseudoHead;
+
+        while (iter != NULL)
+        {
+            front = iter->next->next;
+
+            // extract the copy
+            copy->next = iter->next;
+
+            // restore the original list
+            iter->next = front;
+
+            copy = copy->next;
+            iter = front;
+        }
+
+        return pseudoHead->next;
+    }
 };
 
 int main()
@@ -696,7 +762,10 @@ int main()
 
     // cout << s.isPalindrome(head);
 
-    node* newHead = s.rotateRight(head , 2);
+    // node *newHead = s.rotateRight(head, 2);
+    // s.display(newHead);
+
+    node* newHead = s.copyRandomList(head);
     s.display(newHead);
 
     return 0;
