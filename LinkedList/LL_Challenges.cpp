@@ -443,18 +443,45 @@ public:
             return dummy->next;
         }
 
+        // Intersection of two Linked List : Return value if intersected else return null
+        node* getIntersectionNode(node* headA , node* headB){
+            
+            if(headA == NULL || headB == NULL){
+                return NULL;
+            }
+
+            node* a = headA;
+            node* b = headB;
+
+            // Otherwise, the function initializes two pointers a and b to the heads of the respective lists. It then enters a loop that continues until a and b are equal. During each iteration of the loop, a is set to the next node in the list it points to, or to headB if a reaches the end of the list. Similarly, b is set to the next node in the list it points to, or to headA if b reaches the end of the list. This effectively causes the pointers to traverse the combined lists of headA and headB.
+
+
+            // If there is an intersection between the lists, the pointers will eventually meet at that node during the traversal. 
+
+            // a time complexity of O(m+n) where m and n are the lengths of the two lists.
+
+            // Spoace : O(1) : because the only extra space used is for two pointers a and b.
+            
+
+            while(a != b){
+                a = a ==NULL ? headB : a->next;
+                b = b ==NULL ? headA : b->next;
+            }
+
+            return a;
+            
+        }
 };
 
 int main()
 {
     Solution s;
     node *head = NULL;
+    s.insertAtTail(head, 4);
     s.insertAtTail(head, 1);
-    s.insertAtTail(head, 2);
-    s.insertAtTail(head, 3);
+    s.insertAtTail(head, 8);
     s.insertAtTail(head, 4);
     s.insertAtTail(head, 5);
-    s.insertAtTail(head, 6);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
@@ -484,10 +511,12 @@ int main()
     // cout<<newHead->data;
 
     node *head2 = NULL;
-    s.insertAtTail(head2, 3);
-    s.insertAtTail(head2, 7);
+    s.insertAtTail(head2, 5);
+    s.insertAtTail(head2, 6);
+    s.insertAtTail(head2, 1);
     s.insertAtTail(head2, 8);
-    s.insertAtTail(head2, 10);
+    s.insertAtTail(head2, 4);
+    s.insertAtTail(head2, 5);
     s.display(head2);
 
     // node* sorted = s.mergeTwoLists(head , head2);
@@ -499,8 +528,11 @@ int main()
     // s.deleteNode(del);
     // s.display(head);
 
-    node* addTwoNumbers = s.addTwoNumbers(head , head2);
-    s.display(addTwoNumbers);
+    // node* addTwoNumbers = s.addTwoNumbers(head , head2);
+    // s.display(addTwoNumbers);
+
+    node* getIntersectionNode = s.getIntersectionNode(head , head2);
+    s.display(getIntersectionNode);
 
     return 0;
 }
