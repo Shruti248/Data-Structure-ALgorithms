@@ -353,135 +353,187 @@ public:
         return slow;
     }
 
-    // Merge two sorted Linked List 
+    // Merge two sorted Linked List
     // 1) Making entire new list (External Space)
     // Time complexity & Space COmplexity: O(n1+n2)
-        // -Dummy node  : intialize to 0
-        // H1 & h2 ---Smaller one -- Add to dummy and then increment the head pointer 
-        // Traverse till end ofc 
-    // 2) In place Algo  -- Optimized 
-        // Time : O(n1 , n2)
-        // Space : O(1)
-        // No External Nodes --Using existing one
-        // Eg : 3->4->5->6 (1st LL : 3 5 , 2 LL : 4 6 )
+    // -Dummy node  : intialize to 0
+    // H1 & h2 ---Smaller one -- Add to dummy and then increment the head pointer
+    // Traverse till end ofc
+    // 2) In place Algo  -- Optimized
+    // Time : O(n1 , n2)
+    // Space : O(1)
+    // No External Nodes --Using existing one
+    // Eg : 3->4->5->6 (1st LL : 3 5 , 2 LL : 4 6 )
 
-        node* mergeTwoLists(node* l1 , node* l2){
-            // Iterative
-            if(l1 == NULL) return l2;
-            if(l2 == NULL) return l1;
-            if(l1->data > l2->data) std::swap(l1 , l2);
-            node* res = l1;
-            while(l1 != NULL && l2 != NULL){
-                node* tmp = NULL;
-                while(l1 != NULL && l1->data <= l2->data){
-                    tmp = l1;
-                    l1 = l1->next;
-                }
-                tmp->next = l2;
-                std::swap(l1 , l2);
+    node *mergeTwoLists(node *l1, node *l2)
+    {
+        // Iterative
+        if (l1 == NULL)
+            return l2;
+        if (l2 == NULL)
+            return l1;
+        if (l1->data > l2->data)
+            std::swap(l1, l2);
+        node *res = l1;
+        while (l1 != NULL && l2 != NULL)
+        {
+            node *tmp = NULL;
+            while (l1 != NULL && l1->data <= l2->data)
+            {
+                tmp = l1;
+                l1 = l1->next;
             }
-            return res;
+            tmp->next = l2;
+            std::swap(l1, l2);
         }
+        return res;
+    }
 
-        // Delete Node In a Linked List 
-        // No head Given 
-        // Only th node to be deleted is given 
-        // Therefore you cannot acess teh previous node and connect the linn and break one ....
-        // You can only access the enxt node 
-        // Therefore Copy the next nodes value into the node to be deleted and continue afterwards....
+    // Delete Node In a Linked List
+    // No head Given
+    // Only th node to be deleted is given
+    // Therefore you cannot acess teh previous node and connect the linn and break one ....
+    // You can only access the enxt node
+    // Therefore Copy the next nodes value into the node to be deleted and continue afterwards....
 
-        // Therefore value is deleted..
-         void deleteNode(node* pos){
-            if(pos == NULL){
+    // Therefore value is deleted..
+    void deleteNode(node *pos)
+    {
+        if (pos == NULL)
+        {
+            return;
+        }
+        else
+        {
+            if (pos->next == NULL)
+            {
                 return;
-            }else{
-                if(pos->next == NULL){
-                    return;
-                }
             }
-
-            node* temp = pos->next;
-
-            // Copy data of teh next node to the current node
-            pos->data = pos->next->data;
-
-            // Perform coventional deletion
-            pos->next = pos->next->next;
-
-            free(temp);
-         }
-
-        //  Add Two Numbers
-        // Optimal Solution
-        // Time : O(max(n1,n2))
-        // O(n) : Space
-
-        node* addTwoNumbers(node* l1 , node* l2){
-            node* dummy = new node(0);
-            node* temp = dummy;
-            int carry = 0;
-
-            while(l1 != NULL || l2!= NULL || carry){
-                int sum = 0 ;
-                if(l1 != NULL){
-                    sum +=l1->data;
-                    l1=l1->next;
-                }
-
-                if(l2 != NULL){
-                    sum += l2->data;
-                    l2 = l2->next;
-                }
-
-                sum += carry;
-                carry = sum/10;
-                node* Listnode = new node(sum%10);
-                temp->next = Listnode;
-                temp = temp->next;
-            }
-
-            return dummy->next;
         }
 
-        // Intersection of two Linked List : Return value if intersected else return null
-        node* getIntersectionNode(node* headA , node* headB){
-            
-            if(headA == NULL || headB == NULL){
-                return NULL;
+        node *temp = pos->next;
+
+        // Copy data of teh next node to the current node
+        pos->data = pos->next->data;
+
+        // Perform coventional deletion
+        pos->next = pos->next->next;
+
+        free(temp);
+    }
+
+    //  Add Two Numbers
+    // Optimal Solution
+    // Time : O(max(n1,n2))
+    // O(n) : Space
+
+    node *addTwoNumbers(node *l1, node *l2)
+    {
+        node *dummy = new node(0);
+        node *temp = dummy;
+        int carry = 0;
+
+        while (l1 != NULL || l2 != NULL || carry)
+        {
+            int sum = 0;
+            if (l1 != NULL)
+            {
+                sum += l1->data;
+                l1 = l1->next;
             }
 
-            node* a = headA;
-            node* b = headB;
-
-            // Otherwise, the function initializes two pointers a and b to the heads of the respective lists. It then enters a loop that continues until a and b are equal. During each iteration of the loop, a is set to the next node in the list it points to, or to headB if a reaches the end of the list. Similarly, b is set to the next node in the list it points to, or to headA if b reaches the end of the list. This effectively causes the pointers to traverse the combined lists of headA and headB.
-
-
-            // If there is an intersection between the lists, the pointers will eventually meet at that node during the traversal. 
-
-            // a time complexity of O(m+n) where m and n are the lengths of the two lists.
-
-            // Spoace : O(1) : because the only extra space used is for two pointers a and b.
-            
-
-            while(a != b){
-                a = a ==NULL ? headB : a->next;
-                b = b ==NULL ? headA : b->next;
+            if (l2 != NULL)
+            {
+                sum += l2->data;
+                l2 = l2->next;
             }
 
-            return a;
-            
+            sum += carry;
+            carry = sum / 10;
+            node *Listnode = new node(sum % 10);
+            temp->next = Listnode;
+            temp = temp->next;
         }
+
+        return dummy->next;
+    }
+
+    // Intersection of two Linked List : Return value if intersected else return null
+    node *getIntersectionNode(node *headA, node *headB)
+    {
+
+        if (headA == NULL || headB == NULL)
+        {
+            return NULL;
+        }
+
+        node *a = headA;
+        node *b = headB;
+
+        // Otherwise, the function initializes two pointers a and b to the heads of the respective lists. It then enters a loop that continues until a and b are equal. During each iteration of the loop, a is set to the next node in the list it points to, or to headB if a reaches the end of the list. Similarly, b is set to the next node in the list it points to, or to headA if b reaches the end of the list. This effectively causes the pointers to traverse the combined lists of headA and headB.
+
+        // If there is an intersection between the lists, the pointers will eventually meet at that node during the traversal.
+
+        // a time complexity of O(m+n) where m and n are the lengths of the two lists.
+
+        // Spoace : O(1) : because the only extra space used is for two pointers a and b.
+
+        while (a != b)
+        {
+            a = a == NULL ? headB : a->next;
+            b = b == NULL ? headA : b->next;
+        }
+
+        return a;
+    }
+
+    // Check for Palindromic Linked List
+
+    // The approach used in the code is to find the middle of the linked list using two pointers, slow and fast. Then, the second half of the linked list is reversed using the reverseList function. Finally, the reversed second half is compared with the first half of the linked list to check if the linked list is a palindrome or not.
+
+    // O(n) time complexity and O(1) space complexity.
+
+    bool isPalindrome(node *head)
+    {
+        if (head == NULL || head->next == NULL)
+        {
+            // 0 or 1 node
+            return true;
+        }
+
+        node *slow = head;
+        node *fast = head;
+
+        while (fast->next != NULL && fast->next->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        slow->next = reverseALinkedList(slow->next);
+        slow = slow->next;
+
+        while (slow != NULL)
+        {
+            if (head->data != slow->data)
+            {
+                return false;
+            }
+            head = head->next;
+            slow = slow->next;
+        }
+        return true;
+    }
 };
 
 int main()
 {
     Solution s;
     node *head = NULL;
-    s.insertAtTail(head, 4);
     s.insertAtTail(head, 1);
-    s.insertAtTail(head, 8);
-    s.insertAtTail(head, 4);
-    s.insertAtTail(head, 5);
+    s.insertAtTail(head, 2);
+    s.insertAtTail(head, 2);
+    s.insertAtTail(head, 1);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
@@ -510,19 +562,19 @@ int main()
     // node* newHead = s.middleNode(head);
     // cout<<newHead->data;
 
-    node *head2 = NULL;
-    s.insertAtTail(head2, 5);
-    s.insertAtTail(head2, 6);
-    s.insertAtTail(head2, 1);
-    s.insertAtTail(head2, 8);
-    s.insertAtTail(head2, 4);
-    s.insertAtTail(head2, 5);
-    s.display(head2);
+    // node *head2 = NULL;
+    // s.insertAtTail(head2, 5);
+    // s.insertAtTail(head2, 6);
+    // s.insertAtTail(head2, 1);
+    // s.insertAtTail(head2, 8);
+    // s.insertAtTail(head2, 4);
+    // s.insertAtTail(head2, 5);
+    // s.display(head2);
 
     // node* sorted = s.mergeTwoLists(head , head2);
     // s.display(sorted);
 
-    // 1 2 3 4 5 6 
+    // 1 2 3 4 5 6
     // node* del = head->next;
 
     // s.deleteNode(del);
@@ -531,8 +583,10 @@ int main()
     // node* addTwoNumbers = s.addTwoNumbers(head , head2);
     // s.display(addTwoNumbers);
 
-    node* getIntersectionNode = s.getIntersectionNode(head , head2);
-    s.display(getIntersectionNode);
+    // node *getIntersectionNode = s.getIntersectionNode(head, head2);
+    // s.display(getIntersectionNode);
+
+    cout<<s.isPalindrome(head);
 
     return 0;
 }
