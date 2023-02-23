@@ -524,6 +524,60 @@ public:
         }
         return true;
     }
+
+    // Flatenning of the Linked List
+    // Merging From teh last 2 linked list : and continue till start
+
+    // time : O(Summation of total Nodes)
+    // Space : O(1)
+
+    // Above Merge Function is used here ......
+    // GFG Question ------ Try in that 
+    // Node *mergeTwoLists(Node *a, Node *b)
+    // {
+
+    //     Node *temp = new Node(0);
+    //     Node *res = temp;
+
+    //     while (a != NULL && b != NULL)
+    //     {
+    //         if (a->data < b->data)
+    //         {
+    //             temp->bottom = a;
+    //             temp = temp->bottom;
+    //             a = a->bottom;
+    //         }
+    //         else
+    //         {
+    //             temp->bottom = b;
+    //             temp = temp->bottom;
+    //             b = b->bottom;
+    //         }
+    //     }
+
+    //     if (a)
+    //         temp->bottom = a;
+    //     else
+    //         temp->bottom = b;
+
+    //     return res->bottom;
+    // }
+    // Node *flatten(Node *root)
+    // {
+
+    //     if (root == NULL || root->next == NULL)
+    //         return root;
+
+    //     // recur for list on right
+    //     root->next = flatten(root->next);
+
+    //     // now merge
+    //     root = mergeTwoLists(root, root->next);
+
+    //     // return the root
+    //     // it will be in turn merged with its left
+    //     return root;
+    // }
 };
 
 int main()
@@ -586,7 +640,7 @@ int main()
     // node *getIntersectionNode = s.getIntersectionNode(head, head2);
     // s.display(getIntersectionNode);
 
-    cout<<s.isPalindrome(head);
+    cout << s.isPalindrome(head);
 
     return 0;
 }
