@@ -578,6 +578,58 @@ public:
     //     // it will be in turn merged with its left
     //     return root;
     // }
+
+    // Rotate a Linnked LIst -- k times 
+    // K can be greater then length of the list as well
+
+    // Naive approach : Pick up last node , and put in front --- k times --resultant LL
+    // Time : O(k*N)
+    // Space : O(1)
+
+    // Optimised 
+    // case 1 : k<length    
+    
+
+    // Case 2 : k>=length
+    // ANy multiple of length : Returns teh original LL 
+    // That is : k == multiple of length , return original LL
+    // Else minus the multiple & the ans is the number of rotations 
+
+    // DO THis : k = k%length ---Nearest multiple of k 
+
+    // SIMPLE : last node to 1st node connect karvanu : etle apnne curcular LL madi jase , pachi jetla rotations hoi ene last thi count kari ne tya api devanu head ne (k = length - k : Last Node , head = k+1)
+
+    // Time : O(N)+O(n-N%k) = O(N)
+    // Space : O(1)
+
+    node* rotateRight(node* head , int k){
+        if(!head || !head->next || k ==0 ) return head;
+
+        // COmpute teh length 
+        node* curr = head;
+        int len = 1;
+        while(curr->next && ++len){
+            curr = curr->next;
+        }
+
+        // Go till That Node
+        curr->next = head;
+        k=k%len;
+        k=len-k;
+
+        while(k--)
+            curr = curr->next;
+        
+        // Make the node Head & break teh connection
+        head = curr->next;
+        curr->next = NULL;
+
+        return head;
+    }
+
+
+
+
 };
 
 int main()
@@ -586,8 +638,10 @@ int main()
     node *head = NULL;
     s.insertAtTail(head, 1);
     s.insertAtTail(head, 2);
-    s.insertAtTail(head, 2);
-    s.insertAtTail(head, 1);
+    s.insertAtTail(head, 3);
+    s.insertAtTail(head, 4);
+    s.insertAtTail(head, 5);
+    s.insertAtTail(head, 6);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
@@ -640,7 +694,10 @@ int main()
     // node *getIntersectionNode = s.getIntersectionNode(head, head2);
     // s.display(getIntersectionNode);
 
-    cout << s.isPalindrome(head);
+    // cout << s.isPalindrome(head);
+
+    node* newHead = s.rotateRight(head , 2);
+    s.display(newHead);
 
     return 0;
 }
