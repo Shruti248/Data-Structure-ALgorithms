@@ -698,14 +698,14 @@ public:
     }
 
     // Remove Duplicates From the sorted Linked List
-    node* removeDuplicatesFromSortedList(node *head)
+    node *removeDuplicatesFromSortedList(node *head)
     {
 
         /* Pointer to traverse the linked list */
         node *current = head;
 
-
-        if(current == NULL){
+        if (current == NULL)
+        {
             return NULL;
         }
 
@@ -714,7 +714,7 @@ public:
             if (current->data == current->next->data)
             {
                 // Break The Link
-                node* next_next = current->next->next;
+                node *next_next = current->next->next;
                 // free(current->next);
                 delete current->next;
                 current->next = next_next;
@@ -728,23 +728,29 @@ public:
         return head;
     }
 
-    // Remove Duplicates From Unsorted Linked List 
+    // Remove Duplicates From Unsorted Linked List
 
-    // Naive Approach : Outer loop And inner loop all the elements camparisons 
+    // Naive Approach : Outer loop And inner loop all the elements camparisons
     // Time COmplexity : O(N2)
     // SPace : O(1)
-    node* removeDuplicatesfromUnsortedList(node* head){
-        node* ptr1 = head;
+    node *removeDuplicatesfromUnsortedList(node *head)
+    {
+        node *ptr1 = head;
 
-        while(ptr1 != NULL && ptr1->next != NULL){
-            node * ptr2 = ptr1;
+        while (ptr1 != NULL && ptr1->next != NULL)
+        {
+            node *ptr2 = ptr1;
 
-            while(ptr2->next != NULL){
-                if(ptr1->data == ptr2->next->data){
-                    node* dup = ptr2->next;
+            while (ptr2->next != NULL)
+            {
+                if (ptr1->data == ptr2->next->data)
+                {
+                    node *dup = ptr2->next;
                     ptr2->next = ptr2->next->next;
-                    delete(dup);
-                }else{
+                    delete (dup);
+                }
+                else
+                {
                     ptr2 = ptr2->next;
                 }
             }
@@ -754,29 +760,69 @@ public:
         return head;
     }
 
-    // Using Sorting 
-    // ->Sort the elements using merge sort for linked list 
+    // Using Sorting
+    // ->Sort the elements using merge sort for linked list
     // Remove the duplicates in linear time as above question
 
     // time : O(NlogN)
     // Space : O(1)
 
-    // Using HAshing 
+    // Using HAshing
     // O(N)
     // O(1)
 
+    // Sort a lInked Lisyt of 0s 1s and 2s
+    // O(N)
+    // O(1)
+
+    node *sortListOfZeroOneTwo(node *head)
+    {
+        int count[3] = {0, 0, 0}; // Initialize count of '0', '1' and '2' as 0
+        node *ptr = head;
+
+        /* count total number of '0', '1' and '2'
+         * count[0] will store total number of '0's
+         * count[1] will store total number of '1's
+         * count[2] will store total number of '2's */
+        while (ptr != NULL)
+        {
+            count[ptr->data] += 1;
+            ptr = ptr->next;
+        }
+
+        int i = 0;
+        ptr = head;
+
+        /* Let say count[0] = n1, count[1] = n2 and count[2] = n3
+         * now start traversing list from head node,
+         * 1) fill the list with 0, till n1 > 0
+         * 2) fill the list with 1, till n2 > 0
+         * 3) fill the list with 2, till n3 > 0 */
+        while (ptr != NULL)
+        {
+            if (count[i] == 0)
+                ++i;
+            else
+            {
+                ptr->data = i;
+                --count[i];
+                ptr = ptr->next;
+            }
+        }
+        return head;
+    }
 };
 
 int main()
 {
     Solution s;
     node *head = NULL;
-    s.insertAtTail(head, 5);
-    s.insertAtTail(head, 2);
-    s.insertAtTail(head, 2);
+    s.insertAtTail(head, 0);
     s.insertAtTail(head, 1);
     s.insertAtTail(head, 2);
-    s.insertAtTail(head, 4);
+    s.insertAtTail(head, 1);
+    s.insertAtTail(head, 0);
+    s.insertAtTail(head, 0);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
@@ -838,7 +884,8 @@ int main()
     // s.display(newHead);
 
     // node* newHead = s.removeDuplicatesFromSortedList(head);
-    node* newHead = s.removeDuplicatesfromUnsortedList(head);
+    // node *newHead = s.removeDuplicatesfromUnsortedList(head);
+    node *newHead = s.sortListOfZeroOneTwo(head);
     s.display(newHead);
 
     return 0;
