@@ -727,18 +727,56 @@ public:
 
         return head;
     }
+
+    // Remove Duplicates From Unsorted Linked List 
+
+    // Naive Approach : Outer loop And inner loop all the elements camparisons 
+    // Time COmplexity : O(N2)
+    // SPace : O(1)
+    node* removeDuplicatesfromUnsortedList(node* head){
+        node* ptr1 = head;
+
+        while(ptr1 != NULL && ptr1->next != NULL){
+            node * ptr2 = ptr1;
+
+            while(ptr2->next != NULL){
+                if(ptr1->data == ptr2->next->data){
+                    node* dup = ptr2->next;
+                    ptr2->next = ptr2->next->next;
+                    delete(dup);
+                }else{
+                    ptr2 = ptr2->next;
+                }
+            }
+            ptr1 = ptr1->next;
+        }
+
+        return head;
+    }
+
+    // Using Sorting 
+    // ->Sort the elements using merge sort for linked list 
+    // Remove the duplicates in linear time as above question
+
+    // time : O(NlogN)
+    // Space : O(1)
+
+    // Using HAshing 
+    // O(N)
+    // O(1)
+
 };
 
 int main()
 {
     Solution s;
     node *head = NULL;
+    s.insertAtTail(head, 5);
+    s.insertAtTail(head, 2);
+    s.insertAtTail(head, 2);
     s.insertAtTail(head, 1);
     s.insertAtTail(head, 2);
-    s.insertAtTail(head, 2);
     s.insertAtTail(head, 4);
-    s.insertAtTail(head, 5);
-    s.insertAtTail(head, 6);
     s.display(head);
     // node* newHead = s.reverseALinkedList(head);
     // s.display(newHead);
@@ -799,7 +837,8 @@ int main()
     // node *newHead = s.copyRandomList(head);
     // s.display(newHead);
 
-    node* newHead = s.removeDuplicatesFromSortedList(head);
+    // node* newHead = s.removeDuplicatesFromSortedList(head);
+    node* newHead = s.removeDuplicatesfromUnsortedList(head);
     s.display(newHead);
 
     return 0;
