@@ -6,7 +6,7 @@ class node
 public:
     int data;
     node *next;
-    node* random;
+    node *random;
 
     node(int val)
     {
@@ -696,6 +696,37 @@ public:
 
         return pseudoHead->next;
     }
+
+    // Remove Duplicates From the sorted Linked List
+    node* removeDuplicatesFromSortedList(node *head)
+    {
+
+        /* Pointer to traverse the linked list */
+        node *current = head;
+
+
+        if(current == NULL){
+            return NULL;
+        }
+
+        while (current->next != NULL)
+        {
+            if (current->data == current->next->data)
+            {
+                // Break The Link
+                node* next_next = current->next->next;
+                // free(current->next);
+                delete current->next;
+                current->next = next_next;
+            }
+            else
+            {
+                current = current->next;
+            }
+        }
+
+        return head;
+    }
 };
 
 int main()
@@ -704,7 +735,7 @@ int main()
     node *head = NULL;
     s.insertAtTail(head, 1);
     s.insertAtTail(head, 2);
-    s.insertAtTail(head, 3);
+    s.insertAtTail(head, 2);
     s.insertAtTail(head, 4);
     s.insertAtTail(head, 5);
     s.insertAtTail(head, 6);
@@ -765,7 +796,10 @@ int main()
     // node *newHead = s.rotateRight(head, 2);
     // s.display(newHead);
 
-    node* newHead = s.copyRandomList(head);
+    // node *newHead = s.copyRandomList(head);
+    // s.display(newHead);
+
+    node* newHead = s.removeDuplicatesFromSortedList(head);
     s.display(newHead);
 
     return 0;
