@@ -218,6 +218,16 @@ void sumAtKthLevel(Node *root)
     }
 }
 
+// Count all the ndoes in the binary Tree
+// LEft subtree + rightsubtree + 1
+int countNodes(Node* root){
+
+    if(root == NULL){
+        return 0;
+    }
+    return countNodes(root->left) + countNodes(root->right) + 1;
+}
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -249,6 +259,7 @@ int main()
     // inOrder(root);
 
     // printLevelOrder(root);
-    sumAtKthLevel(root);
+    // sumAtKthLevel(root);
+    cout<<countNodes(root);
     return 0;
 }
