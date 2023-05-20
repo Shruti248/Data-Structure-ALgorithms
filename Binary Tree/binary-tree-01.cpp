@@ -278,6 +278,27 @@ int calcDiameter(Node* root){
     return max(currDiameter , max(lDiameter , rDiameter));
 }
 
+// SUm Replacement : Replace teh value of each node with the sum of all subtree nodes & itself
+
+void sumReplace(Node* root){
+
+    if(root == NULL){
+        return;
+    }
+
+    sumReplace(root->left);
+    sumReplace(root->right);
+
+    if(root->left != NULL){
+        root->data +=  root->left->data;
+    }
+    if(root->right != NULL){
+        root->data +=  root->right->data;
+    }
+}
+
+
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -313,6 +334,13 @@ int main()
     // cout<<countNodes(root);
     // cout<<sumofAllNodes(root);
     // cout<<calcHeight(root);
-    cout<<calcDiameter(root);
+    // cout<<calcDiameter(root);
+
+    preOrder(root);
+    cout<<"\n";
+    sumReplace(root);
+    preOrder(root);
+    cout<<"\n";
+
     return 0;
 }
