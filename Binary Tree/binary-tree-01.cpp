@@ -36,7 +36,8 @@ void preOrder(struct Node* root){
     preOrder(root->right);
 }
 
-void inOrder(struct Node* root){
+// void inOrder(struct Node* root){
+void inOrder(Node* root){
 
     if(root == NULL){
         return;
@@ -58,25 +59,69 @@ void postOrder(struct Node* root){
     cout<<root->data<<" ";
 }
 
+// BUILD TREE FROM PREORDER & INORDER
+
+int search(int inOrder[] , int start , int end , int curr){
+    for(int i = start ; i<=end ; i++){
+        if(inOrder[i] == curr){
+            return i;
+        }
+    }
+    return -1;
+}
+
+Node* buildTree(int preOrder[] , int inOrder[] , int start , int end /**Start & end or inorder*/){
+    static int idx = 0;
+
+    if(start > end){
+        return NULL;
+    }
+
+    int curr = preOrder[idx];
+    idx++;
+    Node* node = new Node(curr);
+
+
+    // Leaf Nodes : no left & right child in inorder
+    if(start == end){
+        return node;
+    }
+
+    int pos = search(inOrder , start , end , curr);
+
+    node->left = buildTree(preOrder , inOrder , start , pos-1);
+
+    node->right = buildTree(preOrder , inOrder , pos+1 , end);
+
+    return node;
+}
+
+
 int main(){
-    struct Node* root = new Node(1);
-    root->left = new Node(2);
-    root->right = new Node(3);
+    // struct Node* root = new Node(1);
+    // root->left = new Node(2);
+    // root->right = new Node(3);
 
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
+    // root->left->left = new Node(4);
+    // root->left->right = new Node(5);
 
-    root->right->left = new Node(6);
-    root->right->right = new Node(7);
+    // root->right->left = new Node(6);
+    // root->right->right = new Node(7);
 
-    preOrder(root);
-    cout<<endl;
-    cout<<endl;
+    // preOrder(root);
+    // cout<<endl;
+    // cout<<endl;
+    // inOrder(root);
+    // cout<<endl;
+    // cout<<endl;
+    // postOrder(root);
+    // cout<<endl;
+    // cout<<endl;
+
+    int preorder[] = {1 ,2  , 4 , 3 , 5};
+    int inorder[] = { 4 , 2 , 1 , 5 , 3};
+
+    Node* root = buildTree(preorder , inorder , 0  , 4);
     inOrder(root);
-    cout<<endl;
-    cout<<endl;
-    postOrder(root);
-    cout<<endl;
-    cout<<endl;
     return 0;
 }
