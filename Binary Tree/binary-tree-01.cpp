@@ -195,7 +195,6 @@ void sumAtKthLevel(Node *root)
 
             sum += node->data;
 
-
             if (node->left)
             {
                 q.push(node->left);
@@ -208,7 +207,7 @@ void sumAtKthLevel(Node *root)
         else
         {
             cout << k << " level : " << sum << endl;
-            sum=0;
+            sum = 0;
             k++;
             if (!q.empty())
             {
@@ -220,80 +219,91 @@ void sumAtKthLevel(Node *root)
 
 // Count all the ndoes in the binary Tree
 // LEft subtree + rightsubtree + 1
-int countNodes(Node* root){
+int countNodes(Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return 0;
     }
     return countNodes(root->left) + countNodes(root->right) + 1;
 }
 
 // Sum of ALl nodes in Binary Tree
-int sumofAllNodes(Node* root){
+int sumofAllNodes(Node *root)
+{
 
-    if(root== NULL){
+    if (root == NULL)
+    {
         return 0;
     }
 
     return sumofAllNodes(root->left) + sumofAllNodes(root->right) + root->data;
-
 }
 
 // Hieght of the binary Tree
 // max(leftSubtree , rightSubtree) + 1
-int calcHeight(Node* root){
-    if(root == NULL){
+int calcHeight(Node *root)
+{
+    if (root == NULL)
+    {
         return 0;
     }
 
     int leftHeight = calcHeight(root->left);
     int rightHeight = calcHeight(root->right);
 
-    return max(leftHeight , rightHeight) + 1;
+    return max(leftHeight, rightHeight) + 1;
 }
 
 // Diameter of the Binary Tree
 // Numberof nodes in the longest path etween 2 leaves
-    // 1) diameter through root
-            // left height + right height +1
-    // 2) diameter NOT through root
-            // MAX  of :
-            // left diameter
-            // right diameter
+// 1) diameter through root
+// left height + right height +1
+// 2) diameter NOT through root
+// MAX  of :
+// left diameter
+// right diameter
 
-    // ANS : max(lheight+rheight+1 , max( left diamater , right diamater))
+// ANS : max(lheight+rheight+1 , max( left diamater , right diamater))
 
-int calcDiameter(Node* root){
+int calcDiameter(Node *root)
+{
 
-    if(root== NULL){
+    if (root == NULL)
+    {
         return 0;
     }
     int lHeight = calcHeight(root->left);
     int rHeight = calcHeight(root->right);
-    int currDiameter = lHeight+rHeight+1;
+    int currDiameter = lHeight + rHeight + 1;
 
     int lDiameter = calcDiameter(root->left);
     int rDiameter = calcDiameter(root->right);
 
-    return max(currDiameter , max(lDiameter , rDiameter));
+    return max(currDiameter, max(lDiameter, rDiameter));
 }
 
 // SUm Replacement : Replace teh value of each node with the sum of all subtree nodes & itself
 
-void sumReplace(Node* root){
+void sumReplace(Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return;
     }
 
     sumReplace(root->left);
     sumReplace(root->right);
 
-    if(root->left != NULL){
-        root->data +=  root->left->data;
+    if (root->left != NULL)
+    {
+        root->data += root->left->data;
     }
-    if(root->right != NULL){
-        root->data +=  root->right->data;
+    if (root->right != NULL)
+    {
+        root->data += root->right->data;
     }
 }
 
@@ -301,33 +311,42 @@ void sumReplace(Node* root){
 
 //  mod(leftHeight -  rightHeight) <=1;
 
-int height(Node* root){
+int height(Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return 0;
     }
-    return max(height(root->left) , height(root->right))+1;
+    return max(height(root->left), height(root->right)) + 1;
 }
 
-bool isbalanced (Node* root){
+bool isbalanced(Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return true;
     }
 
-    if(isbalanced(root->left) == false){
+    if (isbalanced(root->left) == false)
+    {
         return false;
     }
-    if(isbalanced(root->right) == false){
+    if (isbalanced(root->right) == false)
+    {
         return false;
     }
 
     int lh = height(root->left);
     int rh = height(root->right);
 
-    if(abs(lh-rh) <= 1){
+    if (abs(lh - rh) <= 1)
+    {
         return true;
-    }else{
+    }
+    else
+    {
         return false;
     }
 }
@@ -335,30 +354,70 @@ bool isbalanced (Node* root){
 // RIGHT VIEW of the binary Tree
 // Traverse level wise : Get the RightMost Node
 // Level ORder Traversal : QUEUE
-void rightView(Node* root){
-    if(root == NULL){
+void rightView(Node *root)
+{
+    if (root == NULL)
+    {
         return;
     }
 
-    queue<Node*> q;
+    queue<Node *> q;
     q.push(root);
 
-    while(!q.empty()){
+    while (!q.empty())
+    {
         // Nodes at current level
         int n = q.size();
 
-        for(int i = 0 ; i<n ; i++){
-            Node*  curr = q.front();
+        for (int i = 0; i < n; i++)
+        {
+            Node *curr = q.front();
             q.pop();
 
-            if(i == n-1){
-                cout<<curr->data<<" ";
+            if (i == n - 1)
+            {
+                cout << curr->data << " ";
             }
 
-            if(curr->left != NULL){
+            if (curr->left != NULL)
+            {
                 q.push(curr->left);
             }
-            if(curr->right != NULL){
+            if (curr->right != NULL)
+            {
+                q.push(curr->right);
+            }
+        }
+    }
+}
+
+void leftView(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    queue<Node *> q;
+    q.push(root);
+
+    while (!q.empty())
+    {
+        int n = q.size();
+
+        for (int i = 0; i < n; i++)
+        {
+            Node *curr = q.front();
+            q.pop();
+
+            if (i == 0)
+                cout << curr->data << " ";
+            if (curr->left != NULL)
+            {
+                q.push(curr->left);
+            }
+            if (curr->right != NULL)
+            {
                 q.push(curr->right);
             }
         }
@@ -410,6 +469,7 @@ int main()
 
     // cout<<isbalanced(root);
 
-    rightView(root);
+    // rightView(root);
+    leftView(root);
     return 0;
 }
