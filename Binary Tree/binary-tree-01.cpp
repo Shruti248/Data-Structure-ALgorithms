@@ -239,6 +239,19 @@ int sumofAllNodes(Node* root){
 
 }
 
+// Hieght of the binary Tree
+// max(leftSubtree , rightSubtree) + 1
+int calcHeight(Node* root){
+    if(root == NULL){
+        return 0;
+    }
+
+    int leftHeight = calcHeight(root->left);
+    int rightHeight = calcHeight(root->right);
+
+    return max(leftHeight , rightHeight) + 1;
+}
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -272,6 +285,7 @@ int main()
     // printLevelOrder(root);
     // sumAtKthLevel(root);
     // cout<<countNodes(root);
-    cout<<sumofAllNodes(root);
+    // cout<<sumofAllNodes(root);
+    cout<<calcHeight(root);
     return 0;
 }
