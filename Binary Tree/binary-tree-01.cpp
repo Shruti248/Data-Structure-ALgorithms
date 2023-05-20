@@ -96,6 +96,32 @@ Node* buildTree(int preOrder[] , int inOrder[] , int start , int end /**Start & 
     return node;
 }
 
+// BUILD TREE FROM POSTORDER & INORDER
+
+Node* buildTreePostOrderGiven(int postOrder[] , int inOrder[] , int start , int end){
+    static int idx = 4;
+
+    if(start > end){
+        return NULL;
+    }
+
+    int curr = postOrder[idx];
+    idx--;
+    Node* node = new Node(curr);
+
+    if(start == end){
+        return node;
+    }
+
+    int pos = search(inOrder , start , end , curr);
+
+    node->right = buildTreePostOrderGiven(postOrder , inOrder , pos+1  , end);
+    node->left = buildTreePostOrderGiven(postOrder , inOrder , start  , pos-1);
+
+    return node;
+}
+
+
 
 int main(){
     // struct Node* root = new Node(1);
@@ -118,10 +144,12 @@ int main(){
     // cout<<endl;
     // cout<<endl;
 
-    int preorder[] = {1 ,2  , 4 , 3 , 5};
+    // int preorder[] = {1 ,2  , 4 , 3 , 5};
+    int postorder[] = {4 , 2 , 5 , 3 , 1};
     int inorder[] = { 4 , 2 , 1 , 5 , 3};
 
-    Node* root = buildTree(preorder , inorder , 0  , 4);
+    // Node* root = buildTree(preorder , inorder , 0  , 4);
+    Node* root = buildTreePostOrderGiven(postorder , inorder , 0  , 4);
     inOrder(root);
     return 0;
 }
