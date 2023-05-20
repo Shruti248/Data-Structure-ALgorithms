@@ -297,6 +297,40 @@ void sumReplace(Node* root){
     }
 }
 
+// Balnaced Height Tree : For Each Node , the difference between the heights of the left subtree & right subtree <= 1;
+
+//  mod(leftHeight -  rightHeight) <=1;
+
+int height(Node* root){
+
+    if(root == NULL){
+        return 0;
+    }
+    return max(height(root->left) , height(root->right))+1;
+}
+
+bool isbalanced (Node* root){
+
+    if(root == NULL){
+        return true;
+    }
+
+    if(isbalanced(root->left) == false){
+        return false;
+    }
+    if(isbalanced(root->right) == false){
+        return false;
+    }
+
+    int lh = height(root->left);
+    int rh = height(root->right);
+
+    if(abs(lh-rh) <= 1){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 
 int main()
@@ -336,11 +370,13 @@ int main()
     // cout<<calcHeight(root);
     // cout<<calcDiameter(root);
 
-    preOrder(root);
-    cout<<"\n";
-    sumReplace(root);
-    preOrder(root);
-    cout<<"\n";
+    // preOrder(root);
+    // cout<<"\n";
+    // sumReplace(root);
+    // preOrder(root);
+    // cout<<"\n";
+
+    cout<<isbalanced(root);
 
     return 0;
 }
