@@ -252,6 +252,32 @@ int calcHeight(Node* root){
     return max(leftHeight , rightHeight) + 1;
 }
 
+// Diameter of the Binary Tree
+// Numberof nodes in the longest path etween 2 leaves
+    // 1) diameter through root
+            // left height + right height +1
+    // 2) diameter NOT through root
+            // MAX  of :
+            // left diameter
+            // right diameter
+
+    // ANS : max(lheight+rheight+1 , max( left diamater , right diamater))
+
+int calcDiameter(Node* root){
+
+    if(root== NULL){
+        return 0;
+    }
+    int lHeight = calcHeight(root->left);
+    int rHeight = calcHeight(root->right);
+    int currDiameter = lHeight+rHeight+1;
+
+    int lDiameter = calcDiameter(root->left);
+    int rDiameter = calcDiameter(root->right);
+
+    return max(currDiameter , max(lDiameter , rDiameter));
+}
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -286,6 +312,7 @@ int main()
     // sumAtKthLevel(root);
     // cout<<countNodes(root);
     // cout<<sumofAllNodes(root);
-    cout<<calcHeight(root);
+    // cout<<calcHeight(root);
+    cout<<calcDiameter(root);
     return 0;
 }
