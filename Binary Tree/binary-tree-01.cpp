@@ -332,6 +332,38 @@ bool isbalanced (Node* root){
     }
 }
 
+// RIGHT VIEW of the binary Tree
+// Traverse level wise : Get the RightMost Node
+// Level ORder Traversal : QUEUE
+void rightView(Node* root){
+    if(root == NULL){
+        return;
+    }
+
+    queue<Node*> q;
+    q.push(root);
+
+    while(!q.empty()){
+        // Nodes at current level
+        int n = q.size();
+
+        for(int i = 0 ; i<n ; i++){
+            Node*  curr = q.front();
+            q.pop();
+
+            if(i == n-1){
+                cout<<curr->data<<" ";
+            }
+
+            if(curr->left != NULL){
+                q.push(curr->left);
+            }
+            if(curr->right != NULL){
+                q.push(curr->right);
+            }
+        }
+    }
+}
 
 int main()
 {
@@ -376,7 +408,8 @@ int main()
     // preOrder(root);
     // cout<<"\n";
 
-    cout<<isbalanced(root);
+    // cout<<isbalanced(root);
 
+    rightView(root);
     return 0;
 }
