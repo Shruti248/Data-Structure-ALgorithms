@@ -9,15 +9,17 @@
 
 // A binary tree with L Leaves has at least log(n+1)(Base 2) + 1 number of levels
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-struct Node{
+struct Node
+{
     int data;
-    struct Node* left;
-    struct Node* right;
+    struct Node *left;
+    struct Node *right;
 
-    Node(int val){
+    Node(int val)
+    {
         data = val;
         left = NULL;
         right = NULL;
@@ -25,132 +27,200 @@ struct Node{
 };
 
 // TREE TRAVERSALS
-void preOrder(struct Node* root){
+void preOrder(struct Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return;
     }
 
-    cout<<root->data<<" ";
+    cout << root->data << " ";
     preOrder(root->left);
     preOrder(root->right);
 }
 
 // void inOrder(struct Node* root){
-void inOrder(Node* root){
+void inOrder(Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return;
     }
 
     inOrder(root->left);
-    cout<<root->data<<" ";
+    cout << root->data << " ";
     inOrder(root->right);
 }
 
-void postOrder(struct Node* root){
+void postOrder(struct Node *root)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return;
     }
 
     postOrder(root->left);
     postOrder(root->right);
-    cout<<root->data<<" ";
+    cout << root->data << " ";
 }
 
 // BUILD TREE FROM PREORDER & INORDER
 
-int search(int inOrder[] , int start , int end , int curr){
-    for(int i = start ; i<=end ; i++){
-        if(inOrder[i] == curr){
+int search(int inOrder[], int start, int end, int curr)
+{
+    for (int i = start; i <= end; i++)
+    {
+        if (inOrder[i] == curr)
+        {
             return i;
         }
     }
     return -1;
 }
 
-Node* buildTree(int preOrder[] , int inOrder[] , int start , int end /**Start & end or inorder*/){
+Node *buildTree(int preOrder[], int inOrder[], int start, int end /**Start & end or inorder*/)
+{
     static int idx = 0;
 
-    if(start > end){
+    if (start > end)
+    {
         return NULL;
     }
 
     int curr = preOrder[idx];
     idx++;
-    Node* node = new Node(curr);
-
+    Node *node = new Node(curr);
 
     // Leaf Nodes : no left & right child in inorder
-    if(start == end){
+    if (start == end)
+    {
         return node;
     }
 
-    int pos = search(inOrder , start , end , curr);
+    int pos = search(inOrder, start, end, curr);
 
-    node->left = buildTree(preOrder , inOrder , start , pos-1);
+    node->left = buildTree(preOrder, inOrder, start, pos - 1);
 
-    node->right = buildTree(preOrder , inOrder , pos+1 , end);
+    node->right = buildTree(preOrder, inOrder, pos + 1, end);
 
     return node;
 }
 
 // BUILD TREE FROM POSTORDER & INORDER
 
-Node* buildTreePostOrderGiven(int postOrder[] , int inOrder[] , int start , int end){
+Node *buildTreePostOrderGiven(int postOrder[], int inOrder[], int start, int end)
+{
     static int idx = 4;
 
-    if(start > end){
+    if (start > end)
+    {
         return NULL;
     }
 
     int curr = postOrder[idx];
     idx--;
-    Node* node = new Node(curr);
+    Node *node = new Node(curr);
 
-    if(start == end){
+    if (start == end)
+    {
         return node;
     }
 
-    int pos = search(inOrder , start , end , curr);
+    int pos = search(inOrder, start, end, curr);
 
-    node->right = buildTreePostOrderGiven(postOrder , inOrder , pos+1  , end);
-    node->left = buildTreePostOrderGiven(postOrder , inOrder , start  , pos-1);
+    node->right = buildTreePostOrderGiven(postOrder, inOrder, pos + 1, end);
+    node->left = buildTreePostOrderGiven(postOrder, inOrder, start, pos - 1);
 
     return node;
 }
 
 // LEVEL ORDER TRAversal : QUEUE : FIFO
-void printLevelOrder(Node* root){
-    if(root == NULL){
+void printLevelOrder(Node *root)
+{
+    if (root == NULL)
+    {
         return;
     }
 
-    queue<Node*> q;
+    queue<Node *> q;
     q.push(root);
     q.push(NULL);
 
-    while(!q.empty()){
-        Node* node = q.front();
+    while (!q.empty())
+    {
+        Node *node = q.front();
         q.pop();
-        if(node != NULL){
-            cout<<node->data<<" ";
-            if(node->left){
+        if (node != NULL)
+        {
+            cout << node->data << " ";
+            if (node->left)
+            {
                 q.push(node->left);
             }
-            if(node->right){
+            if (node->right)
+            {
                 q.push(node->right);
             }
-        }else if(!q.empty()){
+        }
+        else if (!q.empty())
+        {
             q.push(NULL);
         }
     }
 }
 
+// Find SUm of Nodes at kth Level
+void sumAtKthLevel(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
 
-int main(){
-    struct Node* root = new Node(1);
+    int k = 0;
+    queue<Node *> q;
+    q.push(root);
+    q.push(NULL);
+    int sum = 0;
+    while (!q.empty())
+    {
+        Node *node = q.front();
+        q.pop();
+
+        if (node != NULL)
+        {
+
+            sum += node->data;
+
+
+            if (node->left)
+            {
+                q.push(node->left);
+            }
+            if (node->right)
+            {
+                q.push(node->right);
+            }
+        }
+        else
+        {
+            cout << k << " level : " << sum << endl;
+            sum=0;
+            k++;
+            if (!q.empty())
+            {
+                q.push(NULL);
+            }
+        }
+    }
+}
+
+int main()
+{
+    struct Node *root = new Node(1);
     root->left = new Node(2);
     root->right = new Node(3);
 
@@ -178,6 +248,7 @@ int main(){
     // Node* root = buildTreePostOrderGiven(postorder , inorder , 0  , 4);
     // inOrder(root);
 
-    printLevelOrder(root);
+    // printLevelOrder(root);
+    sumAtKthLevel(root);
     return 0;
 }
