@@ -424,6 +424,61 @@ void leftView(Node *root)
     }
 }
 
+// MINIMUM DISTANCE BETWEEN 2 NODES IN BINARY TREE
+// 1) FInd Lowest Common ancestor
+// 2) Distance of both nodes from common ancestor.
+// 3)Sum of both distance is the total path
+
+Node* LCA(Node* root , int n1 , int n2){
+    if(root == NULL){
+        return NULL;
+    }
+
+    if(root->data == n1 || root->data == n2){
+        return root;
+    }
+
+    Node* left = LCA(root->left , n1 , n2);
+    Node* right = LCA(root->right , n1 , n2);
+
+    if(left != NULL && right != NULL){
+        return root;
+    }
+
+    if(left == NULL && right == NULL){
+        return NULL;
+    }
+
+    if(left != NULL){
+        return LCA(root->left , n1 , n2);
+    }
+    return LCA(root->right , n1 ,n2);
+}
+
+int findDistance(Node* root , int k , int dist){
+    if(root == NULL){
+        return -1;
+    }
+    if(root->data == k){
+        return dist;
+    }
+
+    int left = findDistance(root->left , k , dist+1);
+    if(left !=  -1){
+        return left;
+    }
+    return findDistance(root->right , k , dist+1);
+}
+
+int distanceBtwNodes(Node* root , int n1 , int n2){
+    Node* lca = LCA(root , n1 , n2);
+
+    int d1 = findDistance(lca , n1 , 0);
+    int d2 = findDistance(lca , n2 , 0);
+
+    return d1+d2;
+}
+
 int main()
 {
     struct Node *root = new Node(1);
@@ -470,6 +525,8 @@ int main()
     // cout<<isbalanced(root);
 
     // rightView(root);
-    leftView(root);
+    // leftView(root);
+
+    cout<<distanceBtwNodes(root , 4 , 7);
     return 0;
 }
