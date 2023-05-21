@@ -429,54 +429,120 @@ void leftView(Node *root)
 // 2) Distance of both nodes from common ancestor.
 // 3)Sum of both distance is the total path
 
-Node* LCA(Node* root , int n1 , int n2){
-    if(root == NULL){
+Node *LCA(Node *root, int n1, int n2)
+{
+    if (root == NULL)
+    {
         return NULL;
     }
 
-    if(root->data == n1 || root->data == n2){
+    if (root->data == n1 || root->data == n2)
+    {
         return root;
     }
 
-    Node* left = LCA(root->left , n1 , n2);
-    Node* right = LCA(root->right , n1 , n2);
+    Node *left = LCA(root->left, n1, n2);
+    Node *right = LCA(root->right, n1, n2);
 
-    if(left != NULL && right != NULL){
+    if (left != NULL && right != NULL)
+    {
         return root;
     }
 
-    if(left == NULL && right == NULL){
+    if (left == NULL && right == NULL)
+    {
         return NULL;
     }
 
-    if(left != NULL){
-        return LCA(root->left , n1 , n2);
+    if (left != NULL)
+    {
+        return LCA(root->left, n1, n2);
     }
-    return LCA(root->right , n1 ,n2);
+    return LCA(root->right, n1, n2);
 }
 
-int findDistance(Node* root , int k , int dist){
-    if(root == NULL){
+int findDistance(Node *root, int k, int dist)
+{
+    if (root == NULL)
+    {
         return -1;
     }
-    if(root->data == k){
+    if (root->data == k)
+    {
         return dist;
     }
 
-    int left = findDistance(root->left , k , dist+1);
-    if(left !=  -1){
+    int left = findDistance(root->left, k, dist + 1);
+    if (left != -1)
+    {
         return left;
     }
-    return findDistance(root->right , k , dist+1);
+    return findDistance(root->right, k, dist + 1);
 }
 
-int distanceBtwNodes(Node* root , int n1 , int n2){
-    Node* lca = LCA(root , n1 , n2);
+int distanceBtwNodes(Node *root, int n1, int n2)
+{
+    Node *lca = LCA(root, n1, n2);
 
-    int d1 = findDistance(lca , n1 , 0);
-    int d2 = findDistance(lca , n2 , 0);
+    int d1 = findDistance(lca, n1, 0);
+    int d2 = findDistance(lca, n2, 0);
 
-    return d1+d2;
+    return d1 + d2;
+}
+
+// Print ALL Nodes At Distance K
+// CASE 1 : Nodes Subtree
+// CASE 2 : Nodes Ancestor
+
+// CAse 1
+void printSubtreeNodes(Node *root, int k)
+{
+    if (root == NULL & k < 0)
+    {
+        return;
+    }
+
+    if(k == 0){
+        cout<<root->data<<" ";
+        return;
+    }
+
+    printSubtreeNodes(root->left , k-1);
+    printSubtreeNodes(root->right , k-1);
+}
+
+// Case 2
+int printNodesAtK(Node* root , Node* target , int k){
+    if(root == NULL){
+        return -1;
+    }
+
+    if(root == target){
+        printSubtreeNodes(root , k);
+        return 0;
+    }
+
+    int dl = printNodesAtK(root->left ,  target , k);
+    if(dl != -1){
+        if(dl+1 == k){
+            cout<<root->data<<" ";
+        }else{
+            printSubtreeNodes(root->right , k-dl-2);
+        }
+        return 1+dl;
+    }
+
+    int dr = printNodesAtK(root->right , target, k);
+    if(dr != -1){
+        if(dr+1 == k){
+            cout<<root->data<<" ";
+        }else{
+            printSubtreeNodes(root->left , k-dr-2);
+        }
+        return 1+dr;
+    }
+
+    return -1;
 }
 
 int main()
@@ -527,6 +593,7 @@ int main()
     // rightView(root);
     // leftView(root);
 
-    cout<<distanceBtwNodes(root , 4 , 7);
+    // cout << distanceBtwNodes(root, 4, 7);
+    printNodesAtK(root , root->left , 1);
     return 0;
 }
