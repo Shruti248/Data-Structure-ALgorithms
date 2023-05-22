@@ -587,17 +587,36 @@ int maxPathSum(Node *root)
     return ans;
 }
 
+// Path Sum with the Traget Sum Given : Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+
+bool pathSumWithGiventargetSum(Node* root , int target){
+
+    if(root == NULL){
+        return false;
+    }
+
+    if(root->data == target){
+        return true;
+    }
+
+    int left = pathSumWithGiventargetSum(root->left , target - root->data);
+    int right = pathSumWithGiventargetSum(root->right , target - root->data);
+
+    return left || right;
+
+}
+
 int main()
 {
-    struct Node *root = new Node(-5);
-    root->left = new Node(4);
-    root->right = new Node(-1);
+    struct Node *root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
 
-    root->left->left = new Node(3);
-    root->left->right = new Node(2);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
 
-    // root->right->left = new Node(6);
-    // root->right->right = new Node(7);
+    root->right->left = new Node(6);
+    root->right->right = new Node(7);
 
     // preOrder(root);
     // cout<<endl;
@@ -638,6 +657,8 @@ int main()
     // cout << distanceBtwNodes(root, 4, 7);
     // printNodesAtK(root , root->left , 1);
 
-    cout << maxPathSum(root);
+    // cout << maxPathSum(root);
+
+    cout<<pathSumWithGiventargetSum(root , 3);
     return 0;
 }
