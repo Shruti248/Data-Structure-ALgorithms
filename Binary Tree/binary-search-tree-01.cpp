@@ -38,18 +38,55 @@ void inorder(Node* root){
     inorder(root->right);
 }
 
+// SEARCH IN BST  : MAjor Operation
+// time in binary Tree : O(N)
+// in BST : O(log N)
+
+Node* searchInBST(Node* root , int key){
+
+    if(root == NULL){
+        return NULL;
+    }
+
+    if(root->data == key){
+        return root;
+    }
+
+    if(root->data > key){
+        return searchInBST(root->left , key);
+    }
+
+
+    // Right subtree
+    return searchInBST(root->right  , key);
+}
+
+
 int main(){
-    Node *root = NULL;
-    root = insertBST(root , 5);
-    insertBST(root , 1);
-    insertBST(root , 3);
-    insertBST(root , 4);
-    insertBST(root , 2);
-    insertBST(root , 7);
+    // Node *root = NULL;
+    // root = insertBST(root , 5);
+    // insertBST(root , 1);
+    // insertBST(root , 3);
+    // insertBST(root , 4);
+    // insertBST(root , 2);
+    // insertBST(root , 7);
 
     // Inorder traversal of BST is always in increaisng order....
     // Prinnt inorder
-    inorder(root);
+    // inorder(root);
+
+    Node* root = new Node(4);
+    root->left = new Node(2);
+    root->left->left = new Node(1);
+    root->left->right = new Node(3);
+    root->right = new Node(5);
+    root->right->right = new Node(6);
+
+    if(searchInBST(root , 7)){
+        cout<<"Key Exists";
+    }else{
+        cout<<"Key doesn't Exist.";
+    }
 
     return 0;
 }
