@@ -270,7 +270,54 @@ bool isBSTIdentical(Node* root1 , Node* root2){
     return false;
 }
 
+// Largest Binary Serach Tree in Binary Tree
+// for each node store the info :
+// min in subtree
+// max in subtree
+// subtree size
+// size of tehe largest BST
+// isBST
 
+// Recursively traverse in teh bottom-up manner & find out the size of the largest BST
+struct Info{
+    int size;
+    int max;
+    int min;
+    int ans;
+    bool isBST;
+};
+
+Info largestBSTinBT(Node* root){
+    if(root == NULL){
+        return {
+            0 , INT_MIN , INT_MAX , 0 , true
+        };
+    }
+
+    if(root->left == NULL && root->right == NULL){
+        return {1 , root->data , root->data , 1 , true};
+    }
+
+    Info leftInfo = largestBSTinBT(root->left);
+    Info rightInfo = largestBSTinBT(root->right);
+
+    // Info of current Level
+    Info curr;
+    curr.size = (1 /**Current Node*/+ leftInfo.size + rightInfo.size);
+
+    if(leftInfo.isBST && rightInfo.isBST && leftInfo.max < root->data && rightInfo.min > root->data){
+        curr.min = min(leftInfo.min , min(rightInfo.min , root->data));
+        curr.max = max(rightInfo.max , max(leftInfo.max , root->data));
+        curr.ans = curr.size;
+        curr.isBST = true;
+
+        return curr;
+    }
+
+    curr.ans = max(leftInfo.ans , rightInfo.ans);
+    curr.isBST = false;
+    return curr;
+}
 
 
 int main()
@@ -327,7 +374,8 @@ int main()
     //     cout<<endl;
     // }
 
-    cout<<isBSTIdentical(root , root);
+    // cout<<isBSTIdentical(root , root);
+    cout<<largestBSTinBT(root).ans<<endl;
 
     return 0;
 }
