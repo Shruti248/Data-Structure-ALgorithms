@@ -166,6 +166,32 @@ Node* sortedArrayToBST(int arr[] , int start , int end){
     return root;
 }
 
+// CATALAN NUMBERS : important important
+// Cn = 1/(n+1) 2nCn = summataion(Ci Cn-i) , i = 0 to n-1
+
+// C0 = 1
+// c1 = 1
+// c2 = c0c1 + c1c0
+
+// 0 to n-1 : 1st COeffienect
+// n-1 to 0: 2nd COeffienect
+
+// FInd nth catalan Number
+// this will be optimized this with dynamic programming wuth O(n) later;
+int catalan(int n){
+
+    // C0 && C1 == 1
+    if(n <= 1){
+        return 1;
+    }
+
+    int res = 0;
+    for(int i = 0 ; i<=n-1 ; i++){
+        res += catalan(i)*catalan(n-i-1);
+    }
+    return res;
+}
+
 int main()
 {
     // Node *root = NULL;
@@ -204,9 +230,13 @@ int main()
     // cout<<isBST(root);
 
 
-    int arr[] = {10 , 20 , 30 , 40 , 50};
-    Node* newroot = sortedArrayToBST(arr , 0 , 4);
-    inorder(newroot);
+    // int arr[] = {10 , 20 , 30 , 40 , 50};
+    // Node* newroot = sortedArrayToBST(arr , 0 , 4);
+    // inorder(newroot);
+
+    for(int i = 0 ; i<10 ; i++){
+        cout<<i<<" "<<catalan(i)<<endl;
+    }
 
     return 0;
 }
