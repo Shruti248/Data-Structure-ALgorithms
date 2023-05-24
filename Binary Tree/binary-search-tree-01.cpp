@@ -241,6 +241,38 @@ void preorder(Node* root){
     preorder(root->right);
 }
 
+// Are BST Identical ? : Should be structurally identical & have nodes values same
+
+// If both empty , return true
+// if both non empty  ,
+    // check that the data at nodes is equal
+    // check if left subtrees are same
+    // check if right subtrees are same
+
+// /if all 3 conditions are trye , return true else false
+
+bool isBSTIdentical(Node* root1 , Node* root2){
+    if(root1 == NULL && root2 == NULL){
+        return true;
+    }
+
+    if(root1 != NULL && root2 != NULL){
+        if(root1->data == root2->data){
+            bool left = isBSTIdentical(root1->left , root2->left);
+            bool right = isBSTIdentical(root1->right , root2->right);
+
+            if(left && right){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+
+
+
 int main()
 {
     // Node *root = NULL;
@@ -287,13 +319,15 @@ int main()
     //     cout<<i<<" "<<catalan(i)<<endl;
     // }
 
-    vector<Node*> totalTrees = constructTrees(1 , 3);
+    // vector<Node*> totalTrees = constructTrees(1 , 3);
 
-    for(int i = 0 ; i<totalTrees.size() ; i++){
-        cout<<(i+1)<<" : ";
-        preorder(totalTrees[i]);
-        cout<<endl;
-    }
+    // for(int i = 0 ; i<totalTrees.size() ; i++){
+    //     cout<<(i+1)<<" : ";
+    //     preorder(totalTrees[i]);
+    //     cout<<endl;
+    // }
+
+    cout<<isBSTIdentical(root , root);
 
     return 0;
 }
