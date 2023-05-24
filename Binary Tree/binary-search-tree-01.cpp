@@ -319,6 +319,61 @@ Info largestBSTinBT(Node* root){
     return curr;
 }
 
+// Recover BST
+// Strategy : Inorder of a BST is sorted
+
+// Case 1 : swapped elements are not adjacent to each other
+// Case 2 : Swapped elements are adjacent to each other
+
+// Miantain 3 pointers : first , last , end
+// first : previous node where 1st numeber <previous[8];
+// mid : number where 1st element <previous[3];
+// last : 2nd node where number <previous[2]
+
+// CASE 1 : swap first & last
+// CASE 2 : swap first & MID bcoz last is NULL
+
+void calcPointers(Node* root  , Node** first ,Node** mid ,Node** last , Node** prev){
+    if(root == NULL){
+        return;
+    }
+
+    calcPointers(root->left , first , mid , last , prev);
+
+    if(*prev && root->data < (*prev)->data){
+        if(!*first){
+            *first = *prev;
+            *mid = root;
+        }else{
+            *last = root;
+        }
+    }
+
+    *prev = root;
+
+    calcPointers(root->right , first , mid , last , prev);
+}
+
+void swap(int *a , int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void restoreBST(Node* root){
+    Node *first  = NULL, *mid = NULL, *last = NULL, *prev = NULL;
+
+    calcPointers(root , &first , &mid , &last , &prev);
+
+    // case 1
+    if(first && last){
+        swap(&(first->data) , &(last->data));
+    }else if(first && mid){
+        swap(&(first->data) , &(mid->data));
+    }
+
+}
+
 
 int main()
 {
@@ -335,10 +390,10 @@ int main()
     // inorder(root);
 
     Node *root = new Node(4);
-    root->left = new Node(2);
+    root->left = new Node(5);
     root->left->left = new Node(1);
     root->left->right = new Node(3);
-    root->right = new Node(5);
+    root->right = new Node(2);
     root->right->right = new Node(6);
 
     // if (searchInBST(root, 7))
@@ -375,7 +430,13 @@ int main()
     // }
 
     // cout<<isBSTIdentical(root , root);
-    cout<<largestBSTinBT(root).ans<<endl;
+    // cout<<largestBSTinBT(root).ans<<endl;
 
+    inorder(root);
+    cout<<endl;
+    restoreBST(root);
+
+    inorder(root);
+    cout<<endl;
     return 0;
 }
