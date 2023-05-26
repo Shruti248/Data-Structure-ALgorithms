@@ -417,6 +417,61 @@ int largestMinDistance(int arr[] , int n , int k){
     return result;
 }
 
+// Allocate Min Pages
+// Apply binary search for minimum & maximum possible values of max values
+// Check the feasibility
+
+bool isPossible(int arr[] , int n , int m , int min){
+    int studentsRequired = 1 , sum = 0;
+
+    for(int i = 0 ; i<n ; i++){
+        if(arr[i] > min){
+            return false;
+        }
+
+        if(sum+arr[i] > min){
+            studentsRequired++;
+            sum = arr[i];
+
+            if(studentsRequired > m ){
+                return false;
+            }
+        }else{
+            sum += arr[i];
+        }
+    }
+
+    return true;
+}
+
+int allocateMinimumPages(int arr[] , int n , int m){
+    int sum = 0;
+
+    if(n<m){
+        // Books less than students
+        return -1;
+    }
+
+    for(int i = 0 ; i<n ; i++){
+        // Sum of all the pages of th books
+        sum += arr[i];
+    }
+
+    int start = 0 , end = sum , ans = INT_MAX;
+    while(start <= end){
+        int mid = (start + end)/2;
+
+        if(isPossible(arr , n , m , mid)){
+            ans = min(ans , mid);
+            end = mid-1; //left half
+        }else{
+            start = mid+1;
+        }
+    }
+    return ans;
+
+}
+
 
 int main()
 {
@@ -482,10 +537,16 @@ int main()
     // inorder(root);
     // cout<<endl;
 
-    int arr[] = {1 , 2 , 8 , 4 , 9};
-    int n = 5;
-    int k = 3;
+    // int arr[] = {1 , 2 , 8 , 4 , 9};
+    // int n = 5;
+    // int k = 3;
 
-    cout<<largestMinDistance(arr , n , k);
+    // cout<<largestMinDistance(arr , n , k);
+
+    int arr[] = {12 , 34 , 67 , 90};
+
+    int n = 4;
+    int m = 2;
+    cout<<allocateMinimumPages(arr , n , m);
     return 0;
 }
