@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <set>
+#include<unordered_set>
 using namespace std;
 
 int main()
@@ -156,6 +157,22 @@ int main()
     for(auto i= multiset.begin() ; i != multiset.end() ; i++){
         cout<<*i<<" ";
     }
+    cout<<endl;
+    cout << "-------------------------" << endl;
+    // Unsordered Set
+    unordered_set<int> s2;
+    s2.insert(1);
+    s2.insert(2);
+    s2.insert(2);
+    s2.insert(3);
+
+    s2.erase(3);
+    for (auto i = s2.begin(); i != s2.end(); i++)
+    {
+        cout << *i << " ";
+    }
+
+
 
     return 0;
 }
