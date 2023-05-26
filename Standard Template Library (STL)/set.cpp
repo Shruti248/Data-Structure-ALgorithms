@@ -44,5 +44,33 @@ int main(){
     for(auto i = descending.begin() ; i!= descending.end() ; i++){
         cout<<*i<<" ";
     }
+
+    // Deletion
+
+    // For single element.
+    // name_of_set.erase(iterator);
+
+    // // For single element.
+    // name_of_set.erase(element_to_delete);
+
+    // // For the deletion of multiple elements.
+    // name_of_set.erase(start_iterator, end_iterator);
+
+
+    cout<<"-------------------------"<<endl;
+    cout<<s.erase(1);
+    cout<<s.erase(2);
+    cout<<s.erase(3);
+    cout<<s.erase(4);
+    // If element present & erased : Return 1 --> else 0
+    for(auto i : s){
+        cout<<i<<" ";
+    }
+    cout<<"\n";
+    for(auto i = s.begin() ; i!= s.end() ; i++){
+        cout<<*i<<" ";
+    }
+    cout<<"\n";
+
     return 0;
 }
