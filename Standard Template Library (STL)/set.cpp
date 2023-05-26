@@ -122,5 +122,40 @@ int main()
     cout<<*s.upper_bound(5)<<endl;
     cout<<*s.upper_bound(6)<<endl;
     cout << "-------------------------" << endl;
+
+
+    multiset<int>  multiset;
+    multiset.insert(1);
+    multiset.insert(2);
+    multiset.insert(3);
+    multiset.insert(3);
+    multiset.insert(3);
+    multiset.insert(3);
+    multiset.insert(5);
+
+    cout << "-------------------------" << endl;
+    for(auto i : multiset){
+        cout<<i<<" ";
+    }
+    cout<<endl;
+    for(auto i= multiset.begin() ; i != multiset.end() ; i++){
+        cout<<*i<<" ";
+    }
+    cout<<endl;
+    cout << "-------------------------" << endl;
+    cout<<multiset.size()<<endl;
+    cout << "-------------------------" << endl;
+    // Deletes all the occurences of 3
+    // multiset.erase(3);
+    for(auto i= multiset.begin() ; i != multiset.end() ; i++){
+        cout<<*i<<" ";
+    }
+    cout<<endl;
+    // Erase only 1 occurence of 3
+    multiset.erase(multiset.find(3));
+    for(auto i= multiset.begin() ; i != multiset.end() ; i++){
+        cout<<*i<<" ";
+    }
+
     return 0;
 }
