@@ -26,5 +26,23 @@ int main(){
     cout<<"\n";
     cout<<s.size()<<endl;
 
+    // Custom Camparator
+    // Default set is in ascending order
+    set<int> ascendingyDefault;
+    set<int , greater<int>> descending;
+
+    descending.insert(1);
+    descending.insert(2);
+    descending.insert(2);
+    descending.insert(3);
+    // NO duplicate elements in set & therefore only 1 will be printed
+
+    for(auto i : descending){
+        cout<<i<<" ";
+    }
+    cout<<"\n";
+    for(auto i = descending.begin() ; i!= descending.end() ; i++){
+        cout<<*i<<" ";
+    }
     return 0;
 }
