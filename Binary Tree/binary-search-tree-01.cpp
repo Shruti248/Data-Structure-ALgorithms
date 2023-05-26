@@ -374,6 +374,49 @@ void restoreBST(Node* root){
 
 }
 
+// FIND MAXIMUM POSSIBLE MINIMUM DISTANCE FOR K ELEMENTS THAT CAN BE GROUPED TOPGETHER
+// Sort the array for binary search technique
+// pick middle element as result & check for feasibiliy.
+// if middle element is feasible , search the right half of the array with larger min distance .
+// if middle element is not feasible , search left half
+
+bool isFeasible(int mid , int arr[] , int n , int k){
+    int pos = arr[0] , elements = 1;
+
+    for(int i = 1 ; i<n ; i++){
+        if(arr[i] - pos >= mid){
+            pos = arr[i];
+            elements++;
+            if(elements == k){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int largestMinDistance(int arr[] , int n , int k){
+    sort(arr , arr+n);
+
+    int result = -1;
+    int left = 1;
+    int right = arr[n-1];
+
+    // Binary search on left to right
+    while(left < right){
+        int mid = (left+right)/2;
+
+        if(isFeasible(mid , arr , n , k)){
+            result = max(result , mid);
+            left = mid+1; //right half
+        }else{
+            right = mid; //left half
+        }
+    }
+
+    return result;
+}
+
 
 int main()
 {
@@ -432,11 +475,17 @@ int main()
     // cout<<isBSTIdentical(root , root);
     // cout<<largestBSTinBT(root).ans<<endl;
 
-    inorder(root);
-    cout<<endl;
-    restoreBST(root);
+    // inorder(root);
+    // cout<<endl;
+    // restoreBST(root);
 
-    inorder(root);
-    cout<<endl;
+    // inorder(root);
+    // cout<<endl;
+
+    int arr[] = {1 , 2 , 8 , 4 , 9};
+    int n = 5;
+    int k = 3;
+
+    cout<<largestMinDistance(arr , n , k);
     return 0;
 }
