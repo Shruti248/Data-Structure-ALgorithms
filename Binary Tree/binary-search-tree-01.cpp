@@ -592,6 +592,37 @@ int peakElements(int arr[], int low, int high, int n)
     return peakElements(arr, mid + 1, high, n);
 }
 
+// Sliding WIndow Problems
+
+// MAX SUM SUBARRAY
+// Size = K & sum < x
+// The goal of the function is to find the maximum subarray sum that is less than x.
+
+int maxSubarraySum(int arr[] , int n , int k , int x){
+    int sum = 0;
+    int ans = 0;
+
+    for(int i = 0 ; i<k ; i++){
+        sum += arr[i];
+    }
+
+    if(sum < x){
+        ans = sum;
+    }
+
+    for(int i = k ; i<n ; i++){
+        sum = sum - arr[i-k]/**start pointer*/;
+        sum = sum + arr[i]; /** end pointer*/
+
+        if(sum < x){
+            ans = max(ans , sum);
+        }
+    }
+
+    return ans;
+
+}
+
 int main()
 {
     // Node *root = NULL;
@@ -667,7 +698,7 @@ int main()
     // int m = 2;
     // cout<<allocateMinimumPages(arr , n , m);
 
-    int arr[] = {6, 7, 8, 9, 10, 1, 2, 3};
+    // int arr[] = {6, 7, 8, 9, 10, 1, 2, 3};
     // int n = 8;
     // int key = 8;
 
@@ -678,7 +709,9 @@ int main()
     //     return true;
     // }
 
-    cout<<peakElements(arr, 0, 7 , 7); // return index
+    // cout<<peakElements(arr, 0, 7 , 7); // return index
+    int arr[] = {7 , 5 , 4 , 6 , 8 , 9};
+    cout<<maxSubarraySum(arr , 6 , 3 , 20);
 
     return 0;
 }
