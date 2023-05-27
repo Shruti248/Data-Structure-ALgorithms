@@ -79,10 +79,12 @@ Node *searchInBST(Node *root, int key)
 // CASE 3 : Node has 2 children
 // Steps 1 : Find the inorder successor : Replace the node with inorder successor : delet the node
 
-Node* inorderSucc(Node* root){
-    Node* curr = root;
-    while(curr && curr!= NULL){
-        curr= curr->left;
+Node *inorderSucc(Node *root)
+{
+    Node *curr = root;
+    while (curr && curr != NULL)
+    {
+        curr = curr->left;
     }
     return curr;
 }
@@ -98,22 +100,27 @@ Node *deleteInBST(Node *root, int key)
     else if (key > root->data)
     {
         root->right = deleteInBST(root->right, key);
-    }else{
+    }
+    else
+    {
         // case 1 & 2 both together
-        if(root->left == NULL){
-            Node* temp = root->right;
+        if (root->left == NULL)
+        {
+            Node *temp = root->right;
             free(root);
             return temp;
-        }else if (root->right == NULL){
-            Node* temp = root->left;
+        }
+        else if (root->right == NULL)
+        {
+            Node *temp = root->left;
             free(root);
             return temp;
         }
 
         // CASE 3
-        Node* temp = inorderSucc(root->right);
+        Node *temp = inorderSucc(root->right);
         root->data = temp->data;
-        root->right = deleteInBST(root->right , temp->data);
+        root->right = deleteInBST(root->right, temp->data);
     }
     return root;
 }
@@ -126,21 +133,25 @@ Node *deleteInBST(Node *root, int key)
 // minALlowed < node
 // maxAllowed > node
 
-bool isBST(Node* root , Node * min = NULL , Node* max = NULL){
+bool isBST(Node *root, Node *min = NULL, Node *max = NULL)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return true;
     }
 
-    if(min != NULL && root->data <= min->data){
+    if (min != NULL && root->data <= min->data)
+    {
         return false;
     }
-    if(max != NULL && root->data >= max->data){
+    if (max != NULL && root->data >= max->data)
+    {
         return false;
     }
 
-    bool leftValid = isBST(root->left , min , root);
-    bool rightValid = isBST(root->right , root , max);
+    bool leftValid = isBST(root->left, min, root);
+    bool rightValid = isBST(root->right, root, max);
 
     return leftValid && rightValid;
 }
@@ -150,18 +161,20 @@ bool isBST(Node* root , Node * min = NULL , Node* max = NULL){
 // start to mid-1 : Left SUbtree
 // mid+1 to end : Right Subtree
 
-Node* sortedArrayToBST(int arr[] , int start , int end){
+Node *sortedArrayToBST(int arr[], int start, int end)
+{
 
-    if(start > end){
+    if (start > end)
+    {
         return NULL;
     }
 
-    int mid = (start+end)/2;
+    int mid = (start + end) / 2;
 
-    Node* root = new Node(arr[mid]);
+    Node *root = new Node(arr[mid]);
 
-    root->left = sortedArrayToBST(arr , start , mid-1);
-    root->right = sortedArrayToBST(arr , mid+1 , end);
+    root->left = sortedArrayToBST(arr, start, mid - 1);
+    root->right = sortedArrayToBST(arr, mid + 1, end);
 
     return root;
 }
@@ -178,16 +191,19 @@ Node* sortedArrayToBST(int arr[] , int start , int end){
 
 // FInd nth catalan Number
 // this will be optimized this with dynamic programming wuth O(n) later;
-int catalan(int n){
+int catalan(int n)
+{
 
     // C0 && C1 == 1
-    if(n <= 1){
+    if (n <= 1)
+    {
         return 1;
     }
 
     int res = 0;
-    for(int i = 0 ; i<=n-1 ; i++){
-        res += catalan(i)*catalan(n-i-1);
+    for (int i = 0; i <= n - 1; i++)
+    {
+        res += catalan(i) * catalan(n - i - 1);
     }
     return res;
 }
@@ -203,24 +219,29 @@ int catalan(int n){
 // dyck words of given length & much more
 
 // 1) Possible Number of Valid BST's
-vector<Node*> constructTrees(int start , int end){
-    vector<Node*> trees;
+vector<Node *> constructTrees(int start, int end)
+{
+    vector<Node *> trees;
 
-    if(start > end){
+    if (start > end)
+    {
         trees.push_back(NULL);
         return trees;
     }
 
-    for(int i = start ; i<=end ; i++){
-        vector<Node*> leftSubtrees = constructTrees(start , i-1);
-        vector<Node*> rightSubtrees = constructTrees(i+1 , end);
+    for (int i = start; i <= end; i++)
+    {
+        vector<Node *> leftSubtrees = constructTrees(start, i - 1);
+        vector<Node *> rightSubtrees = constructTrees(i + 1, end);
 
-        for(int j = 0 ; j<leftSubtrees.size() ; j++){
-            Node* left = leftSubtrees[j];
-            for(int k = 0 ; k<rightSubtrees.size() ; k++){
-                Node* right = rightSubtrees[k];
+        for (int j = 0; j < leftSubtrees.size(); j++)
+        {
+            Node *left = leftSubtrees[j];
+            for (int k = 0; k < rightSubtrees.size(); k++)
+            {
+                Node *right = rightSubtrees[k];
 
-                Node* node = new Node(i);
+                Node *node = new Node(i);
                 node->left = left;
                 node->right = right;
                 trees.push_back(node);
@@ -231,12 +252,14 @@ vector<Node*> constructTrees(int start , int end){
     return trees;
 }
 
-void preorder(Node* root){
-    if(root == NULL){
+void preorder(Node *root)
+{
+    if (root == NULL)
+    {
         return;
     }
 
-    cout<<root->data<<" ";
+    cout << root->data << " ";
     preorder(root->left);
     preorder(root->right);
 }
@@ -245,23 +268,28 @@ void preorder(Node* root){
 
 // If both empty , return true
 // if both non empty  ,
-    // check that the data at nodes is equal
-    // check if left subtrees are same
-    // check if right subtrees are same
+// check that the data at nodes is equal
+// check if left subtrees are same
+// check if right subtrees are same
 
 // /if all 3 conditions are trye , return true else false
 
-bool isBSTIdentical(Node* root1 , Node* root2){
-    if(root1 == NULL && root2 == NULL){
+bool isBSTIdentical(Node *root1, Node *root2)
+{
+    if (root1 == NULL && root2 == NULL)
+    {
         return true;
     }
 
-    if(root1 != NULL && root2 != NULL){
-        if(root1->data == root2->data){
-            bool left = isBSTIdentical(root1->left , root2->left);
-            bool right = isBSTIdentical(root1->right , root2->right);
+    if (root1 != NULL && root2 != NULL)
+    {
+        if (root1->data == root2->data)
+        {
+            bool left = isBSTIdentical(root1->left, root2->left);
+            bool right = isBSTIdentical(root1->right, root2->right);
 
-            if(left && right){
+            if (left && right)
+            {
                 return true;
             }
         }
@@ -279,7 +307,8 @@ bool isBSTIdentical(Node* root1 , Node* root2){
 // isBST
 
 // Recursively traverse in teh bottom-up manner & find out the size of the largest BST
-struct Info{
+struct Info
+{
     int size;
     int max;
     int min;
@@ -287,15 +316,17 @@ struct Info{
     bool isBST;
 };
 
-Info largestBSTinBT(Node* root){
-    if(root == NULL){
+Info largestBSTinBT(Node *root)
+{
+    if (root == NULL)
+    {
         return {
-            0 , INT_MIN , INT_MAX , 0 , true
-        };
+            0, INT_MIN, INT_MAX, 0, true};
     }
 
-    if(root->left == NULL && root->right == NULL){
-        return {1 , root->data , root->data , 1 , true};
+    if (root->left == NULL && root->right == NULL)
+    {
+        return {1, root->data, root->data, 1, true};
     }
 
     Info leftInfo = largestBSTinBT(root->left);
@@ -303,18 +334,19 @@ Info largestBSTinBT(Node* root){
 
     // Info of current Level
     Info curr;
-    curr.size = (1 /**Current Node*/+ leftInfo.size + rightInfo.size);
+    curr.size = (1 /**Current Node*/ + leftInfo.size + rightInfo.size);
 
-    if(leftInfo.isBST && rightInfo.isBST && leftInfo.max < root->data && rightInfo.min > root->data){
-        curr.min = min(leftInfo.min , min(rightInfo.min , root->data));
-        curr.max = max(rightInfo.max , max(leftInfo.max , root->data));
+    if (leftInfo.isBST && rightInfo.isBST && leftInfo.max < root->data && rightInfo.min > root->data)
+    {
+        curr.min = min(leftInfo.min, min(rightInfo.min, root->data));
+        curr.max = max(rightInfo.max, max(leftInfo.max, root->data));
         curr.ans = curr.size;
         curr.isBST = true;
 
         return curr;
     }
 
-    curr.ans = max(leftInfo.ans , rightInfo.ans);
+    curr.ans = max(leftInfo.ans, rightInfo.ans);
     curr.isBST = false;
     return curr;
 }
@@ -333,45 +365,55 @@ Info largestBSTinBT(Node* root){
 // CASE 1 : swap first & last
 // CASE 2 : swap first & MID bcoz last is NULL
 
-void calcPointers(Node* root  , Node** first ,Node** mid ,Node** last , Node** prev){
-    if(root == NULL){
+void calcPointers(Node *root, Node **first, Node **mid, Node **last, Node **prev)
+{
+    if (root == NULL)
+    {
         return;
     }
 
-    calcPointers(root->left , first , mid , last , prev);
+    calcPointers(root->left, first, mid, last, prev);
 
-    if(*prev && root->data < (*prev)->data){
-        if(!*first){
+    if (*prev && root->data < (*prev)->data)
+    {
+        if (!*first)
+        {
             *first = *prev;
             *mid = root;
-        }else{
+        }
+        else
+        {
             *last = root;
         }
     }
 
     *prev = root;
 
-    calcPointers(root->right , first , mid , last , prev);
+    calcPointers(root->right, first, mid, last, prev);
 }
 
-void swap(int *a , int *b){
+void swap(int *a, int *b)
+{
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void restoreBST(Node* root){
-    Node *first  = NULL, *mid = NULL, *last = NULL, *prev = NULL;
+void restoreBST(Node *root)
+{
+    Node *first = NULL, *mid = NULL, *last = NULL, *prev = NULL;
 
-    calcPointers(root , &first , &mid , &last , &prev);
+    calcPointers(root, &first, &mid, &last, &prev);
 
     // case 1
-    if(first && last){
-        swap(&(first->data) , &(last->data));
-    }else if(first && mid){
-        swap(&(first->data) , &(mid->data));
+    if (first && last)
+    {
+        swap(&(first->data), &(last->data));
     }
-
+    else if (first && mid)
+    {
+        swap(&(first->data), &(mid->data));
+    }
 }
 
 // FIND MAXIMUM POSSIBLE MINIMUM DISTANCE FOR K ELEMENTS THAT CAN BE GROUPED TOPGETHER
@@ -380,14 +422,18 @@ void restoreBST(Node* root){
 // if middle element is feasible , search the right half of the array with larger min distance .
 // if middle element is not feasible , search left half
 
-bool isFeasible(int mid , int arr[] , int n , int k){
-    int pos = arr[0] , elements = 1;
+bool isFeasible(int mid, int arr[], int n, int k)
+{
+    int pos = arr[0], elements = 1;
 
-    for(int i = 1 ; i<n ; i++){
-        if(arr[i] - pos >= mid){
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] - pos >= mid)
+        {
             pos = arr[i];
             elements++;
-            if(elements == k){
+            if (elements == k)
+            {
                 return true;
             }
         }
@@ -395,22 +441,27 @@ bool isFeasible(int mid , int arr[] , int n , int k){
     return false;
 }
 
-int largestMinDistance(int arr[] , int n , int k){
-    sort(arr , arr+n);
+int largestMinDistance(int arr[], int n, int k)
+{
+    sort(arr, arr + n);
 
     int result = -1;
     int left = 1;
-    int right = arr[n-1];
+    int right = arr[n - 1];
 
     // Binary search on left to right
-    while(left < right){
-        int mid = (left+right)/2;
+    while (left < right)
+    {
+        int mid = (left + right) / 2;
 
-        if(isFeasible(mid , arr , n , k)){
-            result = max(result , mid);
-            left = mid+1; //right half
-        }else{
-            right = mid; //left half
+        if (isFeasible(mid, arr, n, k))
+        {
+            result = max(result, mid);
+            left = mid + 1; // right half
+        }
+        else
+        {
+            right = mid; // left half
         }
     }
 
@@ -421,22 +472,29 @@ int largestMinDistance(int arr[] , int n , int k){
 // Apply binary search for minimum & maximum possible values of max values
 // Check the feasibility
 
-bool isPossible(int arr[] , int n , int m , int min){
-    int studentsRequired = 1 , sum = 0;
+bool isPossible(int arr[], int n, int m, int min)
+{
+    int studentsRequired = 1, sum = 0;
 
-    for(int i = 0 ; i<n ; i++){
-        if(arr[i] > min){
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] > min)
+        {
             return false;
         }
 
-        if(sum+arr[i] > min){
+        if (sum + arr[i] > min)
+        {
             studentsRequired++;
             sum = arr[i];
 
-            if(studentsRequired > m ){
+            if (studentsRequired > m)
+            {
                 return false;
             }
-        }else{
+        }
+        else
+        {
             sum += arr[i];
         }
     }
@@ -444,34 +502,95 @@ bool isPossible(int arr[] , int n , int m , int min){
     return true;
 }
 
-int allocateMinimumPages(int arr[] , int n , int m){
+int allocateMinimumPages(int arr[], int n, int m)
+{
     int sum = 0;
 
-    if(n<m){
+    if (n < m)
+    {
         // Books less than students
         return -1;
     }
 
-    for(int i = 0 ; i<n ; i++){
+    for (int i = 0; i < n; i++)
+    {
         // Sum of all the pages of th books
         sum += arr[i];
     }
 
-    int start = 0 , end = sum , ans = INT_MAX;
-    while(start <= end){
-        int mid = (start + end)/2;
+    int start = 0, end = sum, ans = INT_MAX;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
 
-        if(isPossible(arr , n , m , mid)){
-            ans = min(ans , mid);
-            end = mid-1; //left half
-        }else{
-            start = mid+1;
+        if (isPossible(arr, n, m, mid))
+        {
+            ans = min(ans, mid);
+            end = mid - 1; // left half
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
     return ans;
-
 }
 
+// Search ELement in sorted & pivot element
+// Find pivot
+// APply biary search on left & right half
+
+int searchInRotatedArray(int arr[], int key, int left, int right)
+{
+    if (left > right)
+    {
+        return -1;
+    }
+
+    int mid = (left + right) / 2;
+    if (arr[mid] == key)
+    {
+        return mid;
+    }
+
+    if (arr[left <= arr[mid]])
+    {
+        if (key >= arr[left] && key <= arr[mid])
+        {
+            return searchInRotatedArray(arr, key, left, mid - 1);
+        }
+        return searchInRotatedArray(arr, key, mid + 1, right);
+    }
+
+    if (key >= arr[mid] && key <= arr[right])
+    {
+        return searchInRotatedArray(arr, key, mid + 1, right);
+    }
+
+    return searchInRotatedArray(arr, key, left, mid - 1);
+}
+
+// FInd Peak Element : Elmeent greater than both previous & next element
+
+// Ascending array : last element is peak
+// Descending array : first element is peak
+// For all the same element : Each element is peak
+
+int peakElements(int arr[], int low, int high, int n)
+{
+    int mid = low + (high - low) / 2;
+
+    if ((mid == 0 || arr[mid - 1] <= arr[mid]) && (mid == n - 1 || arr[mid] >= arr[mid + 1]))
+    {
+        return mid;
+    }
+    else if (mid > 0 && arr[mid - 1] > arr[mid])
+    {
+        // Left Half
+        return peakElements(arr, low, mid - 1, n);
+    }
+    return peakElements(arr, mid + 1, high, n);
+}
 
 int main()
 {
@@ -510,7 +629,6 @@ int main()
 
     // cout<<isBST(root);
 
-
     // int arr[] = {10 , 20 , 30 , 40 , 50};
     // Node* newroot = sortedArrayToBST(arr , 0 , 4);
     // inorder(newroot);
@@ -543,10 +661,24 @@ int main()
 
     // cout<<largestMinDistance(arr , n , k);
 
-    int arr[] = {12 , 34 , 67 , 90};
+    // int arr[] = {12 , 34 , 67 , 90};
 
-    int n = 4;
-    int m = 2;
-    cout<<allocateMinimumPages(arr , n , m);
+    // int n = 4;
+    // int m = 2;
+    // cout<<allocateMinimumPages(arr , n , m);
+
+    int arr[] = {6, 7, 8, 9, 10, 1, 2, 3};
+    // int n = 8;
+    // int key = 8;
+
+    // int idx = searchInRotatedArray(arr , key , 0 , n-1);
+    // if(idx == -1){
+    //     return false;
+    // }else{
+    //     return true;
+    // }
+
+    cout<<peakElements(arr, 0, 7 , 7); // return index
+
     return 0;
 }
