@@ -764,6 +764,65 @@ int findPalindromicSubarray(vector<int> arr, int k)
     return -1;
 }
 
+// Maximum Perfect Numbers in length K
+// Perfect Number is a number if it is equal to the sum of its proper divisior except for the number itself
+// Eg : Num = 6  proper divisor = [1 , 2 , 3] & 1 + 2 + 3 == 6
+
+//See video Apna College
+
+int maxSum(int arr[] , int n , int k){
+    if(n < k){
+        return -1;
+    }
+
+    int res = 0;
+    for(int i = 0 ; i<k ; i++){
+        res += arr[i];
+    }
+
+    int sum = res;
+
+    for(int i = k ; i<n ; i++){
+        sum += arr[i] - arr[i-k];
+        res = max(res , sum);
+    }
+
+    return res;
+}
+
+bool isNumberPerfect(int n){
+    int sum = 1;
+
+    // FOr divisors
+    for(int i = 2 ; i<sqrt(n) ; i++){
+        if(n%i == 0){
+            if(i == n/i){
+                sum += i;
+            }else{
+                sum += i+n/i;
+            }
+        }
+    }
+
+    if(sum == n && n!= 1){
+        return true;
+    }
+    return false;
+}
+
+int maxNumberOfPerfects(int arr[] , int n , int k){
+    for(int i = 0 ; i<n ; i++){
+        if(isNumberPerfect(arr[i])){
+            arr[i] = 1;
+        }else{
+            arr[i] = 0;
+        }
+    }
+
+    return maxSum(arr , n , k);
+}
+
+
 int main()
 {
     // Node *root = NULL;
@@ -865,8 +924,15 @@ int main()
     // vector<int> arr = {84, 23, 45, 12, 56, 82};
     // computeNumberFromSubarray(arr, 3);
 
-    vector<int> arr = {2 , 3, 5, 1, 1, 5};
-    cout<<findPalindromicSubarray(arr , 4);
+    // vector<int> arr = {2 , 3, 5, 1, 1, 5};
+    // cout<<findPalindromicSubarray(arr , 4);
+
+    int arr[] = {28 , 2 , 3 , 6 , 4 , 96 , 99 , 8218 , 24};
+
+    int k = 4;
+    int n = 8;
+
+    cout<<maxNumberOfPerfects(arr , n , k);
 
     return 0;
 }
