@@ -570,6 +570,7 @@ int searchInRotatedArray(int arr[], int key, int left, int right)
     return searchInRotatedArray(arr, key, left, mid - 1);
 }
 
+// Sliding Window Problems
 // FInd Peak Element : Elmeent greater than both previous & next element
 
 // Ascending array : last element is peak
@@ -620,6 +621,36 @@ int maxSubarraySum(int arr[] , int n , int k , int x){
     }
 
     return ans;
+
+}
+
+// Smallest Subarray with sum > K
+// Slidiling window approach
+// Use variables ans  , sum , start
+// Iterate over array & start adding elements to sum
+// If sum > x , remove elements from the start
+// O(n)
+
+// ans = INT_max or size greter than n , such way no possible solution is found , sum = 0 , X given
+
+int smallestSubarraywithSum(int arr[] , int n , int x){
+    int sum = 0  , minLength = n+1 , start = 0 , end = 0;
+
+    while(end < n){
+        while(sum  <= x && end < n){
+            sum += arr[end++];
+        }
+
+        while(sum > x && start < n){
+            if(end - start < minLength){
+                minLength = end - start;
+            }
+
+            sum -= arr[start++];
+        }
+    }
+
+    return minLength;
 
 }
 
@@ -710,8 +741,13 @@ int main()
     // }
 
     // cout<<peakElements(arr, 0, 7 , 7); // return index
-    int arr[] = {7 , 5 , 4 , 6 , 8 , 9};
-    cout<<maxSubarraySum(arr , 6 , 3 , 20);
+    int arr[] = {1 , 4 , 45 , 6 , 10 , 19};
+    // cout<<maxSubarraySum(arr , 6 , 3 , 20);
+    if(smallestSubarraywithSum(arr , 6 , 51) == 7 /**n+1*/){
+        cout<<"No such Subarray Exist"<<endl;
+    }else{
+        cout<<smallestSubarraywithSum(arr , 6 , 51)<<endl;
+    }
 
     return 0;
 }
