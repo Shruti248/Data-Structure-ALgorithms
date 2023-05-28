@@ -599,29 +599,33 @@ int peakElements(int arr[], int low, int high, int n)
 // Size = K & sum < x
 // The goal of the function is to find the maximum subarray sum that is less than x.
 
-int maxSubarraySum(int arr[] , int n , int k , int x){
+int maxSubarraySum(int arr[], int n, int k, int x)
+{
     int sum = 0;
     int ans = 0;
 
-    for(int i = 0 ; i<k ; i++){
+    for (int i = 0; i < k; i++)
+    {
         sum += arr[i];
     }
 
-    if(sum < x){
+    if (sum < x)
+    {
         ans = sum;
     }
 
-    for(int i = k ; i<n ; i++){
-        sum = sum - arr[i-k]/**start pointer*/;
+    for (int i = k; i < n; i++)
+    {
+        sum = sum - arr[i - k] /**start pointer*/;
         sum = sum + arr[i]; /** end pointer*/
 
-        if(sum < x){
-            ans = max(ans , sum);
+        if (sum < x)
+        {
+            ans = max(ans, sum);
         }
     }
 
     return ans;
-
 }
 
 // Smallest Subarray with sum > K
@@ -633,16 +637,21 @@ int maxSubarraySum(int arr[] , int n , int k , int x){
 
 // ans = INT_max or size greter than n , such way no possible solution is found , sum = 0 , X given
 
-int smallestSubarraywithSum(int arr[] , int n , int x){
-    int sum = 0  , minLength = n+1 , start = 0 , end = 0;
+int smallestSubarraywithSum(int arr[], int n, int x)
+{
+    int sum = 0, minLength = n + 1, start = 0, end = 0;
 
-    while(end < n){
-        while(sum  < x && end < n){
+    while (end < n)
+    {
+        while (sum < x && end < n)
+        {
             sum += arr[end++];
         }
 
-        while(sum >= x && start < n){
-            if(end - start < minLength){
+        while (sum >= x && start < n)
+        {
+            if (end - start < minLength)
+            {
                 minLength = end - start;
             }
 
@@ -651,8 +660,50 @@ int smallestSubarraywithSum(int arr[] , int n , int x){
     }
 
     return minLength;
-
 }
+
+// Number formed from subarray of size k divisible by 3;
+// O(n)
+void computeNumberFromSubarray(vector<int> arr , int k){
+    pair<int , int> ans;
+    int sum = 0;
+
+    for(int i = 0 ; i<k ; i++){
+        sum += arr[i];
+    }
+
+    bool found = false;
+
+    if(sum%3 == 0){
+        ans = make_pair(0 , k-1);
+        found = true;
+    }
+
+    for(int j = k ; j<arr.size() ; j++){
+        if(found){
+            break;
+        }
+
+        sum += arr[j] - arr[j-k]; //Sliding Window Technique
+
+        if(sum%3 == 0){
+            ans = make_pair(j-k+1 , j);
+            found = true;
+        }
+    }
+
+    if(!found){
+        ans = make_pair(-1 , 0);
+    }
+    if(ans.first == -1){
+        cout<<"No such Pair Exist."<<endl;
+    }else{
+        for(int i = ans.first ; i<= ans.second ; i++){
+            cout<<arr[i]<<" ";
+        }
+    }
+}
+
 
 int main()
 {
@@ -741,13 +792,19 @@ int main()
     // }
 
     // cout<<peakElements(arr, 0, 7 , 7); // return index
-    int arr[] = {1 , 4 , 45 , 6 , 10 , 19};
+    // int arr[] = {1, 4, 45, 6, 10, 19};
     // cout<<maxSubarraySum(arr , 6 , 3 , 20);
-    if(smallestSubarraywithSum(arr , 6 , 51) == 7 /**n+1*/){
-        cout<<"No such Subarray Exist"<<endl;
-    }else{
-        cout<<smallestSubarraywithSum(arr , 6 , 51)<<endl;
-    }
+    // if (smallestSubarraywithSum(arr, 6, 51) == 7 /**n+1*/)
+    // {
+    //     cout << "No such Subarray Exist" << endl;
+    // }
+    // else
+    // {
+    //     cout << smallestSubarraywithSum(arr, 6, 51) << endl;
+    // }
+
+    vector<int> arr = {84 , 23 , 45 , 12 , 56 , 82};
+    computeNumberFromSubarray(arr, 3);
 
     return 0;
 }
