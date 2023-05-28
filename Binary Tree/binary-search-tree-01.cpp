@@ -664,46 +664,105 @@ int smallestSubarraywithSum(int arr[], int n, int x)
 
 // Number formed from subarray of size k divisible by 3;
 // O(n)
-void computeNumberFromSubarray(vector<int> arr , int k){
-    pair<int , int> ans;
+void computeNumberFromSubarray(vector<int> arr, int k)
+{
+    pair<int, int> ans;
     int sum = 0;
 
-    for(int i = 0 ; i<k ; i++){
+    for (int i = 0; i < k; i++)
+    {
         sum += arr[i];
     }
 
     bool found = false;
 
-    if(sum%3 == 0){
-        ans = make_pair(0 , k-1);
+    if (sum % 3 == 0)
+    {
+        ans = make_pair(0, k - 1);
         found = true;
     }
 
-    for(int j = k ; j<arr.size() ; j++){
-        if(found){
+    for (int j = k; j < arr.size(); j++)
+    {
+        if (found)
+        {
             break;
         }
 
-        sum += arr[j] - arr[j-k]; //Sliding Window Technique
+        sum += arr[j] - arr[j - k]; // Sliding Window Technique
 
-        if(sum%3 == 0){
-            ans = make_pair(j-k+1 , j);
+        if (sum % 3 == 0)
+        {
+            ans = make_pair(j - k + 1, j);
             found = true;
         }
     }
 
-    if(!found){
-        ans = make_pair(-1 , 0);
+    if (!found)
+    {
+        ans = make_pair(-1, 0);
     }
-    if(ans.first == -1){
-        cout<<"No such Pair Exist."<<endl;
-    }else{
-        for(int i = ans.first ; i<= ans.second ; i++){
-            cout<<arr[i]<<" ";
+    if (ans.first == -1)
+    {
+        cout << "No such Pair Exist." << endl;
+    }
+    else
+    {
+        for (int i = ans.first; i <= ans.second; i++)
+        {
+            cout << arr[i] << " ";
         }
     }
 }
 
+// Subarray of size k with palindromic concatenation
+// O(n2)
+// We are returing the starting index where palindrome exists
+
+bool isPalindrome(int n){
+    int temp = n , number = 0;
+
+    // Calculates reverse of a number
+    while(temp > 0){
+        number = number*10 + temp%10;
+        temp = temp/10;
+    }
+
+    if(number == n){
+        return true;
+    }
+
+    return false;
+}
+
+int findPalindromicSubarray(vector<int> arr, int k)
+{
+    int num = 0;
+
+    for (int i = 0; i < k; i++)
+    {
+        // Concatenation
+        num = num * 10 + arr[i];
+    }
+
+    if (isPalindrome(num))
+    {
+        return 0;
+    }
+
+    for (int j = k; j < arr.size(); j++)
+    {
+        // Both subtraction & addition in same line
+        num = (num % (int)pow(10, k - 1)) * 10 + arr[j];
+
+        if (isPalindrome(num))
+        {
+            return j-k+1;
+        }
+    }
+
+    return -1;
+}
 
 int main()
 {
@@ -803,8 +862,11 @@ int main()
     //     cout << smallestSubarraywithSum(arr, 6, 51) << endl;
     // }
 
-    vector<int> arr = {84 , 23 , 45 , 12 , 56 , 82};
-    computeNumberFromSubarray(arr, 3);
+    // vector<int> arr = {84, 23, 45, 12, 56, 82};
+    // computeNumberFromSubarray(arr, 3);
+
+    vector<int> arr = {2 , 3, 5, 1, 1, 5};
+    cout<<findPalindromicSubarray(arr , 4);
 
     return 0;
 }
