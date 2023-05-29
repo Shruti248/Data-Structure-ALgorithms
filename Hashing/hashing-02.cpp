@@ -109,6 +109,45 @@ int numberofSubarraysWithSumZero(vector<int> arr){
     return ans;
 
 }
+
+// TOp k most frequent Elements
+// We have to output elements in decreasing frequency till we reach (k+1)th distinct elements
+
+void topKMostFrequentElements(vector<int> arr , int k){
+    map<int , int> freq ;
+
+    for(int i = 0 ;  i< arr.size() ; i++){
+        int presentSize = freq.size();
+
+        // Do this for finding Distinct ELements
+        // if(freq[arr[i]] == 0 && presentSize == k){
+        //     // k Distinct Elements found
+        //     break;
+        // }
+
+        freq[arr[i]]++;
+    }
+
+    vector<pair<int , int>> ans;
+
+    map<int, int> ::iterator it;
+
+    for(it = freq.begin() ; it!= freq.end() ; it++){
+        if(it->second != 0){
+            ans.push_back(make_pair(it->second , it->first));
+        }
+    }
+
+    sort(ans.begin() , ans.end() , greater<pair<int , int>>());
+
+    vector<pair<int , int>> :: iterator it1;
+
+    for(it1 = ans.begin() ; it1 != ans.end() ; it1++){
+        cout << it1->second << " " << it1->first << endl;
+    }
+
+}
+
 int main()
 {
     // Declartion
@@ -217,8 +256,11 @@ int main()
     //     cout<<endl;
     // }
 
-    vector<int> arr = {1 , -1 , 1 , -1};
-    cout<<numberofSubarraysWithSumZero(arr)<<endl;
+    // vector<int> arr = {1 , -1 , 1 , -1};
+    // cout<<numberofSubarraysWithSumZero(arr)<<endl;
+
+    vector<int> arr = {1 , 2 , 2 , 2, 3 , 1};
+    topKMostFrequentElements(arr , 2);
 
 
     return 0;
