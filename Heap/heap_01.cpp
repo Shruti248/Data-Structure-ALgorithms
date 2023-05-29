@@ -40,6 +40,28 @@ void insert(vector<int> &heap, int newNum)
     }
 }
 
+void deleteNode(vector<int> &heap, int num)
+{
+    int size = heap.size();
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        if (num == heap[i])
+            break;
+    }
+
+    cout << "Element Present at index : " <<i<< endl;
+    swap(heap[i], heap[size - 1]);
+
+    // Removing the element
+    heap.pop_back();
+
+    for (int i = size / 2 - 1; i >= 0; i--)
+    {
+        heapify(heap, i);
+    }
+}
+
 int main()
 {
     vector<int> heap = {};
@@ -48,6 +70,14 @@ int main()
     insert(heap, 5);
     insert(heap, 15);
     insert(heap, 6);
+
+    for (int i = 0; i < heap.size(); i++)
+    {
+        cout << heap[i] << " ";
+    }
+
+    cout << endl;
+    deleteNode(heap, 10);
 
     for (int i = 0; i < heap.size(); i++)
     {
