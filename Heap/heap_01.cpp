@@ -107,6 +107,18 @@ void heapSort(vector<int> &arr)
     }
 }
 
+// Heap STL
+void heapUsingSTL(vector<int> heap){
+    make_heap(heap.begin() , heap.end());
+
+    // By default : Max Heap;
+
+    cout<<"MAx Element : "<<heap.front()<<endl;
+    for(int i = 0 ; i<heap.size() ; i++){
+        cout<<heap[i]<<" ";
+    }
+}
+
 int main()
 {
     vector<int> heap = {};
@@ -130,11 +142,13 @@ int main()
     // }
 
     cout << endl;
-    heapSort(heap);
-    for (int i = 0; i < heap.size(); i++)
-    {
-        cout << heap[i] << " ";
-    }
+    // heapSort(heap);
+    // for (int i = 0; i < heap.size(); i++)
+    // {
+    //     cout << heap[i] << " ";
+    // }
+
+    heapUsingSTL(heap);
 
     return 0;
 }
