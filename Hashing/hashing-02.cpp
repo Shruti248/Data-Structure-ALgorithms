@@ -1,6 +1,6 @@
-#include<bits/stdc++.h>
-#include<iostream>
-#include<map>
+#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
 using namespace std;
 
 // Hashing in STL
@@ -18,23 +18,62 @@ using namespace std;
 // Key : Array Elements
 // Value : Frequency
 
-void countFrequencyofElements(vector<int> arr){
-    map<int , int> freq;
+void countFrequencyofElements(vector<int> arr)
+{
+    map<int, int> freq;
 
-    for(int i = 0 ; i<arr.size()  ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         freq[arr[i]]++;
     }
 
     // Iterate over Map & print Frequency
-    map<int , int> :: iterator it;
-    for(it = freq.begin() ; it != freq.end() ; it++){
-        cout<<it->first<<" "<<it->second<<endl;
+    map<int, int>::iterator it;
+    for (it = freq.begin(); it != freq.end(); it++)
+    {
+        cout << it->first << " " << it->second << endl;
     }
-
 }
 
+// Print Vertical Order of the BInary Tree
 
-int main(){
+// COmpute the horizontal Distance .... Root : H = 0 , left : -1 , rright :  +1 & so on
+// Vectical order : -1 0 1 Horizontal Distance
+
+// Start from root node
+// Recursively call the left & right with HD-1 & HD+1 as arguments
+// Push the value in vector corressonding to the horizontal Distance
+// Key : Horizontal Distance , value (Vector) : Elements  at that HD
+// Output the MAP
+
+struct Node
+{
+    int data;
+    Node *left;
+    Node *right;
+};
+
+Node* newNode(int data){
+    Node* node = new Node;
+    node->data = data;
+    node->left = NULL;
+    node->right = NULL;
+    return node;
+}
+void verticalOrderofTheBInaryTree(Node* root , int hDist , map<int , vector<int>> &m)
+{
+    if(root == NULL){
+        return;
+    }
+
+    m[hDist].push_back(root->data);
+
+    verticalOrderofTheBInaryTree(root->left , hDist-1 , m);
+    verticalOrderofTheBInaryTree(root->right , hDist+1 , m);
+}
+
+int main()
+{
     // Declartion
     // map <key_dataType, value_dataType> mapName;
 
@@ -115,8 +154,32 @@ int main(){
     // // O(logn)
     // mp.equal_range("Asia");
 
-    vector<int> arr = {1 , 2 , 1 , 3 , 2 , 1};
-    countFrequencyofElements(arr);
+    // vector<int> arr = {1, 2, 1, 3, 2, 1};
+    // countFrequencyofElements(arr);
+
+
+    Node *root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->left = newNode(4);
+    root->left->right = newNode(6);
+    root->right->left = newNode(5);
+    root->right->right = newNode(7);
+
+    map<int , vector<int> > m;
+    int hDist = 0;
+
+    verticalOrderofTheBInaryTree(root , hDist , m);
+
+    map<int , vector<int>> :: iterator it;
+
+    for(it = m.begin() ; it != m.end() ; it++){
+        for(int i = 0 ; i<(it->second).size() ; i++){
+            cout<<(it->second)[i]<<" ";
+        }
+        cout<<endl;
+    }
+
 
     return 0;
 }
