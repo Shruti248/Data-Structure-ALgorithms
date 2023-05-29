@@ -131,9 +131,9 @@ void heapUsingSTL(vector<int> heap)
     auto iteratortillHeap = is_heap_until(heap.begin(), heap.end());
     for (auto it = heap.begin(); it != iteratortillHeap; it++)
     {
-        cout<<*it<<" ";
+        cout << *it << " ";
     }
-    cout<<endl;
+    cout << endl;
 
     // cout<<"Max Element : "<<heap.front()<<endl;
     for (int i = 0; i < heap.size(); i++)
@@ -144,37 +144,99 @@ void heapUsingSTL(vector<int> heap)
 
 // Prioroty queue
 
-void heapUsingPriorityQueue(){
+void heapUsingPriorityQueue()
+{
     // Push O(logn)
     // pop O(logn)
     // top O(1)
     // size O(1)
-    priority_queue<int , vector<int>> pq;
+    priority_queue<int, vector<int>> pq;
 
     pq.push(2);
     pq.push(3);
     pq.push(1);
 
-    cout<<pq.top()<<endl;
+    cout << pq.top() << endl;
     pq.pop();
-    cout<<pq.top()<<endl;
+    cout << pq.top() << endl;
 
-    priority_queue<int , vector<int> , greater<int>> pqMinHeap;
+    priority_queue<int, vector<int>, greater<int>> pqMinHeap;
     pqMinHeap.push(3);
     pqMinHeap.push(2);
     pqMinHeap.push(1);
-    cout<<pqMinHeap.top()<<endl;
+    cout << pqMinHeap.top() << endl;
     pqMinHeap.pop();
-    cout<<pqMinHeap.top()<<endl;
+    cout << pqMinHeap.top() << endl;
 }
+
+// Challenges
+// Median of Runnig Stream
+// Number are coming and we have to tell the median after each input
+
+// Brute Force : Sort after each input O(nlogn) & then median O(n) --> O(n2logn)
+
+// Optimal
+// Keep one max Heap & one min Heap
+// Partition the array into 2 parts
+// If sizes of max heap & minHeap not equal : Top of larger size heap
+// Else : Average of top of both heaps
+
+void insert(int x ,  priority_queue<int, vector<int>, greater<int>> &pqmin , priority_queue<int, vector<int>> &pqmax ){
+    if(pqmin.size() == pqmax.size()){
+        if(pqmax.size() == 0){
+            pqmax.push(x);
+            return;
+        }
+
+        if(x<pqmax.top()){
+            pqmax.push(x);
+        }else{
+            pqmin.push(x);
+        }
+    }else{
+        // 2 cases
+        if(pqmax.size() > pqmin.size()){
+            if( x>= pqmax.top()){
+                pqmin.push(x);
+            }else{
+                int temp = pqmax.top();
+                pqmax.pop();
+                pqmin.push(temp);
+                pqmax.push(x);
+            }
+        }else{
+            if(x<=pqmin.top()){
+                pqmax.push(x);
+            }else{
+                int temp = pqmin.top();
+                pqmin.pop();
+                pqmax.push(temp);
+                pqmin.push(x);
+            }
+        }
+
+    }
+}
+
+double medianOfRunningStream(priority_queue<int, vector<int>, greater<int>> &pqmin , priority_queue<int, vector<int>> &pqmax)
+{
+    if(pqmin.size() == pqmax.size()){
+        return (pqmin.top()+pqmax.top())/2.0; //.0 for typecasting
+    }else if(pqmax.size() > pqmin.size()){
+        return pqmax.top();
+    }else{
+        return pqmin.top();
+    }
+}
+
 int main()
 {
-    vector<int> heap = {};
-    insert(heap, 10);
-    insert(heap, 8);
-    insert(heap, 5);
-    insert(heap, 15);
-    insert(heap, 6);
+    // vector<int> heap = {};
+    // insert(heap, 10);
+    // insert(heap, 8);
+    // insert(heap, 5);
+    // insert(heap, 15);
+    // insert(heap, 6);
 
     // for (int i = 0; i < heap.size(); i++)
     // {
@@ -189,7 +251,7 @@ int main()
     //     cout << heap[i] << " ";
     // }
 
-    cout << endl;
+    // cout << endl;
     // heapSort(heap);
     // for (int i = 0; i < heap.size(); i++)
     // {
@@ -197,7 +259,24 @@ int main()
     // }
 
     // heapUsingSTL(heap);
-    heapUsingPriorityQueue();
+    // heapUsingPriorityQueue();
+
+    priority_queue<int, vector<int>, greater<int>> pqmin; // minHeap
+    priority_queue<int, vector<int>> pqmax;               // maxHeap
+
+    insert(10 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    insert(15 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    insert(21 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    insert(30 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    insert(18 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    insert(19 , pqmin , pqmax);
+    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+
 
     return 0;
 }
