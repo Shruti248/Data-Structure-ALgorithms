@@ -72,6 +72,43 @@ void verticalOrderofTheBInaryTree(Node* root , int hDist , map<int , vector<int>
     verticalOrderofTheBInaryTree(root->right , hDist+1 , m);
 }
 
+// Count Number of Subarrays with Sum Zero
+// Brute Force : All Possible subarrays : O(n2)
+//Oprimized :
+// Compute Prefix Sum : Su from Starting till i
+
+// Map Prefix Sum to a Map
+// For Every Key , choose 2 values from all the occurences of the particular prefix Sum (mC2)
+// Special Case : For prefSum 0 , we have to also include them
+
+int numberofSubarraysWithSumZero(vector<int> arr){
+    map<int , int> count;
+
+    int prefixSum = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+            prefixSum += arr[i];
+
+            count[prefixSum]++;
+    }
+
+    int ans = 0;
+
+    map<int , int> ::iterator it;
+
+    for(it = count.begin() ; it != count.end() ; it++){
+        int c = it->second;
+
+        ans += c*(c-1)/2;
+
+        if(it->first == 0){
+            ans += it->second;
+        }
+    }
+
+    return ans;
+
+}
 int main()
 {
     // Declartion
@@ -158,27 +195,30 @@ int main()
     // countFrequencyofElements(arr);
 
 
-    Node *root = newNode(1);
-    root->left = newNode(2);
-    root->right = newNode(3);
-    root->left->left = newNode(4);
-    root->left->right = newNode(6);
-    root->right->left = newNode(5);
-    root->right->right = newNode(7);
+    // Node *root = newNode(1);
+    // root->left = newNode(2);
+    // root->right = newNode(3);
+    // root->left->left = newNode(4);
+    // root->left->right = newNode(6);
+    // root->right->left = newNode(5);
+    // root->right->right = newNode(7);
 
-    map<int , vector<int> > m;
-    int hDist = 0;
+    // map<int , vector<int> > m;
+    // int hDist = 0;
 
-    verticalOrderofTheBInaryTree(root , hDist , m);
+    // verticalOrderofTheBInaryTree(root , hDist , m);
 
-    map<int , vector<int>> :: iterator it;
+    // map<int , vector<int>> :: iterator it;
 
-    for(it = m.begin() ; it != m.end() ; it++){
-        for(int i = 0 ; i<(it->second).size() ; i++){
-            cout<<(it->second)[i]<<" ";
-        }
-        cout<<endl;
-    }
+    // for(it = m.begin() ; it != m.end() ; it++){
+    //     for(int i = 0 ; i<(it->second).size() ; i++){
+    //         cout<<(it->second)[i]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+
+    vector<int> arr = {1 , -1 , 1 , -1};
+    cout<<numberofSubarraysWithSumZero(arr)<<endl;
 
 
     return 0;
