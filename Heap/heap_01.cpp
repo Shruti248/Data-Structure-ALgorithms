@@ -181,52 +181,104 @@ void heapUsingPriorityQueue()
 // If sizes of max heap & minHeap not equal : Top of larger size heap
 // Else : Average of top of both heaps
 
-void insert(int x ,  priority_queue<int, vector<int>, greater<int>> &pqmin , priority_queue<int, vector<int>> &pqmax ){
-    if(pqmin.size() == pqmax.size()){
-        if(pqmax.size() == 0){
+void insert(int x, priority_queue<int, vector<int>, greater<int>> &pqmin, priority_queue<int, vector<int>> &pqmax)
+{
+    if (pqmin.size() == pqmax.size())
+    {
+        if (pqmax.size() == 0)
+        {
             pqmax.push(x);
             return;
         }
 
-        if(x<pqmax.top()){
+        if (x < pqmax.top())
+        {
             pqmax.push(x);
-        }else{
+        }
+        else
+        {
             pqmin.push(x);
         }
-    }else{
+    }
+    else
+    {
         // 2 cases
-        if(pqmax.size() > pqmin.size()){
-            if( x>= pqmax.top()){
+        if (pqmax.size() > pqmin.size())
+        {
+            if (x >= pqmax.top())
+            {
                 pqmin.push(x);
-            }else{
+            }
+            else
+            {
                 int temp = pqmax.top();
                 pqmax.pop();
                 pqmin.push(temp);
                 pqmax.push(x);
             }
-        }else{
-            if(x<=pqmin.top()){
+        }
+        else
+        {
+            if (x <= pqmin.top())
+            {
                 pqmax.push(x);
-            }else{
+            }
+            else
+            {
                 int temp = pqmin.top();
                 pqmin.pop();
                 pqmax.push(temp);
                 pqmin.push(x);
             }
         }
-
     }
 }
 
-double medianOfRunningStream(priority_queue<int, vector<int>, greater<int>> &pqmin , priority_queue<int, vector<int>> &pqmax)
+double medianOfRunningStream(priority_queue<int, vector<int>, greater<int>> &pqmin, priority_queue<int, vector<int>> &pqmax)
 {
-    if(pqmin.size() == pqmax.size()){
-        return (pqmin.top()+pqmax.top())/2.0; //.0 for typecasting
-    }else if(pqmax.size() > pqmin.size()){
+    if (pqmin.size() == pqmax.size())
+    {
+        return (pqmin.top() + pqmax.top()) / 2.0; //.0 for typecasting
+    }
+    else if (pqmax.size() > pqmin.size())
+    {
         return pqmax.top();
-    }else{
+    }
+    else
+    {
         return pqmin.top();
     }
+}
+
+typedef pair<int, pair<int, int> > ppi;
+vector<int> mergeKArrays(vector<vector<int>> arr)
+{
+    vector<int> output;
+
+    // priority queue to store the vector pair
+    priority_queue<ppi, vector<ppi>, greater<ppi>> pq;
+
+    for (int i = 0; i < arr.size(); i++)
+        pq.push({arr[i][0], {i, 0}});
+
+    while (pq.empty() == false)
+    {
+        ppi curr = pq.top();
+        pq.pop();
+
+        // i ==> Array Number
+        // j ==> Index of array number
+        int i = curr.second.first;
+        int j = curr.second.second;
+
+        output.push_back(curr.first);
+
+        // checking if the next element belongs to same array as the current array.
+        if (j + 1 < arr[i].size())
+            pq.push({arr[i][j + 1], {i, j + 1}});
+    }
+
+    return output;
 }
 
 int main()
@@ -261,22 +313,31 @@ int main()
     // heapUsingSTL(heap);
     // heapUsingPriorityQueue();
 
-    priority_queue<int, vector<int>, greater<int>> pqmin; // minHeap
-    priority_queue<int, vector<int>> pqmax;               // maxHeap
+    // priority_queue<int, vector<int>, greater<int>> pqmin; // minHeap
+    // priority_queue<int, vector<int>> pqmax;               // maxHeap
 
-    insert(10 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
-    insert(15 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
-    insert(21 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
-    insert(30 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
-    insert(18 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
-    insert(19 , pqmin , pqmax);
-    cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(10 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(15 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(21 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(30 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(18 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
+    // insert(19 , pqmin , pqmax);
+    // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
 
+    vector<vector<int>> arr{{2, 6, 12},
+                            {1, 9},
+                            {23, 34, 90, 2000}};
+
+    vector<int> output = mergeKArrays(arr);
+
+    cout << "Merged array is " << endl;
+    for (auto x : output)
+        cout << x << " ";
 
     return 0;
 }
