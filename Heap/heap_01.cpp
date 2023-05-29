@@ -142,6 +142,31 @@ void heapUsingSTL(vector<int> heap)
     }
 }
 
+// Prioroty queue
+
+void heapUsingPriorityQueue(){
+    // Push O(logn)
+    // pop O(logn)
+    // top O(1)
+    // size O(1)
+    priority_queue<int , vector<int>> pq;
+
+    pq.push(2);
+    pq.push(3);
+    pq.push(1);
+
+    cout<<pq.top()<<endl;
+    pq.pop();
+    cout<<pq.top()<<endl;
+
+    priority_queue<int , vector<int> , greater<int>> pqMinHeap;
+    pqMinHeap.push(3);
+    pqMinHeap.push(2);
+    pqMinHeap.push(1);
+    cout<<pqMinHeap.top()<<endl;
+    pqMinHeap.pop();
+    cout<<pqMinHeap.top()<<endl;
+}
 int main()
 {
     vector<int> heap = {};
@@ -171,7 +196,8 @@ int main()
     //     cout << heap[i] << " ";
     // }
 
-    heapUsingSTL(heap);
+    // heapUsingSTL(heap);
+    heapUsingPriorityQueue();
 
     return 0;
 }
