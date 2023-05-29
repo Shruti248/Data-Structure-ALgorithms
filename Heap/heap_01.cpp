@@ -50,7 +50,7 @@ void deleteNode(vector<int> &heap, int num)
             break;
     }
 
-    cout << "Element Present at index : " <<i<< endl;
+    cout << "Element Present at index : " << i << endl;
     swap(heap[i], heap[size - 1]);
 
     // Removing the element
@@ -59,6 +59,51 @@ void deleteNode(vector<int> &heap, int num)
     for (int i = size / 2 - 1; i >= 0; i--)
     {
         heapify(heap, i);
+    }
+}
+
+// Function to heapify the tree
+void heapifyonlyGivenSizeHeap(vector<int> &arr, int n, int i)
+{
+    // Finding left & right child
+    int largest = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+
+    // Setting the largest out of root, left child & right child
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // If index is not equal to largest
+    if (largest != i)
+    {
+        // using std::swap()to swap
+        swap(arr[i], arr[largest]);
+
+        // heapifying the tree recursively
+        heapifyonlyGivenSizeHeap(arr, n, largest);
+    }
+}
+
+void heapSort(vector<int> &arr)
+{
+    int n = arr.size();
+
+    // Building max Heap by heapfying the elements
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapifyonlyGivenSizeHeap(arr, n, i);
+    }
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+
+        // Heapify root element recursively to get highest element at root
+        heapifyonlyGivenSizeHeap(arr, i, 0);
     }
 }
 
@@ -71,17 +116,25 @@ int main()
     insert(heap, 15);
     insert(heap, 6);
 
-    for (int i = 0; i < heap.size(); i++)
-    {
-        cout << heap[i] << " ";
-    }
+    // for (int i = 0; i < heap.size(); i++)
+    // {
+    //     cout << heap[i] << " ";
+    // }
+
+    // cout << endl;
+    // deleteNode(heap, 10);
+
+    // for (int i = 0; i < heap.size(); i++)
+    // {
+    //     cout << heap[i] << " ";
+    // }
 
     cout << endl;
-    deleteNode(heap, 10);
-
+    heapSort(heap);
     for (int i = 0; i < heap.size(); i++)
     {
         cout << heap[i] << " ";
     }
+
     return 0;
 }
