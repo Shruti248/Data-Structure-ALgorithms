@@ -53,70 +53,77 @@ struct Node
     Node *right;
 };
 
-Node* newNode(int data){
-    Node* node = new Node;
+Node *newNode(int data)
+{
+    Node *node = new Node;
     node->data = data;
     node->left = NULL;
     node->right = NULL;
     return node;
 }
-void verticalOrderofTheBInaryTree(Node* root , int hDist , map<int , vector<int>> &m)
+void verticalOrderofTheBInaryTree(Node *root, int hDist, map<int, vector<int>> &m)
 {
-    if(root == NULL){
+    if (root == NULL)
+    {
         return;
     }
 
     m[hDist].push_back(root->data);
 
-    verticalOrderofTheBInaryTree(root->left , hDist-1 , m);
-    verticalOrderofTheBInaryTree(root->right , hDist+1 , m);
+    verticalOrderofTheBInaryTree(root->left, hDist - 1, m);
+    verticalOrderofTheBInaryTree(root->right, hDist + 1, m);
 }
 
 // Count Number of Subarrays with Sum Zero
 // Brute Force : All Possible subarrays : O(n2)
-//Oprimized :
+// Oprimized :
 // Compute Prefix Sum : Su from Starting till i
 
 // Map Prefix Sum to a Map
 // For Every Key , choose 2 values from all the occurences of the particular prefix Sum (mC2)
 // Special Case : For prefSum 0 , we have to also include them
 
-int numberofSubarraysWithSumZero(vector<int> arr){
-    map<int , int> count;
+int numberofSubarraysWithSumZero(vector<int> arr)
+{
+    map<int, int> count;
 
     int prefixSum = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-            prefixSum += arr[i];
+    for (int i = 0; i < arr.size(); i++)
+    {
+        prefixSum += arr[i];
 
-            count[prefixSum]++;
+        count[prefixSum]++;
     }
 
     int ans = 0;
 
-    map<int , int> ::iterator it;
+    map<int, int>::iterator it;
 
-    for(it = count.begin() ; it != count.end() ; it++){
+    for (it = count.begin(); it != count.end(); it++)
+    {
         int c = it->second;
 
-        ans += c*(c-1)/2;
+        ans += c * (c - 1) / 2;
 
-        if(it->first == 0){
+        if (it->first == 0)
+        {
             ans += it->second;
         }
     }
 
     return ans;
-
 }
 
 // TOp k most frequent Elements
 // We have to output elements in decreasing frequency till we reach (k+1)th distinct elements
 
-void topKMostFrequentElements(vector<int> arr , int k){
-    map<int , int> freq ;
+void topKMostFrequentElements(vector<int> arr, int k)
+{
+    map<int, int> freq;
 
-    for(int i = 0 ;  i< arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         int presentSize = freq.size();
 
         // Do this for finding Distinct ELements
@@ -128,24 +135,91 @@ void topKMostFrequentElements(vector<int> arr , int k){
         freq[arr[i]]++;
     }
 
-    vector<pair<int , int>> ans;
+    vector<pair<int, int>> ans;
 
-    map<int, int> ::iterator it;
+    map<int, int>::iterator it;
 
-    for(it = freq.begin() ; it!= freq.end() ; it++){
-        if(it->second != 0){
-            ans.push_back(make_pair(it->second , it->first));
+    for (it = freq.begin(); it != freq.end(); it++)
+    {
+        if (it->second != 0)
+        {
+            ans.push_back(make_pair(it->second, it->first));
         }
     }
 
-    sort(ans.begin() , ans.end() , greater<pair<int , int>>());
+    sort(ans.begin(), ans.end(), greater<pair<int, int>>());
 
-    vector<pair<int , int>> :: iterator it1;
+    vector<pair<int, int>>::iterator it1;
 
-    for(it1 = ans.begin() ; it1 != ans.end() ; it1++){
+    for (it1 = ans.begin(); it1 != ans.end(); it1++)
+    {
         cout << it1->second << " " << it1->first << endl;
     }
+}
 
+// Sudoku Solver
+void helper(int r, int c, vector<vector<char>> &sudoku, map<pair<int, int>, map<int, int>> &mp, vector<map<int, int>> row, vector<map<int, int>> col){
+    if(r == 9){
+        // Print The Sudoku
+        for(auto it : sudoku){
+            for(auto i : it){
+                cout<<i<<" ";
+            }
+            cout<<endl;
+
+        }
+        cout<<endl;
+        return;
+    }
+    if(c == 9){
+        helper(r+1 , 0 , sudoku , mp , row , col);
+        return;
+    }
+    if(sudoku[r][c] != '.'){
+        helper(r , c+1 , sudoku , mp , row , col);
+        return;
+    }
+    for(int i = 1 ; i<=9 ; i++){
+        int rw = r/3 , cl = c/3;
+
+        if(!mp[{rw , cl}][i] && !row[r][i] && !col[c][i]){
+            mp[{rw , cl}][i] = 1;
+            row[r][i] = 1;
+            col[c][i] = 1;
+
+            sudoku[r][c] = i+'0';
+
+            helper(r , c+1 , sudoku , mp , row , col);
+
+            mp[{rw , cl}][i] = 0;
+            row[r][i] = 0;
+            col[c][i] = 0;
+
+            sudoku[r][c] ='.';
+        }
+    }
+}
+
+void solveSudoku(vector<vector<char>> sudoku)
+{
+    map<pair<int, int>, map<int, int>> mp; // For grids
+    vector<map<int, int>> row(9);
+    vector<map<int, int>> col(9);
+
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (sudoku[i][j] != '.')
+            {
+                mp[{i / 3, j / 3}][sudoku[i][j] - '0'] = 1;
+                row[i][sudoku[i][j] = '0'] = 1;
+                col[j][sudoku[i][j] = '0'] = 1;
+            }
+        }
+    }
+
+    helper(0, 0, sudoku, mp, row, col);
 }
 
 int main()
@@ -233,7 +307,6 @@ int main()
     // vector<int> arr = {1, 2, 1, 3, 2, 1};
     // countFrequencyofElements(arr);
 
-
     // Node *root = newNode(1);
     // root->left = newNode(2);
     // root->right = newNode(3);
@@ -259,9 +332,8 @@ int main()
     // vector<int> arr = {1 , -1 , 1 , -1};
     // cout<<numberofSubarraysWithSumZero(arr)<<endl;
 
-    vector<int> arr = {1 , 2 , 2 , 2, 3 , 1};
-    topKMostFrequentElements(arr , 2);
-
+    vector<int> arr = {1, 2, 2, 2, 3, 1};
+    topKMostFrequentElements(arr, 2);
 
     return 0;
 }
