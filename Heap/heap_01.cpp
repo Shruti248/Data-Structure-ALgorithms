@@ -250,7 +250,7 @@ double medianOfRunningStream(priority_queue<int, vector<int>, greater<int>> &pqm
     }
 }
 
-typedef pair<int, pair<int, int> > ppi;
+typedef pair<int, pair<int, int>> ppi;
 vector<int> mergeKArrays(vector<vector<int>> arr)
 {
     vector<int> output;
@@ -279,6 +279,32 @@ vector<int> mergeKArrays(vector<vector<int>> arr)
     }
 
     return output;
+}
+
+// Smallest Subsequence with Sum K
+int smallestSubsequenceWithSumK(priority_queue<int, vector<int>> &pq , int k)
+{
+    int sum = 0;
+    int count = 0;
+
+    while (!pq.empty())
+    {
+        sum += pq.top();
+        pq.pop();
+
+        count++;
+
+        if (sum >= k)
+        {
+            break;
+        }
+    }
+
+    if (sum < k)
+    {
+        return 0;
+    }
+    return count;
 }
 
 int main()
@@ -329,15 +355,25 @@ int main()
     // insert(19 , pqmin , pqmax);
     // cout<<medianOfRunningStream(pqmin , pqmax)<<endl;
 
-    vector<vector<int>> arr{{2, 6, 12},
-                            {1, 9},
-                            {23, 34, 90, 2000}};
+    // vector<vector<int>> arr{{2, 6, 12},
+    //                         {1, 9},
+    //                         {23, 34, 90, 2000}};
 
-    vector<int> output = mergeKArrays(arr);
+    // vector<int> output = mergeKArrays(arr);
 
-    cout << "Merged array is " << endl;
-    for (auto x : output)
-        cout << x << " ";
+    // cout << "Merged array is " << endl;
+    // for (auto x : output)
+    //     cout << x << " ";
+
+    int k = 12;
+    priority_queue<int, vector<int>> pq;
+    pq.push(1);
+    pq.push(1);
+    pq.push(3);
+    pq.push(2);
+    pq.push(8);
+
+    cout<<smallestSubsequenceWithSumK(pq , k);
 
     return 0;
 }
