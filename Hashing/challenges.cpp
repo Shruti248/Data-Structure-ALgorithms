@@ -243,8 +243,8 @@ vector<int> kClosestElement(vector<int> arr, int X, int k)
     return ans;
 }
 
-//Time complexity: O(log(n-k))
-// Space complexity: O(k)
+// Time complexity: O(log(n-k))
+//  Space complexity: O(k)
 vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
 {
     int left = 0, right = arr.size() - k;
@@ -269,53 +269,93 @@ vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
 vector<int> kthLargestinaStream(int k, vector<int> arr)
 {
     int n = arr.size();
-	vector<int> ans(n);
+    vector<int> ans(n);
 
-	// Creating a min-heap using priority queue
-	priority_queue<int, vector<int>, greater<int> > pq;
+    // Creating a min-heap using priority queue
+    priority_queue<int, vector<int>, greater<int>> pq;
 
-	// Iterating through each element
-	for (int i = 0; i < n; i++) {
-		// If size of priority
-		// queue is less than k
-		if (pq.size() < k)
-			pq.push(arr[i]);
-		else {
-			if (arr[i] > pq.top()) {
-				pq.pop();
-				pq.push(arr[i]);
-			}
-		}
+    // Iterating through each element
+    for (int i = 0; i < n; i++)
+    {
+        // If size of priority
+        // queue is less than k
+        if (pq.size() < k)
+            pq.push(arr[i]);
+        else
+        {
+            if (arr[i] > pq.top())
+            {
+                pq.pop();
+                pq.push(arr[i]);
+            }
+        }
 
-		// If size is less than k
-		if (pq.size() < k)
-			ans[i] = -1;
-		else
-			ans[i] = pq.top();
-	}
+        // If size is less than k
+        if (pq.size() < k)
+            ans[i] = -1;
+        else
+            ans[i] = pq.top();
+    }
 
-	return ans;
+    return ans;
 }
 
 // Connect N Ropes with Minimum Cost
 // Time Complexity: O(N*log(N))
 // Auxiliary Space: O(N)
 
-int minCostToConnectNRopes(int arr[] , int n){
+int minCostToConnectNRopes(int arr[], int n)
+{
     int res = 0;
-    priority_queue<int , vector<int> , greater<int>> pq(arr , arr+n);
+    priority_queue<int, vector<int>, greater<int>> pq(arr, arr + n);
 
-    while(pq.size() > 1){
+    while (pq.size() > 1)
+    {
         int first = pq.top();
         pq.pop();
         int second = pq.top();
         pq.pop();
 
         res += first + second;
-        pq.push(first+second);
+        pq.push(first + second);
     }
 
     return res;
+}
+
+// Find Itinerary from a given list of tickets
+// Time Complexity: O(n).
+// Auxiliary Space: O(n), The extra space is used in map.
+
+void printItinerary(map<string, string> dataset)
+{
+    map<string, string> reversemap;
+    map<string, string>::iterator it;
+
+    for (it = dataset.begin(); it != dataset.end(); it++)
+    {
+        reversemap[it->second] = it->first;
+    }
+
+    string start;
+
+    for (it = dataset.begin(); it != dataset.end(); it++)
+    {
+        if(reversemap.find(it->first) == reversemap.end()){
+            start = it->first;
+            break;
+        }
+    }
+
+    if(start.empty()){
+        cout<<"Invalid Input ";
+        return;
+    }
+
+    while(it != dataset.end()){
+        cout<<it->first<<" -> "<<it->second<<" , ";
+        it = dataset.find(it->second);
+    }
 }
 
 int main()
@@ -345,7 +385,15 @@ int main()
     //     cout << res[i] << " ";
     // }
 
-    int arr[] = {4 , 3 , 2 , 6};
-    cout<<minCostToConnectNRopes(arr , 4);
+    // int arr[] = {4, 3, 2, 6};
+    // cout << minCostToConnectNRopes(arr, 4);
+
+    map<string, string> dataSet;
+    dataSet["Chennai"] = "Banglore";
+    dataSet["Bombay"] = "Delhi";
+    dataSet["Goa"] = "Chennai";
+    dataSet["Delhi"] = "Goa";
+
+    printItinerary(dataSet);
     return 0;
 }
