@@ -66,8 +66,8 @@ int maximumRepeatingElement(vector<int> arr, int k)
         }
     }
 
-       for (int i = 0; i< n; i++)
-          arr[i] = arr[i]%k;
+    for (int i = 0; i < n; i++)
+        arr[i] = arr[i] % k;
 
     return result;
 }
@@ -256,7 +256,6 @@ vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
     return vector<int>(arr.begin() + left, arr.begin() + left + k);
 }
 
-
 // Time Complexity: O(N * log K)
 // Auxiliary Space: O(K)
 vector<int> kthLargestinaStream(int k, vector<int> arr)
@@ -423,31 +422,35 @@ void groupShiftedString(string str[], int n)
     for (auto it = groupMap.begin(); it != groupMap.end(); it++)
     {
         vector<int> v = it->second;
-        for(int i = 0 ; i<v.size() ; i++){
-            cout<<str[v[i]]<<" ";
+        for (int i = 0; i < v.size(); i++)
+        {
+            cout << str[v[i]] << " ";
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
 // Sliding Window Maximum (Maximum of all subarrays of size K)
 
-vector<int> slidingWindowMaximum(vector<int> arr , int k){
+vector<int> slidingWindowMaximum(vector<int> arr, int k)
+{
     int n = arr.size();
-    vector<int> ans ;
-    priority_queue<pair<int , int>> pq;
+    vector<int> ans;
+    priority_queue<pair<int, int>> pq;
 
-    for(int i = 0 ; i<k ; i++){
-        pq.push({arr[i] , i});
+    for (int i = 0; i < k; i++)
+    {
+        pq.push({arr[i], i});
     }
 
     ans.push_back(pq.top().first);
     pq.pop();
 
-    for(int i = k ; i<n ; i++){
-        pq.push({arr[i] , i});
+    for (int i = k; i < n; i++)
+    {
+        pq.push({arr[i], i});
 
-        while(pq.top().second <= i-k)
+        while (pq.top().second <= i - k)
             pq.pop();
 
         ans.push_back(pq.top().first);
@@ -456,7 +459,24 @@ vector<int> slidingWindowMaximum(vector<int> arr , int k){
     return ans;
 }
 
+// Smallest Positive Number
+// O(nlogn)
+// O(1)
+// SOrting approach
 
+int smallestMissingPositiveNumber(int arr[], int n)
+{
+    sort(arr, arr + n);
+    int ans = 1;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] == ans)
+        {
+            ans++;
+        }
+    }
+    return ans;
+}
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
@@ -504,12 +524,15 @@ int main()
     // int n = sizeof(str) / sizeof(str[0]);
     // groupShiftedString(str, n);
 
-    vector<int> arr = { 2, 3, 7, 9, 5, 1, 6, 4, 3 };
-    int k = 3;
+    // vector<int> arr = {1, 3, -1, -3, 5, 3, 6, 7};
+    // int k = 3;
 
-    vector<int> result = slidingWindowMaximum(arr, k);
+    // vector<int> result = slidingWindowMaximum(arr, k);
 
-    for (auto i : result)
-        cout << i << " ";
+    // for (auto i : result)
+    //     cout << i << " ";
+
+    int arr[] = { 0, 1, 2, -10, -20 };
+    cout << smallestMissingPositiveNumber(arr , 5);
     return 0;
 }
