@@ -341,19 +341,22 @@ void printItinerary(map<string, string> dataset)
 
     for (it = dataset.begin(); it != dataset.end(); it++)
     {
-        if(reversemap.find(it->first) == reversemap.end()){
+        if (reversemap.find(it->first) == reversemap.end())
+        {
             start = it->first;
             break;
         }
     }
 
-    if(start.empty()){
-        cout<<"Invalid Input ";
+    if (start.empty())
+    {
+        cout << "Invalid Input ";
         return;
     }
 
-    while(it != dataset.end()){
-        cout<<it->first<<" -> "<<it->second<<" , ";
+    while (it != dataset.end())
+    {
+        cout << it->first << " -> " << it->second << " , ";
         it = dataset.find(it->second);
     }
 }
@@ -362,32 +365,77 @@ void printItinerary(map<string, string> dataset)
 // Time complexity: O(N), A single traversal of the array is required.
 // Auxiliary Space: O(N), Since the hashmap requires linear space.
 
-void countDistinct(int arr[] , int n , int k){
-    unordered_map<int , int> mp;
+void countDistinct(int arr[], int n, int k)
+{
+    unordered_map<int, int> mp;
     int distCount = 0;
 
-    for(int i = 0 ; i<k ; i++){
-        if(mp[arr[i]] == 0){
+    for (int i = 0; i < k; i++)
+    {
+        if (mp[arr[i]] == 0)
+        {
             distCount++;
         }
 
         mp[arr[i]] += 1;
     }
 
-    cout<<distCount<<endl;
+    cout << distCount << endl;
 
-    for(int i = k ; i<n ; i++){
-        if(mp[arr[i-k]] == 1){
+    for (int i = k; i < n; i++)
+    {
+        if (mp[arr[i - k]] == 1)
+        {
             distCount--;
         }
-        mp[arr[i-k]] -= 1;
+        mp[arr[i - k]] -= 1;
 
-        if(mp[arr[i]] == 0){
+        if (mp[arr[i]] == 0)
+        {
             distCount++;
         }
         mp[arr[i]] += 1;
 
-        cout<<distCount<<endl;
+        cout << distCount << endl;
+    }
+}
+
+// Group SHifted Strings
+// Time Complexity: O(N*K), where N=length of string array and K is maximum length of string in string array
+// Auxiliary Space: O(N)
+string getDiffString(string str)
+{
+    string shift = "";
+
+    for (int i = 1; i < str.length(); i++)
+    {
+        int diff = str[i] - str[i - 1];
+        if (diff < 0)
+            diff += 26;
+
+        shift += diff + 'a';
+    }
+    return shift;
+}
+
+void groupShiftedString(string str[], int n)
+{
+    map<string, vector<int>> groupMap;
+
+    for (int i = 0; i < n; i++)
+    {
+        string diffStr = getDiffString(str[i]);
+        cout << diffStr << endl;
+        groupMap[diffStr].push_back(i);
+    }
+
+    for (auto it = groupMap.begin(); it != groupMap.end(); it++)
+    {
+        vector<int> v = it->second;
+        for(int i = 0 ; i<v.size() ; i++){
+            cout<<str[v[i]]<<" ";
+        }
+        cout<<endl;
     }
 }
 
@@ -429,8 +477,13 @@ int main()
 
     // printItinerary(dataSet);
 
-    int arr[] = {1, 2, 1, 3, 4, 2, 3};
+    // int arr[] = {1, 2, 1, 3, 4, 2, 3};
 
-    countDistinct(arr, 7, 4);
+    // countDistinct(arr, 7, 4);
+
+    string str[] = {"acd", "dfg", "wyz", "yab", "mop",
+                    "bdfh", "a", "x", "moqs"};
+    int n = sizeof(str) / sizeof(str[0]);
+    groupShiftedString(str, n);
     return 0;
 }
