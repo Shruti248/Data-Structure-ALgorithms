@@ -297,6 +297,26 @@ vector<int> kthLargestinaStream(int k, vector<int> arr)
 	return ans;
 }
 
+// Connect N Ropes with Minimum Cost
+// Time Complexity: O(N*log(N))
+// Auxiliary Space: O(N)
+
+int minCostToConnectNRopes(int arr[] , int n){
+    int res = 0;
+    priority_queue<int , vector<int> , greater<int>> pq(arr , arr+n);
+
+    while(pq.size() > 1){
+        int first = pq.top();
+        pq.pop();
+        int second = pq.top();
+        pq.pop();
+
+        res += first + second;
+        pq.push(first+second);
+    }
+
+    return res;
+}
 
 int main()
 {
@@ -317,12 +337,15 @@ int main()
     //     cout << res[i] << " ";
     // }
 
-    vector<int> arr =  { 1, 2, 3, 4, 5, 6 };
-    vector<int> res = kthLargestinaStream( 4 , arr);
+    // vector<int> arr =  { 1, 2, 3, 4, 5, 6 };
+    // vector<int> res = kthLargestinaStream( 4 , arr);
 
-    for (int i = 0; i < res.size(); i++)
-    {
-        cout << res[i] << " ";
-    }
+    // for (int i = 0; i < res.size(); i++)
+    // {
+    //     cout << res[i] << " ";
+    // }
+
+    int arr[] = {4 , 3 , 2 , 6};
+    cout<<minCostToConnectNRopes(arr , 4);
     return 0;
 }
