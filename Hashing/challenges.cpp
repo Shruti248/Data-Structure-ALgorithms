@@ -261,6 +261,43 @@ vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
 
     return vector<int>(arr.begin() + left, arr.begin() + left + k);
 }
+
+// Kth largest element in the stream
+
+// Time Complexity: O(N * log K)
+// Auxiliary Space: O(K)
+vector<int> kthLargestinaStream(int k, vector<int> arr)
+{
+    int n = arr.size();
+	vector<int> ans(n);
+
+	// Creating a min-heap using priority queue
+	priority_queue<int, vector<int>, greater<int> > pq;
+
+	// Iterating through each element
+	for (int i = 0; i < n; i++) {
+		// If size of priority
+		// queue is less than k
+		if (pq.size() < k)
+			pq.push(arr[i]);
+		else {
+			if (arr[i] > pq.top()) {
+				pq.pop();
+				pq.push(arr[i]);
+			}
+		}
+
+		// If size is less than k
+		if (pq.size() < k)
+			ans[i] = -1;
+		else
+			ans[i] = pq.top();
+	}
+
+	return ans;
+}
+
+
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
@@ -271,9 +308,17 @@ int main()
     // cout << kthSmallestIntegerOptimized(arr, 2) << endl;
     // cout << kthSmallestIntegerMostOptimized(arr, 2) << endl;
 
-    vector<int> arr = {1, 2, 3, 4, 5};
+    // vector<int> arr = {1, 2, 3, 4, 5};
     // vector<int> res = kClosestElement(arr, 3, 4);
-    vector<int> res = kClosestElementsOptimized(arr, 3, 4);
+    // vector<int> res = kClosestElementsOptimized(arr, 3, 4);
+
+    // for (int i = 0; i < res.size(); i++)
+    // {
+    //     cout << res[i] << " ";
+    // }
+
+    vector<int> arr =  { 1, 2, 3, 4, 5, 6 };
+    vector<int> res = kthLargestinaStream( 4 , arr);
 
     for (int i = 0; i < res.size(); i++)
     {
