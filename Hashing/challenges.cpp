@@ -77,9 +77,99 @@ int maximumRepeatingElement(vector<int> arr, int k)
     return result;
 }
 
+// Kth smallest integer after removing natural Numbers
+// Time Complexity: O(MAX)
+// Auxiliary Space: O(MAX)
+int kthSmallestInteger(vector<int> arr, int k)
+{
+    int MAX = 100;
+    int b[MAX];
+    memset(b, 0, sizeof b); // Intializing the b variable with 0
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        b[arr[i]] = 1;
+    }
+
+    for (int i = 1; i < MAX; i++)
+    {
+        if (b[i] != 1)
+        {
+            k--;
+        }
+        if (k == 0)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+// Efficent Approach
+// Time Complexity: O(nlog(n))
+// Auxiliary Space: O(1)
+int kthSmallestIntegerOptimized(vector<int> arr, int k)
+{
+    int n = arr.size();
+    sort(arr.begin(), arr.end());
+
+    // Checking if k lies before 1st element
+    if (k < arr[0])
+        return k;
+
+    // If k is more than last element
+    if (k > arr[n - 1])
+        return k + n;
+
+    // If first element of array is 1.
+    if (arr[0] == 1)
+        k--;
+
+    // Reducing k by numbers before arr[0].
+    else
+        k -= (arr[0] - 1);
+
+    for (int i = 0; i < arr.size() - 1; i++)
+    {
+        int c = arr[i + 1] - arr[i] - 1;
+
+        if ((k - c) <= 0)
+        {
+            return arr[i] + k;
+        }
+        else
+        {
+            k = k - c;
+        }
+    }
+
+    return arr[n - 1] + k;
+}
+
+// EASIEST SOLUTION
+// O(n)
+// O(1)
+int kthSmallestIntegerMostOptimized(vector<int> arr , int k){
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(arr[i] <= k){
+            k++;
+        }else{
+            break;
+        }
+    }
+
+    return k;
+}
+
 int main()
 {
-    vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
-    cout << maximumRepeatingElement(arr , 10);
+    // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
+    // cout << maximumRepeatingElement(arr, 10);
+
+    vector<int> arr = {2, 3};
+    cout << kthSmallestInteger(arr, 2)<<endl;
+    cout << kthSmallestIntegerOptimized(arr, 2)<<endl;
+    cout << kthSmallestIntegerMostOptimized(arr, 2)<<endl;
     return 0;
 }
