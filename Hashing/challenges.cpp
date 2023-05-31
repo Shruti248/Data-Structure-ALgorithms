@@ -358,6 +358,39 @@ void printItinerary(map<string, string> dataset)
     }
 }
 
+// Count distinct elements for every window of size K
+// Time complexity: O(N), A single traversal of the array is required.
+// Auxiliary Space: O(N), Since the hashmap requires linear space.
+
+void countDistinct(int arr[] , int n , int k){
+    unordered_map<int , int> mp;
+    int distCount = 0;
+
+    for(int i = 0 ; i<k ; i++){
+        if(mp[arr[i]] == 0){
+            distCount++;
+        }
+
+        mp[arr[i]] += 1;
+    }
+
+    cout<<distCount<<endl;
+
+    for(int i = k ; i<n ; i++){
+        if(mp[arr[i-k]] == 1){
+            distCount--;
+        }
+        mp[arr[i-k]] -= 1;
+
+        if(mp[arr[i]] == 0){
+            distCount++;
+        }
+        mp[arr[i]] += 1;
+
+        cout<<distCount<<endl;
+    }
+}
+
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
@@ -388,12 +421,16 @@ int main()
     // int arr[] = {4, 3, 2, 6};
     // cout << minCostToConnectNRopes(arr, 4);
 
-    map<string, string> dataSet;
-    dataSet["Chennai"] = "Banglore";
-    dataSet["Bombay"] = "Delhi";
-    dataSet["Goa"] = "Chennai";
-    dataSet["Delhi"] = "Goa";
+    // map<string, string> dataSet;
+    // dataSet["Chennai"] = "Banglore";
+    // dataSet["Bombay"] = "Delhi";
+    // dataSet["Goa"] = "Chennai";
+    // dataSet["Delhi"] = "Goa";
 
-    printItinerary(dataSet);
+    // printItinerary(dataSet);
+
+    int arr[] = {1, 2, 1, 3, 4, 2, 3};
+
+    countDistinct(arr, 7, 4);
     return 0;
 }
