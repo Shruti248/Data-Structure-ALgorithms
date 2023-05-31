@@ -204,11 +204,11 @@ vector<int> kClosestElement(vector<int> arr, int X, int k)
 {
     vector<int> ans;
 
-    int l = findCrossOver(arr, 0, arr.size()-1, X);
+    int l = findCrossOver(arr, 0, arr.size() - 1, X);
     int r = l + 1;
     int count = 0;
 
-    cout<<l<<endl;
+    cout << l << endl;
     if (arr[l] == X)
     {
         l--;
@@ -242,6 +242,25 @@ vector<int> kClosestElement(vector<int> arr, int X, int k)
 
     return ans;
 }
+
+//Time complexity: O(log(n-k))
+// Space complexity: O(k)
+vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
+{
+    int left = 0, right = arr.size() - k;
+
+    while (left < right)
+    {
+        int mid = (left + right) / 2;
+
+        if (x - arr[mid] > arr[mid + k] - x)
+            left = mid + 1;
+        else
+            right = mid;
+    }
+
+    return vector<int>(arr.begin() + left, arr.begin() + left + k);
+}
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
@@ -252,12 +271,13 @@ int main()
     // cout << kthSmallestIntegerOptimized(arr, 2) << endl;
     // cout << kthSmallestIntegerMostOptimized(arr, 2) << endl;
 
-    vector<int> arr = {12, 16, 22, 30, 35, 39, 42,
-                       45, 48, 50, 53, 55, 56};
-    vector<int> res = kClosestElement(arr, 35, 4);
+    vector<int> arr = {1, 2, 3, 4, 5};
+    // vector<int> res = kClosestElement(arr, 3, 4);
+    vector<int> res = kClosestElementsOptimized(arr, 3, 4);
 
-    for(int i = 0 ; i<res.size() ; i++){
-        cout<<res[i]<<" ";
+    for (int i = 0; i < res.size(); i++)
+    {
+        cout << res[i] << " ";
     }
     return 0;
 }
