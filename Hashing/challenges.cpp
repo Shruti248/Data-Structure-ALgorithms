@@ -43,12 +43,8 @@ using namespace std;
 
 // Optimized
 // O(n) Time & O(1) Space
-// Following is the O(n) time and O(1) extra space approach.
-// Let us understand the approach with a simple example where arr[] = {2, 3, 3, 5, 3, 4, 1, 7}, k = 8, n = 8 (number of elements in arr[]).
 
 // Iterate though input array arr[], for every element arr[i], increment arr[arr[i]%k] by k (arr[] becomes {2, 11, 11, 29, 11, 12, 1, 15 })
-// Find the maximum value in the modified array (maximum value is 29). Index of the maximum value is the maximum repeating element (index of 29 is 3).
-// If we want to get the original array back, we can iterate through the array one more time and do arr[i] = arr[i] % k where i varies from 0 to n-1.
 
 int maximumRepeatingElement(vector<int> arr, int k)
 {
@@ -70,9 +66,8 @@ int maximumRepeatingElement(vector<int> arr, int k)
         }
     }
 
-    /* Uncomment this code to get the original array back
        for (int i = 0; i< n; i++)
-          arr[i] = arr[i]%k; */
+          arr[i] = arr[i]%k;
 
     return result;
 }
@@ -84,7 +79,6 @@ int kthSmallestInteger(vector<int> arr, int k)
 {
     int MAX = 100;
     int b[MAX];
-    memset(b, 0, sizeof b); // Intializing the b variable with 0
 
     for (int i = 0; i < arr.size(); i++)
     {
@@ -262,7 +256,6 @@ vector<int> kClosestElementsOptimized(vector<int> &arr, int k, int x)
     return vector<int>(arr.begin() + left, arr.begin() + left + k);
 }
 
-// Kth largest element in the stream
 
 // Time Complexity: O(N * log K)
 // Auxiliary Space: O(K)
@@ -362,8 +355,6 @@ void printItinerary(map<string, string> dataset)
 }
 
 // Count distinct elements for every window of size K
-// Time complexity: O(N), A single traversal of the array is required.
-// Auxiliary Space: O(N), Since the hashmap requires linear space.
 
 void countDistinct(int arr[], int n, int k)
 {
@@ -439,6 +430,33 @@ void groupShiftedString(string str[], int n)
     }
 }
 
+// Sliding Window Maximum (Maximum of all subarrays of size K)
+
+vector<int> slidingWindowMaximum(vector<int> arr , int k){
+    int n = arr.size();
+    vector<int> ans ;
+    priority_queue<pair<int , int>> pq;
+
+    for(int i = 0 ; i<k ; i++){
+        pq.push({arr[i] , i});
+    }
+
+    ans.push_back(pq.top().first);
+    pq.pop();
+
+    for(int i = k ; i<n ; i++){
+        pq.push({arr[i] , i});
+
+        while(pq.top().second <= i-k)
+            pq.pop();
+
+        ans.push_back(pq.top().first);
+    }
+
+    return ans;
+}
+
+
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
@@ -481,9 +499,17 @@ int main()
 
     // countDistinct(arr, 7, 4);
 
-    string str[] = {"acd", "dfg", "wyz", "yab", "mop",
-                    "bdfh", "a", "x", "moqs"};
-    int n = sizeof(str) / sizeof(str[0]);
-    groupShiftedString(str, n);
+    // string str[] = {"acd", "dfg", "wyz", "yab", "mop",
+    //                 "bdfh", "a", "x", "moqs"};
+    // int n = sizeof(str) / sizeof(str[0]);
+    // groupShiftedString(str, n);
+
+    vector<int> arr = { 2, 3, 7, 9, 5, 1, 6, 4, 3 };
+    int k = 3;
+
+    vector<int> result = slidingWindowMaximum(arr, k);
+
+    for (auto i : result)
+        cout << i << " ";
     return 0;
 }
