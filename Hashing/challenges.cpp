@@ -150,11 +150,16 @@ int kthSmallestIntegerOptimized(vector<int> arr, int k)
 // EASIEST SOLUTION
 // O(n)
 // O(1)
-int kthSmallestIntegerMostOptimized(vector<int> arr , int k){
-    for(int i = 0 ; i<arr.size() ; i++){
-        if(arr[i] <= k){
+int kthSmallestIntegerMostOptimized(vector<int> arr, int k)
+{
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] <= k)
+        {
             k++;
-        }else{
+        }
+        else
+        {
             break;
         }
     }
@@ -162,14 +167,97 @@ int kthSmallestIntegerMostOptimized(vector<int> arr , int k){
     return k;
 }
 
+// k CLosest ELement for X
+// Time complexity: O(Logn + k).
+// Logn for binary Search & k for finding k closest different
+// Auxiliary Space: O(1), since no extra space has been used.
+
+int findCrossOver(vector<int> arr, int low, int high, int X)
+{
+    if (arr[high] <= X)
+    {
+        // x is greater than all
+        return high;
+    }
+    if (arr[low] > X)
+    {
+        // x is smaller than all;
+        return low;
+    }
+
+    int mid = (low + high) / 2;
+
+    if (arr[mid] <= X && arr[mid + 1] > X)
+    {
+        return mid;
+    }
+
+    if (arr[mid] < X)
+    {
+        return findCrossOver(arr, mid + 1, high, X);
+    }
+
+    return findCrossOver(arr, low, mid - 1, X);
+}
+
+vector<int> kClosestElement(vector<int> arr, int X, int k)
+{
+    vector<int> ans;
+
+    int l = findCrossOver(arr, 0, arr.size()-1, X);
+    int r = l + 1;
+    int count = 0;
+
+    cout<<l<<endl;
+    if (arr[l] == X)
+    {
+        l--;
+    }
+
+    while (l >= 0 && r < arr.size() && count < k)
+    {
+        if (X - arr[l] < arr[r] - X)
+        {
+            ans.push_back(arr[l--]);
+        }
+        else
+        {
+            ans.push_back(arr[r++]);
+        }
+
+        count++;
+    }
+
+    while (count < k && l >= 0)
+    {
+        ans.push_back(arr[l--]);
+        count++;
+    }
+
+    while (count < k && r >= 0)
+    {
+        ans.push_back(arr[r++]);
+        count++;
+    }
+
+    return ans;
+}
 int main()
 {
     // vector<int> arr = {1, 2, 2, 2, 0, 2, 0, 2, 3, 8, 0, 9, 2, 3};
     // cout << maximumRepeatingElement(arr, 10);
 
-    vector<int> arr = {2, 3};
-    cout << kthSmallestInteger(arr, 2)<<endl;
-    cout << kthSmallestIntegerOptimized(arr, 2)<<endl;
-    cout << kthSmallestIntegerMostOptimized(arr, 2)<<endl;
+    // vector<int> arr = {2, 3};
+    // cout << kthSmallestInteger(arr, 2) << endl;
+    // cout << kthSmallestIntegerOptimized(arr, 2) << endl;
+    // cout << kthSmallestIntegerMostOptimized(arr, 2) << endl;
+
+    vector<int> arr = {12, 16, 22, 30, 35, 39, 42,
+                       45, 48, 50, 53, 55, 56};
+    vector<int> res = kClosestElement(arr, 35, 4);
+
+    for(int i = 0 ; i<res.size() ; i++){
+        cout<<res[i]<<" ";
+    }
     return 0;
 }
