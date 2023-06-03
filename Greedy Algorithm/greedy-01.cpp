@@ -208,6 +208,21 @@ int minSum(int a[] , int n){
     return num1 + num2;
 }
 
+// Minimum sum of absolute difference of pairs of two arrays
+// Time Complexity: O(n * logn)
+// Auxiliary Space: O(1)
+ int findMinSum(int a[] ,  int b[] , int n){
+    sort(a , a+n);
+    sort(b , b+n);
+
+    int sum = 0;
+    for(int i = 0 ; i<n ; i++){
+        sum += abs(a[i] - b[i]);
+    }
+
+    return sum;
+}
+
 int main()
 {
     // vector<int> denomiations = {1 , 2 , 5 , 10 , 20 , 50 , 100 , 200 , 500 , 2000};
@@ -238,9 +253,13 @@ int main()
     //     cout << ans[i] << " ";
     // }
 
-    int arr[]  = { 5 , 3 , 0 , 7 , 4};
+    // int arr[]  = { 5 , 3 , 0 , 7 , 4};
 
-    cout<<minSum(arr , 5);
+    // cout<<minSum(arr , 5);
+
+    int a[] = {4, 1, 8, 7};
+    int b[] = {2, 3, 6, 5};
+    cout<<findMinSum(a , b , 4);
 
     return 0;
 }
