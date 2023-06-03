@@ -190,6 +190,24 @@ vector<int> maxAndMinArrayDifference(vector<int> arr)
     return ans;
 }
 
+// Minimum sum of two numbers formed from digits of an array
+// Time Complexity: O(N * log N)
+// Auxiliary Space: O(1)
+int minSum(int a[] , int n){
+    sort(a , a+n);
+
+    int num1 = 0 , num2 = 0;
+
+    for(int i = 0 ; i<n ; i++){
+        if(i%2 == 0)
+            num1  = num1*10 + a[i];
+        else
+            num2 = num2*10 + a[i];
+    }
+    cout<<"Num 1 : "<<num1<<" , Num 2 : "<<num2<<endl;
+    return num1 + num2;
+}
+
 int main()
 {
     // vector<int> denomiations = {1 , 2 , 5 , 10 , 20 , 50 , 100 , 200 , 500 , 2000};
@@ -212,13 +230,17 @@ int main()
 
     // cout<<countRefill(4 , a , 25 , 10);
 
-    vector<int> arr{12, -3, 10, 0};
-    vector<int> ans = maxAndMinArrayDifference(arr);
+    // vector<int> arr{12, -3, 10, 0};
+    // vector<int> ans = maxAndMinArrayDifference(arr);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
+
+    int arr[]  = { 5 , 3 , 0 , 7 , 4};
+
+    cout<<minSum(arr , 5);
 
     return 0;
 }
