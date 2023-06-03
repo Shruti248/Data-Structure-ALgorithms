@@ -223,6 +223,36 @@ int minSum(int a[] , int n){
     return sum;
 }
 
+// Find maximum height pyramid from the given array of objects
+int maxLevel(int a[] , int n){
+    sort(a , a+n);
+
+    int ans = 1;
+
+    int prevWidth = a[0];
+    int prevCount = 1;
+
+    int currCount = 0;
+    int currWidth = 0;
+
+    for(int i = 1 ; i<n ; i++){
+        currWidth += a[i];
+        currCount += 1;
+
+        if(currWidth  > prevWidth && currCount > prevCount){
+            prevWidth = currWidth;
+            prevCount = currCount;
+
+            currCount = 0;
+            currWidth = 0;
+
+            ans ++;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // vector<int> denomiations = {1 , 2 , 5 , 10 , 20 , 50 , 100 , 200 , 500 , 2000};
@@ -257,9 +287,14 @@ int main()
 
     // cout<<minSum(arr , 5);
 
-    int a[] = {4, 1, 8, 7};
-    int b[] = {2, 3, 6, 5};
-    cout<<findMinSum(a , b , 4);
+    // int a[] = {4, 1, 8, 7};
+    // int b[] = {2, 3, 6, 5};
+    // cout<<findMinSum(a , b , 4);
+
+
+    int a[] = {10, 20, 30, 50, 60, 70};
+
+    cout<<maxLevel(a , 6);
 
     return 0;
 }
