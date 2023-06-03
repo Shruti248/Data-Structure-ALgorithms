@@ -193,30 +193,34 @@ vector<int> maxAndMinArrayDifference(vector<int> arr)
 // Minimum sum of two numbers formed from digits of an array
 // Time Complexity: O(N * log N)
 // Auxiliary Space: O(1)
-int minSum(int a[] , int n){
-    sort(a , a+n);
+int minSum(int a[], int n)
+{
+    sort(a, a + n);
 
-    int num1 = 0 , num2 = 0;
+    int num1 = 0, num2 = 0;
 
-    for(int i = 0 ; i<n ; i++){
-        if(i%2 == 0)
-            num1  = num1*10 + a[i];
+    for (int i = 0; i < n; i++)
+    {
+        if (i % 2 == 0)
+            num1 = num1 * 10 + a[i];
         else
-            num2 = num2*10 + a[i];
+            num2 = num2 * 10 + a[i];
     }
-    cout<<"Num 1 : "<<num1<<" , Num 2 : "<<num2<<endl;
+    cout << "Num 1 : " << num1 << " , Num 2 : " << num2 << endl;
     return num1 + num2;
 }
 
 // Minimum sum of absolute difference of pairs of two arrays
 // Time Complexity: O(n * logn)
 // Auxiliary Space: O(1)
- int findMinSum(int a[] ,  int b[] , int n){
-    sort(a , a+n);
-    sort(b , b+n);
+int findMinSum(int a[], int b[], int n)
+{
+    sort(a, a + n);
+    sort(b, b + n);
 
     int sum = 0;
-    for(int i = 0 ; i<n ; i++){
+    for (int i = 0; i < n; i++)
+    {
         sum += abs(a[i] - b[i]);
     }
 
@@ -224,8 +228,9 @@ int minSum(int a[] , int n){
 }
 
 // Find maximum height pyramid from the given array of objects
-int maxLevel(int a[] , int n){
-    sort(a , a+n);
+int maxLevel(int a[], int n)
+{
+    sort(a, a + n);
 
     int ans = 1;
 
@@ -235,24 +240,25 @@ int maxLevel(int a[] , int n){
     int currCount = 0;
     int currWidth = 0;
 
-    for(int i = 1 ; i<n ; i++){
+    for (int i = 1; i < n; i++)
+    {
         currWidth += a[i];
         currCount += 1;
 
-        if(currWidth  > prevWidth && currCount > prevCount){
+        if (currWidth > prevWidth && currCount > prevCount)
+        {
             prevWidth = currWidth;
             prevCount = currCount;
 
             currCount = 0;
             currWidth = 0;
 
-            ans ++;
+            ans++;
         }
     }
 
     return ans;
 }
-
 
 // Find Maximum Equal sum of Three Stacks
 // Time Complexity : O(n1 + n2 + n3) where n1, n2 and n3 are sizes of three stacks.
@@ -273,9 +279,9 @@ int maxSum(int stack1[], int stack2[], int stack3[], int n1,
     for (int i = 0; i < n3; i++)
         sum3 += stack3[i];
 
-
     int top1 = 0, top2 = 0, top3 = 0;
-    while (1) {
+    while (1)
+    {
         if (top1 == n1 || top2 == n2 || top3 == n3)
             return 0;
 
@@ -291,6 +297,60 @@ int maxSum(int stack1[], int stack2[], int stack3[], int n1,
     }
 }
 
+// Job Sequencing Problem
+// Time Complexity: O(N log N)
+// Auxiliary Space: O(N)
+struct Job
+{
+    char id;
+    int deadline;
+    int profit;
+};
+
+struct jobProfit {
+    bool operator()(Job const& a, Job const& b)
+    {
+        return (a.profit < b.profit);
+    }
+};
+
+void printJobScheduling(Job arr[] , int n){
+    vector<Job> result;
+
+    sort(arr , arr+n , [](Job a , Job b) {
+        return a.deadline < b.deadline;
+    });
+
+    priority_queue<Job , vector<Job> , jobProfit>  pq;
+
+    for(int i = n-1 ; i>=0 ; i--){
+        int slot_available;
+
+        if(i == 0){
+            slot_available = arr[i].deadline;
+        }else {
+            slot_available = arr[i].deadline - arr[i-1].deadline;
+        }
+
+        pq.push(arr[i]);
+
+        while(slot_available > 0 && pq.size() > 0){
+            Job job = pq.top();
+            pq.pop();
+
+            slot_available--;
+
+            result.push_back(job);
+        }
+    }
+
+    sort(result.begin() , result.end() , [&](Job a , Job b){return a.deadline < b.deadline;});
+
+    for(int i = 0 ; i<result.size() ; i++){
+        cout<<result[i].id<<" ";
+    }
+    cout<<endl;
+}
 
 int main()
 {
@@ -330,20 +390,32 @@ int main()
     // int b[] = {2, 3, 6, 5};
     // cout<<findMinSum(a , b , 4);
 
-
     // int a[] = {10, 20, 30, 50, 60, 70};
 
     // cout<<maxLevel(a , 6);
 
-    int stack1[] = { 3, 2, 1, 1, 1 };
-    int stack2[] = { 4, 3, 2 };
-    int stack3[] = { 1, 1, 4, 1 };
+    // int stack1[] = {3, 2, 1, 1, 1};
+    // int stack2[] = {4, 3, 2};
+    // int stack3[] = {1, 1, 4, 1};
 
-    int n1 = sizeof(stack1) / sizeof(stack1[0]);
-    int n2 = sizeof(stack2) / sizeof(stack2[0]);
-    int n3 = sizeof(stack3) / sizeof(stack3[0]);
+    // int n1 = sizeof(stack1) / sizeof(stack1[0]);
+    // int n2 = sizeof(stack2) / sizeof(stack2[0]);
+    // int n3 = sizeof(stack3) / sizeof(stack3[0]);
 
-    cout << maxSum(stack1, stack2, stack3, n1, n2, n3)
+    // cout << maxSum(stack1, stack2, stack3, n1, n2, n3);
+
+
+    Job arr[] = { { 'a', 2, 100 },
+                  { 'b', 1, 19 },
+                  { 'c', 2, 27 },
+                  { 'd', 1, 25 },
+                  { 'e', 3, 15 } };
+
+    int n = sizeof(arr) / sizeof(arr[0]);
+    cout << "Following is maximum profit sequence of jobs "
+            "\n";
+
+    printJobScheduling(arr, n);
 
     return 0;
 }
