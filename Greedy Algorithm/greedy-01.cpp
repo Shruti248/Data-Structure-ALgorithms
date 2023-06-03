@@ -87,7 +87,7 @@ int fractionalKnapsack(vector<pair<int, int>> a, int W)
 // Auxiliary Space: O(n)
 int optimalMergePattern(vector<int> arr)
 {
-    priority_queue<int, vector<int>, greater<int> > pq(arr.begin(), arr.end());
+    priority_queue<int, vector<int>, greater<int>> pq(arr.begin(), arr.end());
 
     int ans = 0;
     while (pq.size() > 1)
@@ -99,7 +99,66 @@ int optimalMergePattern(vector<int> arr)
 
         ans += (first + second);
         cout << "ans : " << ans << " ";
-        pq.push(first+second);
+        pq.push(first + second);
+    }
+
+    return ans;
+}
+
+// EXPEDI (Expedition)
+int countRefill(int N, vector<pair<int, int>> distAndFuels, int L /**truct currently holds l litres away from town*/, int P /**currrently P units of fuel*/)
+{
+
+    for (int i = 0; i < N; i++)
+    {
+        // initial diatnce from the truck
+        distAndFuels[i].first = L - distAndFuels[i].first;
+    }
+
+    sort(distAndFuels.begin(), distAndFuels.end());
+
+    int ans = 0;
+    int curr = P; // currnet capacity of fuel
+
+    priority_queue<int, vector<int>> pq;
+    bool flag = 0;
+
+    for (int i = 0; i < N; i++)
+    {
+        if (curr >= L)
+        {
+            break;
+        }
+
+        while (curr < distAndFuels[i].first)
+        {
+            if (pq.empty())
+            {
+                flag = 1;
+                break;
+            }
+
+            ans++;
+            curr += pq.top();
+            pq.pop();
+        }
+
+        if (flag)
+            break;
+        pq.push(distAndFuels[i].second);
+    }
+
+    if(flag)
+        return -1;
+
+    while(!pq.empty() && curr < L){
+        curr += pq.top();
+        pq.pop();
+        ans++;
+    }
+
+    if(curr < L){
+        return -1;
     }
 
     return ans;
@@ -120,7 +179,13 @@ int main()
     // cout<<fractionalKnapsack(vw , 20);
     // cout<<fractionalKnapsack(vw , 50);
 
-    vector<int> arr = {5, 4, 2, 7};
-    cout << optimalMergePattern(arr);
+    // vector<int> arr = {5, 4, 2, 7};
+    // cout << optimalMergePattern(arr);
+
+
+    vector<pair<int , int>> a = {{4 , 4} , {5 , 2 }  , {11 , 5} , {15 , 10} };
+
+    cout<<countRefill(4 , a , 25 , 10);
+
     return 0;
 }
