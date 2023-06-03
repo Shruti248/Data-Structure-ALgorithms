@@ -148,18 +148,44 @@ int countRefill(int N, vector<pair<int, int>> distAndFuels, int L /**truct curre
         pq.push(distAndFuels[i].second);
     }
 
-    if(flag)
+    if (flag)
         return -1;
 
-    while(!pq.empty() && curr < L){
+    while (!pq.empty() && curr < L)
+    {
         curr += pq.top();
         pq.pop();
         ans++;
     }
 
-    if(curr < L){
+    if (curr < L)
+    {
         return -1;
     }
+
+    return ans;
+}
+
+// MAximum & Min Array DIfference
+
+vector<int> maxAndMinArrayDifference(vector<int> arr)
+{
+    int n = arr.size();
+    vector<int> ans;
+
+    sort(arr.begin(), arr.end());
+
+    long long mx = 0, mn = 0;
+
+    for (int i = 0; i < n / 2; i++)
+    {
+        mx += (arr[i + n / 2] - arr[i]);
+
+        mn += arr[2 * i + 1] - arr[2 * i];
+    }
+
+    ans.push_back(mn);
+    ans.push_back(mx);
 
     return ans;
 }
@@ -182,10 +208,17 @@ int main()
     // vector<int> arr = {5, 4, 2, 7};
     // cout << optimalMergePattern(arr);
 
+    // vector<pair<int , int>> a = {{4 , 4} , {5 , 2 }  , {11 , 5} , {15 , 10} };
 
-    vector<pair<int , int>> a = {{4 , 4} , {5 , 2 }  , {11 , 5} , {15 , 10} };
+    // cout<<countRefill(4 , a , 25 , 10);
 
-    cout<<countRefill(4 , a , 25 , 10);
+    vector<int> arr{12, -3, 10, 0};
+    vector<int> ans = maxAndMinArrayDifference(arr);
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
 
     return 0;
 }
