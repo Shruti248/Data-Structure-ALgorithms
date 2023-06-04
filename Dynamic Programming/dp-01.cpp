@@ -206,9 +206,9 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
 {
     int t[n + 1][X + 1];
 
-    for (int i = 0; i < n+1; i++)
+    for (int i = 0; i < n + 1; i++)
     {
-        for (int j = 0; j < X+1; j++)
+        for (int j = 0; j < X + 1; j++)
         {
 
             if (i == 0)
@@ -218,7 +218,7 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
 
             else if (arr[i - 1] <= j)
             {
-                t[i][j] = t[i-1][j - arr[i - 1]] || t[i - 1][j];
+                t[i][j] = t[i - 1][j - arr[i - 1]] || t[i - 1][j];
             }
             else
             {
@@ -229,7 +229,6 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
     return t[n][X];
 }
 
-
 // Equal Sum Partition Problem
 // (Divide the array in 2 subsets whose sum is equal)
 // Input : arr output : True or false
@@ -237,26 +236,62 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
 // If the total sum of array is EVEN : Then only it can be divdided into 2 equal sum , Like 22 , 44 , 56 etc
 // But if the total sum is ODD : 23 , 43 --> no Way to get equal sum
 
-
 // Now we need to find only one partition whose sum is half
 // if ones sum is half the total sum , the other subset has automatically the other half sum
 // problem reduced to subset sum probelm of above (find subset whose sum is half(totalSum/2))
 
-bool equalSumPartition(int arr[] , int n){
+bool equalSumPartition(int arr[], int n)
+{
 
     int totalSum = 0;
 
-    for(int i = 0 ; i<n ; i++){
+    for (int i = 0; i < n; i++)
+    {
         totalSum += arr[i];
     }
 
-    if(totalSum%2 != 0){
+    if (totalSum % 2 != 0)
+    {
         // Odd Sum
         return false;
-    }else {
-        // Even Sum
-        return issubsetSum(arr , totalSum/2 , n);
     }
+    else
+    {
+        // Even Sum
+        return issubsetSum(arr, totalSum / 2, n);
+    }
+}
+
+// Count of subsets of a Given Sum
+// input : arr & Sum  , O/P : Count of satisfactory subsets
+
+int countSubsetsWithGivenSum(int arr[], int X, int n)
+{
+    int t[n + 1][X + 1];
+
+    for (int i = 0; i < n + 1; i++)
+        t[i][0] = 1;
+
+    for(int i = 1 ; i<=X ; i++){
+        t[0][i] = 0;
+    }
+
+    for (int i = 1; i < n + 1; i++)
+    {
+        for (int j = 1; j < X + 1; j++)
+        {
+
+            if (arr[i - 1] <= j)
+            {
+                t[i][j] = t[i - 1][j - arr[i - 1]] + t[i - 1][j];
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+    return t[n][X];
 }
 
 int main()
@@ -271,7 +306,10 @@ int main()
     // // cout << issubsetSum(arr, 14, 3) << endl;
     // cout << isSubsetSumTopDown(arr, 14, 3);
 
-    int arr[] = {0 , 3 , 5};
-    cout<<equalSumPartition(arr , 3);
+    // int arr[] = {0 , 3 , 5};
+    // cout<<equalSumPartition(arr , 3);
+
+    int arr[] = {2, 3, 5, 6, 8, 10};
+    cout << countSubsetsWithGivenSum(arr, 10, 6);
     return 0;
 }
