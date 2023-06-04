@@ -155,12 +155,90 @@ int knapsackTopDownApproach(int wt[], int val[], int W, int n)
     return t[n][W];
 }
 
+// --------------------------Variations of Knapsack Problem
+
+// Identification of the knapsack Pattern
+// 1) max caoacity(like W) is given
+// 2) choice of the selection from the given list of items
+
+// SUBSET SUM PROBLEM
+// PROBLEM STATEMENT : Input : Array , Sum = X ---> output : if subset present in aray with sum X (TRUE OR FALSE)
+
+// Similarity : Item Array & max (Sum)
+
+bool issubsetSum(int arr[], int X, int n)
+{
+
+    int t[n + 1][X + 1];
+    memset(t, -1, sizeof(t));
+
+    // Base condition
+    if (X == 0)
+    {
+        return true;
+    }
+    if (n <= 0)
+    {
+        return false;
+    }
+
+    if (t[n][X] != -1)
+    {
+        return t[n][X];
+    }
+
+    // Choice Diagram
+    if (arr[n - 1] <= X)
+    {
+        // Include or exclude
+        return t[n][X] = issubsetSum(arr, X - arr[n - 1], n - 1 /**Include*/) || issubsetSum(arr, X, n - 1) /**Exclude*/;
+    }
+    else
+    {
+        // Exclude
+        return t[n][X] = issubsetSum(arr, X, n - 1);
+    }
+}
+
+// top down
+
+bool isSubsetSumTopDown(int arr[], int X, int n)
+{
+    int t[n + 1][X + 1];
+
+    for (int i = 0; i < n+1; i++)
+    {
+        for (int j = 0; j < X+1; j++)
+        {
+
+            if (i == 0)
+                t[i][j] = false;
+            if (j == 0)
+                t[i][j] = true;
+
+            else if (arr[i - 1] <= j)
+            {
+                t[i][j] = t[i-1][j - arr[i - 1]] || t[i - 1][j];
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+    return t[n][X];
+}
+
 int main()
 {
-    int wt[] = {5, 20, 10};
-    int val[] = {50, 140, 60};
+    // int wt[] = {5, 20, 10};
+    // int val[] = {50, 140, 60};
 
-    cout << knapsack(wt, val, 30, 3)<<endl;
-    cout<<knapsackTopDownApproach(wt , val , 30 , 3)<<endl;
+    // cout << knapsack(wt, val, 30, 3)<<endl;
+    // cout<<knapsackTopDownApproach(wt , val , 30 , 3)<<endl;
+
+    int arr[] = {2, 5, 7};
+    // cout << issubsetSum(arr, 14, 3) << endl;
+    cout << isSubsetSumTopDown(arr, 14, 3);
     return 0;
 }
