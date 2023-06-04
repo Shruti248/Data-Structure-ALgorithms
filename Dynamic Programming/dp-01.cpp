@@ -229,6 +229,36 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
     return t[n][X];
 }
 
+
+// Equal Sum Partition Problem
+// (Divide the array in 2 subsets whose sum is equal)
+// Input : arr output : True or false
+
+// If the total sum of array is EVEN : Then only it can be divdided into 2 equal sum , Like 22 , 44 , 56 etc
+// But if the total sum is ODD : 23 , 43 --> no Way to get equal sum
+
+
+// Now we need to find only one partition whose sum is half
+// if ones sum is half the total sum , the other subset has automatically the other half sum
+// problem reduced to subset sum probelm of above (find subset whose sum is half(totalSum/2))
+
+bool equalSumPartition(int arr[] , int n){
+
+    int totalSum = 0;
+
+    for(int i = 0 ; i<n ; i++){
+        totalSum += arr[i];
+    }
+
+    if(totalSum%2 != 0){
+        // Odd Sum
+        return false;
+    }else {
+        // Even Sum
+        return issubsetSum(arr , totalSum/2 , n);
+    }
+}
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -237,8 +267,11 @@ int main()
     // cout << knapsack(wt, val, 30, 3)<<endl;
     // cout<<knapsackTopDownApproach(wt , val , 30 , 3)<<endl;
 
-    int arr[] = {2, 5, 7};
-    // cout << issubsetSum(arr, 14, 3) << endl;
-    cout << isSubsetSumTopDown(arr, 14, 3);
+    // int arr[] = {2, 5, 7};
+    // // cout << issubsetSum(arr, 14, 3) << endl;
+    // cout << isSubsetSumTopDown(arr, 14, 3);
+
+    int arr[] = {0 , 3 , 5};
+    cout<<equalSumPartition(arr , 3);
     return 0;
 }
