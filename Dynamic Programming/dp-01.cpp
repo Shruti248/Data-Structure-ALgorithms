@@ -377,6 +377,30 @@ int minSubsetSumDifference(int arr[] , int n){
 }
 
 
+// Count the number of subset wuth given DIfference
+// s1-s2 = given Diff
+
+// s1-s2 = diff
+// s1+s2 = Sum(arr)
+
+// Solving eq , s1 = (diff + sum)/2;
+// Problrm is reduced to find the number of subsets with given sum....
+
+int countNumberofSubsetWithGivenDifference(int arr[]  , int diff , int n){
+
+    int totalSum = 0;
+
+    for(int i = 0 ; i<n ; i++){
+        totalSum+=arr[i];
+    }
+
+    int s1 = (totalSum + diff)/2;
+
+    int count = countSubsetsWithGivenSum(arr , s1 , n);
+
+    return count;
+}
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -395,7 +419,10 @@ int main()
     // int arr[] = {2, 3, 5, 6, 8, 10};
     // cout << countSubsetsWithGivenSum(arr, 10, 6);
 
-    int arr[] = {1, 6, 11, 5};
-    cout<<minSubsetSumDifference(arr , 4);
+    // int arr[] = {1, 6, 11, 5};
+    // cout<<minSubsetSumDifference(arr , 4);
+
+    int arr[] = {1, 2, 3, 1, 2};
+    cout<<countNumberofSubsetWithGivenDifference(arr , 1 , 5);
     return 0;
 }
