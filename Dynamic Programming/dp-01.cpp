@@ -468,7 +468,7 @@ int unboundedknapsack(int wt[], int val[], int W, int n)
     return t[n][W];
 }
 
-// Rod cutting Problem
+// Rod cutting Problem --> ANother term for unbounded knapsack
 // input : Lnegth [] , price [] , N (Total lnegth)
 // Output : Maximize the profit
 
@@ -510,6 +510,44 @@ int rodCutting(int wt[] /**Length*/, int val[] /**Price*/, int W /**Total Lnegth
     return t[n][W];
 }
 
+// Coin Change I --> Max Number of Ways
+// input : coin[] , Sum
+// output : max ways to obtain the given sum
+
+int coinChange(int coin[], int sum, int n)
+{
+
+    // Intialization
+    int t[n + 1][sum + 1];
+
+    for (int i = 0; i < n + 1; i++)
+    {
+        for (int j = 0; j < sum + 1; j++)
+        {
+
+            if (j== 0)
+            {
+                t[i][j] = 1;
+            }
+            else if (i == 0)
+            {
+                t[i][j] = 0;
+            }
+
+            else if (coin[i - 1] <= j)
+            {
+                t[i][j] = t[i][j - coin[i - 1]] + t[i - 1][j];
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+
+    return t[n][sum];
+}
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -542,8 +580,13 @@ int main()
 
     // cout<< unboundedknapsack(wt, val, 100, 2) << endl;
 
-    int length[] = {1, 2, 3, 4, 5, 6, 7, 8};
-    int price[] = {1, 5, 8, 9, 10, 17, 17, 20};
-    cout << rodCutting(length, price, 8, 8) << endl;
+    // int length[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    // int price[] = {1, 5, 8, 9, 10, 17, 17, 20};
+    // cout << rodCutting(length, price, 8, 8) << endl;
+
+    // int coin[] = {1, 2, 3};
+    int coin[] = {2, 5, 3, 6};
+    // cout << coinChange(coin, 4, 3);
+    cout << coinChange(coin, 10, 4);
     return 0;
 }
