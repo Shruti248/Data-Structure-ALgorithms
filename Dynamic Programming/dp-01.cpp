@@ -294,6 +294,89 @@ int countSubsetsWithGivenSum(int arr[], int X, int n)
     return t[n][X];
 }
 
+
+// Min SUbset Sum Difference
+// Input : Array ,  Output : Min of s1-s2(Partioon of array in 2 parts)--> s1-s2 = MIN
+
+// Eg  1 6 11 5
+// Partition : 1 6  ----- 11 5 ----- s1 (7) , s2(16) --- s1-s2(9)
+// Partition : 1 6  5----- 11  ----- s1 (12) , s2(11) --- s1-s2(1) --> Better
+
+// Return min difference of the 2 Partition of teh given array
+
+// Similarity : Most closest to equal sum partition which was done with subset sum
+// Hence solved using subset Sum
+
+// ENd cases : Partition can be {} empty & the complete Array.
+// Therefore s2-s1 = Sum of array - 0;
+// This is the range in whihc the differences may lie.
+
+// In thsi range , involve only those numbers whose sum is actually possible. Ignore others
+// Eg 1 2 7
+// 0 ................... 10
+//  Sum actually possible : 0 , 1 , 2 , 3 , 7 , 8 , 9 , 10
+
+// 0 1 2 3 ----> S1
+// 10 9 8 7 ---> Corressponding S2
+// becuase s1 & s2 are same array so total sum will be 10 only (0+10 , 1+9 ...)
+// So find one partition & other partition is known (Range - s1);
+
+// (s1-s2) minimize
+// (s1-[Range - s1]) minimize
+// (Range - 2s1) Minimze ----> Problem reduced to one variable
+
+
+// In top down approach , the way to implement is :
+// Call the subset sum function for the range aas the sum
+// the last row of the table will give us the ans that in the range or 0 to Sum , and  considering all the elements : which subset sum can be included & which will be excluded...
+// Once we have true values of the sum that is possible , push that possible sum in th evector...(Do it for the half Part only (Since we are doing Range-2S1) & we onluy need to know the value of s1)
+// Now the vector contains only the values whose sum is possibe in the gievn array
+// Use the formula on teh vector(Range-2S1) & find the minimum
+
+int minSubsetSumDifference(int arr[] , int n){
+
+    int range = 0;
+    for(int i = 0 ; i<n ; i++){
+        range += arr[i];
+    }
+
+    bool t[n+1][range+1];
+
+    if(n == 0){
+        t[n][range] = false;
+    }
+
+    if(range == 0){
+        t[n][range] = true;
+    }
+
+    for(int i = 1 ; i<n+1 ; i++){
+        for(int j = 1 ; j<range+1 ; j++){
+            if(issubsetSum(arr , j , i)){
+                t[i][j] = true;
+            }else{
+                t[i][j] = false;
+            }
+        }
+    }
+
+    vector<int> possibleSums;
+    for(int j = 0 ; j<(range+1)/2 ; j++){
+        if(t[n][j] == true){
+            possibleSums.push_back(j);  //s1
+        }
+    }
+
+    int mn = INT_MAX;
+    for(int i = 0 ; i<possibleSums.size() ; i++){
+        // cout<<"Possible Sums : "<<possibleSums[i]<<" ";
+        mn = min(range-2*possibleSums[i] , mn);
+    }
+
+    return mn;
+}
+
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -309,7 +392,10 @@ int main()
     // int arr[] = {0 , 3 , 5};
     // cout<<equalSumPartition(arr , 3);
 
-    int arr[] = {2, 3, 5, 6, 8, 10};
-    cout << countSubsetsWithGivenSum(arr, 10, 6);
+    // int arr[] = {2, 3, 5, 6, 8, 10};
+    // cout << countSubsetsWithGivenSum(arr, 10, 6);
+
+    int arr[] = {1, 6, 11, 5};
+    cout<<minSubsetSumDifference(arr , 4);
     return 0;
 }
