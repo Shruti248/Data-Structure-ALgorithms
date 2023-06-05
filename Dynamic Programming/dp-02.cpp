@@ -76,15 +76,58 @@ int LCSTabulation(string x, string y, int xlen, int ylen)
     return t[xlen][ylen];
 }
 
+
+// Longest Common Substring
+// Substring is contigous
+
+// Once there is discontinuity , start it again from 0 , that is length = 0 , thenn incremenet if common
+
+int LCSubstring(string x, string y, int xlen, int ylen)
+{
+
+    int t[xlen + 1][ylen + 1];
+
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
+                t[i][j] = 0;
+                continue;
+            }
+
+
+            if (x[i - 1] == y[j - 1])
+                t[i][j] = 1 + t[i - 1][j - 1];
+            else
+                // Make length 0 - if discontinous
+                t[i][j] = 0;
+        }
+    }
+
+    // Find max length from table
+    int mx = INT_MIN;
+    for(int i = 0 ; i<xlen+1 ; i++){
+        for(int j = 0 ; j<ylen +1 ; j++){
+            mx = max(mx , t[i][j]);
+        }
+    }
+
+    return mx;
+}
+
 int main()
 {
     string x = "abcde";
-    string y = "cbe";
+    string y = "cbcda";
     // cout<<LCS(x , y , 5 , 3);
 
     // memset(t , -1 , sizeof(t));
     // cout<<LCSMemorized(x , y , 5 , 3);
 
-    cout << LCSTabulation(x, y, 5, 3);
+    // cout << LCSTabulation(x, y, 5, 3);
+
+    cout << LCSubstring(x, y, 5, 5);
     return 0;
 }
