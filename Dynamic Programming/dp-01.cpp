@@ -396,9 +396,21 @@ int countNumberofSubsetWithGivenDifference(int arr[]  , int diff , int n){
 
     int s1 = (totalSum + diff)/2;
 
-    int count = countSubsetsWithGivenSum(arr , s1 , n);
+    return countSubsetsWithGivenSum(arr , s1 , n);
+}
 
-    return count;
+// Target Sum
+// input : array , sum , Output : Count
+
+// You have to insert +/- sign bef ore eac h element of the  array such that the sum is equal to the given sum. Return teh total number of combinatipns possible.
+
+// Eg : 1 1 2 3  sum = 1
+
+// +1 -1 +2 -3 --> (+1 +2) + (-1 -3) --> (+1 +2 ) - (+1 +3) --> diff of subsets
+// Problem reduced to countNumberofsubsetwithgivendiff ---> countnumberofsubsetwuthgivensum
+
+int targetSum(int arr[] , int sum , int n){
+    return countNumberofSubsetWithGivenDifference(arr , sum , n);
 }
 
 int main()
@@ -422,7 +434,10 @@ int main()
     // int arr[] = {1, 6, 11, 5};
     // cout<<minSubsetSumDifference(arr , 4);
 
-    int arr[] = {1, 2, 3, 1, 2};
-    cout<<countNumberofSubsetWithGivenDifference(arr , 1 , 5);
+    // int arr[] = {1, 2, 3, 1, 2};
+    // cout<<countNumberofSubsetWithGivenDifference(arr , 1 , 5);
+
+    int arr[] = {1 , 1 , 2 , 3};
+    cout<<targetSum(arr , 1 , 4);
     return 0;
 }
