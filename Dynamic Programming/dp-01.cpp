@@ -272,7 +272,8 @@ int countSubsetsWithGivenSum(int arr[], int X, int n)
     for (int i = 0; i < n + 1; i++)
         t[i][0] = 1;
 
-    for(int i = 1 ; i<=X ; i++){
+    for (int i = 1; i <= X; i++)
+    {
         t[0][i] = 0;
     }
 
@@ -293,7 +294,6 @@ int countSubsetsWithGivenSum(int arr[], int X, int n)
     }
     return t[n][X];
 }
-
 
 // Min SUbset Sum Difference
 // Input : Array ,  Output : Min of s1-s2(Partioon of array in 2 parts)--> s1-s2 = MIN
@@ -325,7 +325,6 @@ int countSubsetsWithGivenSum(int arr[], int X, int n)
 // (s1-[Range - s1]) minimize
 // (Range - 2s1) Minimze ----> Problem reduced to one variable
 
-
 // In top down approach , the way to implement is :
 // Call the subset sum function for the range aas the sum
 // the last row of the table will give us the ans that in the range or 0 to Sum , and  considering all the elements : which subset sum can be included & which will be excluded...
@@ -333,49 +332,60 @@ int countSubsetsWithGivenSum(int arr[], int X, int n)
 // Now the vector contains only the values whose sum is possibe in the gievn array
 // Use the formula on teh vector(Range-2S1) & find the minimum
 
-int minSubsetSumDifference(int arr[] , int n){
+int minSubsetSumDifference(int arr[], int n)
+{
 
     int range = 0;
-    for(int i = 0 ; i<n ; i++){
+    for (int i = 0; i < n; i++)
+    {
         range += arr[i];
     }
 
-    bool t[n+1][range+1];
+    bool t[n + 1][range + 1];
 
-    if(n == 0){
+    if (n == 0)
+    {
         t[n][range] = false;
     }
 
-    if(range == 0){
+    if (range == 0)
+    {
         t[n][range] = true;
     }
 
-    for(int i = 1 ; i<n+1 ; i++){
-        for(int j = 1 ; j<range+1 ; j++){
-            if(issubsetSum(arr , j , i)){
+    for (int i = 1; i < n + 1; i++)
+    {
+        for (int j = 1; j < range + 1; j++)
+        {
+            if (issubsetSum(arr, j, i))
+            {
                 t[i][j] = true;
-            }else{
+            }
+            else
+            {
                 t[i][j] = false;
             }
         }
     }
 
     vector<int> possibleSums;
-    for(int j = 0 ; j<(range+1)/2 ; j++){
-        if(t[n][j] == true){
-            possibleSums.push_back(j);  //s1
+    for (int j = 0; j < (range + 1) / 2; j++)
+    {
+        if (t[n][j] == true)
+        {
+            possibleSums.push_back(j); // s1
         }
     }
 
     int mn = INT_MAX;
-    for(int i = 0 ; i<possibleSums.size() ; i++){
+    for (int i = 0; i < possibleSums.size(); i++)
+    {
         // cout<<"Possible Sums : "<<possibleSums[i]<<" ";
-        mn = min(range-2*possibleSums[i] , mn);
+        mn = min(range - 2 * possibleSums[i], mn);
     }
 
     return mn;
 }
-
 
 // Count the number of subset wuth given DIfference
 // s1-s2 = given Diff
@@ -386,17 +396,19 @@ int minSubsetSumDifference(int arr[] , int n){
 // Solving eq , s1 = (diff + sum)/2;
 // Problrm is reduced to find the number of subsets with given sum....
 
-int countNumberofSubsetWithGivenDifference(int arr[]  , int diff , int n){
+int countNumberofSubsetWithGivenDifference(int arr[], int diff, int n)
+{
 
     int totalSum = 0;
 
-    for(int i = 0 ; i<n ; i++){
-        totalSum+=arr[i];
+    for (int i = 0; i < n; i++)
+    {
+        totalSum += arr[i];
     }
 
-    int s1 = (totalSum + diff)/2;
+    int s1 = (totalSum + diff) / 2;
 
-    return countSubsetsWithGivenSum(arr , s1 , n);
+    return countSubsetsWithGivenSum(arr, s1, n);
 }
 
 // Target Sum
@@ -409,23 +421,22 @@ int countNumberofSubsetWithGivenDifference(int arr[]  , int diff , int n){
 // +1 -1 +2 -3 --> (+1 +2) + (-1 -3) --> (+1 +2 ) - (+1 +3) --> diff of subsets
 // Problem reduced to countNumberofsubsetwithgivendiff ---> countnumberofsubsetwuthgivensum
 
-int targetSum(int arr[] , int sum , int n){
-    return countNumberofSubsetWithGivenDifference(arr , sum , n);
+int targetSum(int arr[], int sum, int n)
+{
+    return countNumberofSubsetWithGivenDifference(arr, sum, n);
 }
-
 
 // Unbounded Knapsack
 // multiple occcurences of the same item is allowe...
 // Same item can be selected multiple times
 
-
 // Item can be either :
-    // selected : PENDING State --> can be used ofr multiple occurence
-    // Rejected : Then in PROCESSED state---> will not be used for multiple occurrence now
+// selected : PENDING State --> can be used ofr multiple occurence
+// Rejected : Then in PROCESSED state---> will not be used for multiple occurrence now
 
 // Choice Diagram :
-    // Not selected : Move to next item (n-1)
-    // Selected : Call to n
+// Not selected : Move to next item (n-1)
+// Selected : Call to n
 
 int unboundedknapsack(int wt[], int val[], int W, int n)
 {
@@ -445,7 +456,7 @@ int unboundedknapsack(int wt[], int val[], int W, int n)
             // Choice Diagram
             if (wt[i - 1] <= j)
             {
-                t[i][j] = max(val[i] + t[i][j - wt[i - 1]] /** t[i-1] changed to t[i]*/, t[i - 1][j]);
+                t[i][j] = max(val[i - 1] + t[i][j - wt[i - 1]] /** t[i-1] changed to t[i]*/, t[i - 1][j]);
             }
             else
             {
@@ -484,10 +495,10 @@ int main()
     // int arr[] = {1 , 1 , 2 , 3};
     // cout<<targetSum(arr , 1 , 4);
 
-    int wt[] = {5, 20, 10};
-    int val[] = {50, 140, 60};
+    int val[] = {1, 30};
+    int wt[] = {1, 50};
 
-    cout << unboundedknapsack(wt, val, 30, 3)<<endl;
+    cout<< unboundedknapsack(wt, val, 100, 2) << endl;
 
     return 0;
 }
