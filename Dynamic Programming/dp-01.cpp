@@ -525,7 +525,7 @@ int coinChange(int coin[], int sum, int n)
         for (int j = 0; j < sum + 1; j++)
         {
 
-            if (j== 0)
+            if (j == 0)
             {
                 t[i][j] = 1;
             }
@@ -537,6 +537,68 @@ int coinChange(int coin[], int sum, int n)
             else if (coin[i - 1] <= j)
             {
                 t[i][j] = t[i][j - coin[i - 1]] + t[i - 1][j];
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+
+    return t[n][sum];
+}
+
+// Coin Change II : Min Number of coins
+// Input : Coin[] , sum
+// Output : Min number of coins used to get teh required sum
+
+int coinChangeII(int coin[], int sum, int n)
+{
+
+    int t[n + 1][sum + 1];
+
+    for (int i = 0; i < n + 1; i++)
+    {
+        for (int j = 0; j < sum + 1; j++)
+        {
+
+             if (j == 0)
+            {
+                // if sum = 0 , then min coin needed is 0
+                t[i][j] = 0;
+            }
+
+            if (i == 0)
+            {
+                // If no coins present in the bag & we want the some sum , then we need infinite coins (INT_MAX)
+                t[i][j] = INT_MAX - 1;
+            }
+
+            if (i == 1)
+            {
+                // We need t0 initialize the second row as well for this question
+                // use INT_MAX-1 , wehere even if we have coins , it is not possible to compute the sum with the available coin
+                if (j % coin[i-1] == 0)
+                {
+                    t[i][j] = j / coin[i-1];
+                }
+                else
+                {
+                    t[i][j] = INT_MAX - 1;
+                }
+            }
+        }
+    }
+
+    t[0][0] = 0;
+
+    for (int i = 2; i < n + 1; i++)
+    {
+        for (int j = 1; j < sum + 1; j++)
+        {
+            if (coin[i - 1] <= j)
+            {
+                t[i][j] = min(t[i - 1][j], 1 + t[i][j - coin[i - 1]]);
             }
             else
             {
@@ -585,8 +647,11 @@ int main()
     // cout << rodCutting(length, price, 8, 8) << endl;
 
     // int coin[] = {1, 2, 3};
-    int coin[] = {2, 5, 3, 6};
+    // int coin[] = {2, 5, 3, 6};
     // cout << coinChange(coin, 4, 3);
-    cout << coinChange(coin, 10, 4);
+    // cout << coinChange(coin, 10, 4);
+
+    int coin[] = {25, 10, 5};
+    cout << coinChangeII(coin, 30, 3);
     return 0;
 }
