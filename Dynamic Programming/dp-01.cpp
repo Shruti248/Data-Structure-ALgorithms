@@ -468,6 +468,48 @@ int unboundedknapsack(int wt[], int val[], int W, int n)
     return t[n][W];
 }
 
+// Rod cutting Problem
+// input : Lnegth [] , price [] , N (Total lnegth)
+// Output : Maximize the profit
+
+// Cut the road of N length such that profit is maximized
+
+// Spmetimes only price array will be given of the same size as N , so contruct length array of size N (1 to N);
+
+// THSI IS UBOUNDED KNAPSACK ONLY --- exact same code
+// wt arr = length arr[]
+// val arr = price arr[]
+
+int rodCutting(int wt[] /**Length*/, int val[] /**Price*/, int W /**Total Lnegth*/, int n)
+{
+
+    int t[n + 1][W + 1];
+    // base
+    for (int i = 0; i < n + 1; i++)
+    {
+        for (int j = 0; j < W + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
+                t[i][j] = 0;
+                continue;
+            }
+
+            // Choice Diagram
+            if (wt[i - 1] <= j)
+            {
+                t[i][j] = max(val[i - 1] + t[i][j - wt[i - 1]] /** t[i-1] changed to t[i]*/, t[i - 1][j]);
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+
+    return t[n][W];
+}
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -495,10 +537,13 @@ int main()
     // int arr[] = {1 , 1 , 2 , 3};
     // cout<<targetSum(arr , 1 , 4);
 
-    int val[] = {1, 30};
-    int wt[] = {1, 50};
+    // int val[] = {1, 30};
+    // int wt[] = {1, 50};
 
-    cout<< unboundedknapsack(wt, val, 100, 2) << endl;
+    // cout<< unboundedknapsack(wt, val, 100, 2) << endl;
 
+    int length[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int price[] = {1, 5, 8, 9, 10, 17, 17, 20};
+    cout << rodCutting(length, price, 8, 8) << endl;
     return 0;
 }
