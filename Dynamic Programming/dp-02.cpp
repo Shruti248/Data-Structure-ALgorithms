@@ -28,7 +28,7 @@ int LCS(string x, string y, int xlen, int ylen)
 }
 
 // Memorized Version (Bottom Up Approach)
-int static t[1001][1001];
+// int static t[1001][1001];
 int LCSMemorized(string x, string y, int xlen, int ylen)
 {
     // Bse condition
@@ -37,9 +37,10 @@ int LCSMemorized(string x, string y, int xlen, int ylen)
         return 0;
     }
 
-    // int t[xlen+1][ylen+1]; --> Depends on constraint : If x , y max value is 1000 , take one more .
+    int t[xlen + 1][ylen + 1]; //--> Depends on constraint : If x , y max value is 1000 , take one more .
+    // memset(t , -1 , sizeof(t));
 
-    if(t[xlen][ylen] != -1)
+    if (t[xlen][ylen] != -1)
         return t[xlen][ylen];
 
     // Choice Diagram
@@ -49,15 +50,41 @@ int LCSMemorized(string x, string y, int xlen, int ylen)
         return t[xlen][ylen] = max(LCSMemorized(x, y, xlen - 1, ylen), LCSMemorized(x, y, xlen, ylen - 1));
 }
 
+// Tabulation : Top Down
+int LCSTabulation(string x, string y, int xlen, int ylen)
+{
+
+    int t[xlen + 1][ylen + 1];
+
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
+                t[i][j] = 0;
+                continue;
+            }
+
+            if (x[i - 1] == y[j - 1])
+                t[i][j] = 1 + t[i - 1][j - 1];
+            else
+                t[i][j] = max(t[i][j - 1], t[i - 1][j]);
+        }
+    }
+
+    return t[xlen][ylen];
+}
 
 int main()
 {
     string x = "abcde";
-    string y="cbe";
+    string y = "cbe";
     // cout<<LCS(x , y , 5 , 3);
 
+    // memset(t , -1 , sizeof(t));
+    // cout<<LCSMemorized(x , y , 5 , 3);
 
-    memset(t , -1 , sizeof(t));
-    cout<<LCSMemorized(x , y , 5 , 3);
+    cout << LCSTabulation(x, y, 5, 3);
     return 0;
 }
