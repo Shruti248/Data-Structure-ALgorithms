@@ -413,6 +413,50 @@ int targetSum(int arr[] , int sum , int n){
     return countNumberofSubsetWithGivenDifference(arr , sum , n);
 }
 
+
+// Unbounded Knapsack
+// multiple occcurences of the same item is allowe...
+// Same item can be selected multiple times
+
+
+// Item can be either :
+    // selected : PENDING State --> can be used ofr multiple occurence
+    // Rejected : Then in PROCESSED state---> will not be used for multiple occurrence now
+
+// Choice Diagram :
+    // Not selected : Move to next item (n-1)
+    // Selected : Call to n
+
+int unboundedknapsack(int wt[], int val[], int W, int n)
+{
+
+    int t[n + 1][W + 1];
+    // base
+    for (int i = 0; i < n + 1; i++)
+    {
+        for (int j = 0; j < W + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
+                t[i][j] = 0;
+                continue;
+            }
+
+            // Choice Diagram
+            if (wt[i - 1] <= j)
+            {
+                t[i][j] = max(val[i] + t[i][j - wt[i - 1]] /** t[i-1] changed to t[i]*/, t[i - 1][j]);
+            }
+            else
+            {
+                t[i][j] = t[i - 1][j];
+            }
+        }
+    }
+
+    return t[n][W];
+}
+
 int main()
 {
     // int wt[] = {5, 20, 10};
@@ -437,7 +481,13 @@ int main()
     // int arr[] = {1, 2, 3, 1, 2};
     // cout<<countNumberofSubsetWithGivenDifference(arr , 1 , 5);
 
-    int arr[] = {1 , 1 , 2 , 3};
-    cout<<targetSum(arr , 1 , 4);
+    // int arr[] = {1 , 1 , 2 , 3};
+    // cout<<targetSum(arr , 1 , 4);
+
+    int wt[] = {5, 20, 10};
+    int val[] = {50, 140, 60};
+
+    cout << unboundedknapsack(wt, val, 30, 3)<<endl;
+
     return 0;
 }
