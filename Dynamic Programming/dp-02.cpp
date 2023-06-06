@@ -388,7 +388,18 @@ int LRS(string x, int xlen)
 
 bool sequencePatternMatching(string x, string y, int xlen, int ylen)
 {
-    return LCS(x , y , xlen , ylen) == min(xlen , ylen);
+    if (xlen == 0 && ylen == 0)
+    {
+        // "" is a subsequence of ""
+        return true;
+    }
+    else if (ylen == 0)
+    {
+        // abcd is not a subsequence of ""
+        return false;
+    }
+
+    return LCS(x, y, xlen, ylen) == min(xlen, ylen);
 }
 
 int main()
@@ -418,6 +429,6 @@ int main()
 
     // cout << LRS(x, 8);
 
-    cout<<sequencePatternMatching(x , y , 3 , 6);
+    cout << sequencePatternMatching(x, y, 3, 6);
     return 0;
 }
