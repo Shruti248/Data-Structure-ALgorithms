@@ -228,9 +228,28 @@ int minInsertionAndDeletiontoOConvertString(string x, string y, int xlen, int yl
     return xlen+ylen-2*lcs;
 }
 
+
+// Largest Palindromic Subsequence
+// input : agbcba
+// Output : 5 (length of longest plaindromic subsequence)
+
+// Eg : a -> a g b c b a
+// Reverse of a = a b c b g a
+// Applying LCS on above two string : a b c b a --> Longest Palindromic subsequence
+
+// LPS (x)= (equivalent to) LCS(x , reverse(x));
+
+int LPS(string x , int xlen){
+
+    string revX = x;
+    reverse(revX.begin() , revX.end());
+    return LCS(x ,  revX , xlen , xlen);
+
+}
+
 int main()
 {
-    string x = "abcde";
+    string x = "agbcba";
     string y = "ccda";
     // cout<<LCS(x , y , 5 , 3);
 
@@ -245,6 +264,8 @@ int main()
 
     // cout << shortestCommonSuperSequence(x, y, 5, 4);
 
-    cout<<minInsertionAndDeletiontoOConvertString(x , y , 5 , 4);
+    // cout<<minInsertionAndDeletiontoOConvertString(x , y , 5 , 4);
+
+    cout<<LPS(x , 6)<<endl;
     return 0;
 }
