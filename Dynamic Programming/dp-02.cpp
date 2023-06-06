@@ -174,6 +174,34 @@ string printLCS(string x, string y, int xlen, int ylen)
 
 }
 
+// Shortest Common Supersequence
+// Input : X Y String
+// Output : Merge the 2 strings in such a way that both strig X & Y is present in it.(As a subsequence) (Shortest possible String)
+
+// Eg : X : geek , y : eke ---> output : geeke
+// Eg : X : aggtab , y : gxtxayb ---> output : aggtgxabtxaxb
+
+// Any string is said to be supersequence when the other 2 subsequences(strings) are present in it.
+// Sequence is maintained in subsequence
+// Subsequence not necessary contigouts
+
+// Output the length of the shortest supersubsequence(xlen + ylen - lcs)
+
+int shortestCommonSuperSequence(string x , string y , int xlen , int ylen){
+    // Same letters in both string are written only once...
+    int lcs = LCS(x , y , xlen , ylen);
+
+    // int diffLettersinX = xlen-lcs;
+    // int diffLettersinY = ylen-lcs;
+
+    // return lcs + diffLettersinX + diffLettersinY;
+
+    // Bcoz lcs in present in both , we substract it 1 time...
+    return xlen + ylen - lcs;
+}
+
+
+
 int main()
 {
     string x = "abcde";
@@ -187,6 +215,8 @@ int main()
 
     // cout << LCSubstring(x, y, 5, 5);
 
-    cout << printLCS(x, y, 5, 4);
+    // cout << printLCS(x, y, 5, 4);
+
+    cout<<shortestCommonSuperSequence(x , y , 5 , 4);
     return 0;
 }
