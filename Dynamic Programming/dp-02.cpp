@@ -310,9 +310,59 @@ string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen)
     return ans;
 }
 
+// Longest Repeating Subsequence
+// Order should be same & can be discontinous
+
+//Eg : a a b e b c d d
+// Subsequenvce 1 : a b d --> you cannot use this letters from thes string again : So string is : aebcd
+// SUbsequence 2 : a b d
+// ABD occcurs 2 x times --> Ans : abd (Output : Print the length --> 3)
+
+// Approach :
+// String 1 : a a b e b c d d
+// String 2 : a a b e b c d d  (Same string)
+// LCS (string 1 & 2) : a a b e b c d d
+
+// if i == j for any letter -->do not include
+// Therefore , leetters chosen are as follows :
+// a(0 1) a(1 0) b(2 4) e(3 3) b(4 2) c(5 5) d(6 7) d(7 6)  --> Pairing done in the string 1 with string 2 , means a of 0th index is matched with a of 1st index of string 2....
+
+// Now e & c will be removed
+//  a a b b d d --> ans : 6/2 = 3
+
+
+// apply i != j in the code of LCS
+
+int LRS(string x , int xlen){
+
+    string y = x;
+    int ylen = xlen;
+
+    int t[xlen+1][ylen+1];
+
+    for(int i = 0 ; i<xlen+1 ; i++){
+        for(int j = 0 ; j<ylen+1 ; j++){
+            if( i == 0 || j == 0){
+                t[i][j] = 0;
+                continue;
+            }
+
+            /** Added this condition on LCS CASE (i != j)*/
+            if(x[i-1] == y[j-1] && i != j ){
+                t[i][j] = 1 + t[i-1][j-1];
+            }else{
+                t[i][j] = max(t[i-1][j] , t[i][j-1]);
+            }
+        }
+    }
+
+    return t[xlen][ylen];
+}
+
+
 int main()
 {
-    string x = "acbcf";
+    string x = "aabebcdd";
     string y = "abcdaf";
     // cout<<LCS(x , y , 5 , 3);
 
@@ -333,6 +383,8 @@ int main()
 
     // cout<<minNoOfDeletionForPalindrome(x , 5);
 
-    cout<<printLongestCommonSupersequence(x , y , 5 , 6);
+    // cout<<printLongestCommonSupersequence(x , y , 5 , 6);
+
+    cout<<LRS(x , 8);
     return 0;
 }
