@@ -251,10 +251,69 @@ int minNoOfDeletionForPalindrome(string x , int xlen){
     return xlen - LPS(x , xlen);
 }
 
+// Print Longest common supersequence
+
+string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen){
+
+    int t[xlen+1][ylen+1];
+
+    // LCS Tabulation
+    for(int i = 0 ; i<xlen+1 ; i++){
+        for(int j = 0 ; j<ylen+1 ; j++){
+            if(i == 0 || j == 0){
+                t[i][j] = 0;
+                continue;
+            }
+
+            if(x[i-1] == y[j-1]){
+                t[i][j] = 1 + t[i-1][j-1];
+            }else{
+                t[i][j] = max(t[i-1][j] , t[i][j-1]);
+            }
+        }
+    }
+    // LCS Tabulation
+
+    // Traversing from last
+    string ans = "";
+    int i = xlen , j = ylen;
+
+    while(i > 0 && j > 0){
+        if(x[i-1] == y[j-1]){
+            ans += x[i-1];
+            i--;
+            j--;
+        }else{
+            if(t[i-1][j] > t[i][j-1]){
+                ans+= x[i-1];
+                i--;
+            }else {
+                ans += y[j-1];
+                j--;
+            }
+        }
+    }
+
+    while(i > 0){
+        // take left characters from string x
+        ans += x[i-1];
+        i--;
+    }
+    while(j > 0){
+        // take left characters from string x
+        ans += y[j-1];
+        j--;
+    }
+
+    reverse(ans.begin() , ans.end());
+
+    return ans;
+}
+
 int main()
 {
-    string x = "agbcba";
-    string y = "ccda";
+    string x = "acbcf";
+    string y = "abcdaf";
     // cout<<LCS(x , y , 5 , 3);
 
     // memset(t , -1 , sizeof(t));
@@ -272,6 +331,8 @@ int main()
 
     // cout<<LPS(x , 6)<<endl;
 
-    cout<<minNoOfDeletionForPalindrome(x , 5);
+    // cout<<minNoOfDeletionForPalindrome(x , 5);
+
+    cout<<printLongestCommonSupersequence(x , y , 5 , 6);
     return 0;
 }
