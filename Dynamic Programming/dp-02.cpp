@@ -76,12 +76,12 @@ int LCSTabulation(string x, string y, int xlen, int ylen)
     return t[xlen][ylen];
 }
 
-
 // Longest Common Substring
 // Substring is contigous
 
 // Once there is discontinuity , start it again from 0 , that is length = 0 , thenn incremenet if common
 
+// Same question : Maximum Length of Repeated Subarray
 int LCSubstring(string x, string y, int xlen, int ylen)
 {
 
@@ -97,7 +97,6 @@ int LCSubstring(string x, string y, int xlen, int ylen)
                 continue;
             }
 
-
             if (x[i - 1] == y[j - 1])
                 t[i][j] = 1 + t[i - 1][j - 1];
             else
@@ -108,19 +107,77 @@ int LCSubstring(string x, string y, int xlen, int ylen)
 
     // Find max length from table
     int mx = INT_MIN;
-    for(int i = 0 ; i<xlen+1 ; i++){
-        for(int j = 0 ; j<ylen +1 ; j++){
-            mx = max(mx , t[i][j]);
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            mx = max(mx, t[i][j]);
         }
     }
 
     return mx;
 }
 
+// Print LCS between 2 strings
+// INput  X Y String , Output : The actual subsequences
+
+string printLCS(string x, string y, int xlen, int ylen)
+{
+
+    // LCS Table
+    int t[xlen + 1][ylen + 1];
+
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
+                t[i][j] = 0;
+                continue;
+            }
+
+            if (x[i - 1] == y[j - 1])
+                t[i][j] = 1 + t[i - 1][j - 1];
+            else
+                // Make length 0 - if discontinous
+                t[i][j] = 0;
+        }
+    }
+
+    // Start from last
+    int i = xlen , j = ylen;
+    string ans = "";
+
+    while(i > 0 && j>0){
+        if(x[i-1] == y[j-1]){
+            ans += x[i-1];
+            i--;
+            j--;
+            // Got the string equal so moved to upper diagronal , bcoz that is where we had came from in th etable
+        }else{
+            // Left block element greater than upper block element
+            if(t[i][j-1] > t[i-1][j]){
+                j--;
+            }else {
+                // upper block element greater than left block element
+                i--;
+            }
+        }
+    }
+
+    // Since we started from last  , teh string taht we got is in reverse format..
+    // to get the LCS in correct order , reverse the string
+    reverse(ans.begin() , ans.end());
+
+    return ans;
+
+}
+
 int main()
 {
     string x = "abcde";
-    string y = "cbcda";
+    string y = "ccda";
     // cout<<LCS(x , y , 5 , 3);
 
     // memset(t , -1 , sizeof(t));
@@ -128,6 +185,8 @@ int main()
 
     // cout << LCSTabulation(x, y, 5, 3);
 
-    cout << LCSubstring(x, y, 5, 5);
+    // cout << LCSubstring(x, y, 5, 5);
+
+    cout << printLCS(x, y, 5, 4);
     return 0;
 }
