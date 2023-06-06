@@ -146,20 +146,27 @@ string printLCS(string x, string y, int xlen, int ylen)
     }
 
     // Start from last
-    int i = xlen , j = ylen;
+    int i = xlen, j = ylen;
     string ans = "";
 
-    while(i > 0 && j>0){
-        if(x[i-1] == y[j-1]){
-            ans += x[i-1];
+    while (i > 0 && j > 0)
+    {
+        if (x[i - 1] == y[j - 1])
+        {
+            ans += x[i - 1];
             i--;
             j--;
             // Got the string equal so moved to upper diagronal , bcoz that is where we had came from in th etable
-        }else{
+        }
+        else
+        {
             // Left block element greater than upper block element
-            if(t[i][j-1] > t[i-1][j]){
+            if (t[i][j - 1] > t[i - 1][j])
+            {
                 j--;
-            }else {
+            }
+            else
+            {
                 // upper block element greater than left block element
                 i--;
             }
@@ -168,10 +175,9 @@ string printLCS(string x, string y, int xlen, int ylen)
 
     // Since we started from last  , teh string taht we got is in reverse format..
     // to get the LCS in correct order , reverse the string
-    reverse(ans.begin() , ans.end());
+    reverse(ans.begin(), ans.end());
 
     return ans;
-
 }
 
 // Shortest Common Supersequence
@@ -187,9 +193,10 @@ string printLCS(string x, string y, int xlen, int ylen)
 
 // Output the length of the shortest supersubsequence(xlen + ylen - lcs)
 
-int shortestCommonSuperSequence(string x , string y , int xlen , int ylen){
+int shortestCommonSuperSequence(string x, string y, int xlen, int ylen)
+{
     // Same letters in both string are written only once...
-    int lcs = LCS(x , y , xlen , ylen);
+    int lcs = LCS(x, y, xlen, ylen);
 
     // int diffLettersinX = xlen-lcs;
     // int diffLettersinY = ylen-lcs;
@@ -200,7 +207,26 @@ int shortestCommonSuperSequence(string x , string y , int xlen , int ylen){
     return xlen + ylen - lcs;
 }
 
+// Minimum number of insertion & deletion to convert String x -> to string y
 
+// Input : String x , string y
+// Output : Min No. of insertion ,Min no of deletion
+
+// Eg : heap , pea ---> insert p in heap in frot --> pheap --> delete h & p --> pea
+
+// We observe the untouched part ea(no insertion & deletion) is LCS
+
+int minInsertionAndDeletiontoOConvertString(string x, string y, int xlen, int ylen)
+{
+
+    int lcs = LCS(x, y, xlen, ylen);
+
+    // int insertion = ylen - lcs;
+    // int deletion = xlen - lcs;
+
+    // return insertion + deletion;
+    return xlen+ylen-2*lcs;
+}
 
 int main()
 {
@@ -217,6 +243,8 @@ int main()
 
     // cout << printLCS(x, y, 5, 4);
 
-    cout<<shortestCommonSuperSequence(x , y , 5 , 4);
+    // cout << shortestCommonSuperSequence(x, y, 5, 4);
+
+    cout<<minInsertionAndDeletiontoOConvertString(x , y , 5 , 4);
     return 0;
 }
