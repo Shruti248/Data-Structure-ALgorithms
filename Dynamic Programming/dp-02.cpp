@@ -402,9 +402,14 @@ bool sequencePatternMatching(string x, string y, int xlen, int ylen)
     return LCS(x, y, xlen, ylen) == min(xlen, ylen);
 }
 
+// Minimum number of insertion in a string to make a palindrome
+int minInsertionToMakeAPalindrome(string x ,int xlen){
+    return xlen-LPS(x , xlen);
+}
+
 int main()
 {
-    string x = "axy";
+    string x = "acbcbda";
     string y = "adxcpy";
     // cout<<LCS(x , y , 5 , 3);
 
@@ -429,6 +434,8 @@ int main()
 
     // cout << LRS(x, 8);
 
-    cout << sequencePatternMatching(x, y, 3, 6);
+    // cout << sequencePatternMatching(x, y, 3, 6);
+
+    cout<<minInsertionToMakeAPalindrome(x , 7);
     return 0;
 }
