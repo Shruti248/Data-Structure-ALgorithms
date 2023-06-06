@@ -225,9 +225,8 @@ int minInsertionAndDeletiontoOConvertString(string x, string y, int xlen, int yl
     // int deletion = xlen - lcs;
 
     // return insertion + deletion;
-    return xlen+ylen-2*lcs;
+    return xlen + ylen - 2 * lcs;
 }
-
 
 // Largest Palindromic Subsequence
 // input : agbcba
@@ -239,36 +238,45 @@ int minInsertionAndDeletiontoOConvertString(string x, string y, int xlen, int yl
 
 // LPS (x)= (equivalent to) LCS(x , reverse(x));
 
-int LPS(string x , int xlen){
+int LPS(string x, int xlen)
+{
 
     string revX = x;
-    reverse(revX.begin() , revX.end());
-    return LCS(x ,  revX , xlen , xlen);
+    reverse(revX.begin(), revX.end());
+    return LCS(x, revX, xlen, xlen);
 }
 
 // Minimum no of deletion in a string to make it palindrome
-int minNoOfDeletionForPalindrome(string x , int xlen){
-    return xlen - LPS(x , xlen);
+int minNoOfDeletionForPalindrome(string x, int xlen)
+{
+    return xlen - LPS(x, xlen);
 }
 
 // Print Longest common supersequence
 
-string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen){
+string printLongestCommonSupersequence(string x, string y, int xlen, int ylen)
+{
 
-    int t[xlen+1][ylen+1];
+    int t[xlen + 1][ylen + 1];
 
     // LCS Tabulation
-    for(int i = 0 ; i<xlen+1 ; i++){
-        for(int j = 0 ; j<ylen+1 ; j++){
-            if(i == 0 || j == 0){
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
                 t[i][j] = 0;
                 continue;
             }
 
-            if(x[i-1] == y[j-1]){
-                t[i][j] = 1 + t[i-1][j-1];
-            }else{
-                t[i][j] = max(t[i-1][j] , t[i][j-1]);
+            if (x[i - 1] == y[j - 1])
+            {
+                t[i][j] = 1 + t[i - 1][j - 1];
+            }
+            else
+            {
+                t[i][j] = max(t[i - 1][j], t[i][j - 1]);
             }
         }
     }
@@ -276,36 +284,45 @@ string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen)
 
     // Traversing from last
     string ans = "";
-    int i = xlen , j = ylen;
+    int i = xlen, j = ylen;
 
-    while(i > 0 && j > 0){
-        if(x[i-1] == y[j-1]){
-            ans += x[i-1];
+    while (i > 0 && j > 0)
+    {
+        if (x[i - 1] == y[j - 1])
+        {
+            ans += x[i - 1];
             i--;
             j--;
-        }else{
-            if(t[i-1][j] > t[i][j-1]){
-                ans+= x[i-1];
+        }
+        else
+        {
+            if (t[i - 1][j] > t[i][j - 1])
+            {
+                ans += x[i - 1];
                 i--;
-            }else {
-                ans += y[j-1];
+            }
+            else
+            {
+                ans += y[j - 1];
                 j--;
             }
         }
     }
 
-    while(i > 0){
+    while (i > 0)
+    {
         // take left characters from string x
-        ans += x[i-1];
+        ans += x[i - 1];
         i--;
     }
-    while(j > 0){
+    while (j > 0)
+    {
         // take left characters from string x
-        ans += y[j-1];
+        ans += y[j - 1];
         j--;
     }
 
-    reverse(ans.begin() , ans.end());
+    reverse(ans.begin(), ans.end());
 
     return ans;
 }
@@ -313,10 +330,10 @@ string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen)
 // Longest Repeating Subsequence
 // Order should be same & can be discontinous
 
-//Eg : a a b e b c d d
-// Subsequenvce 1 : a b d --> you cannot use this letters from thes string again : So string is : aebcd
-// SUbsequence 2 : a b d
-// ABD occcurs 2 x times --> Ans : abd (Output : Print the length --> 3)
+// Eg : a a b e b c d d
+//  Subsequenvce 1 : a b d --> you cannot use this letters from thes string again : So string is : aebcd
+//  SUbsequence 2 : a b d
+//  ABD occcurs 2 x times --> Ans : abd (Output : Print the length --> 3)
 
 // Approach :
 // String 1 : a a b e b c d d
@@ -330,28 +347,34 @@ string printLongestCommonSupersequence(string x , string y ,int xlen , int ylen)
 // Now e & c will be removed
 //  a a b b d d --> ans : 6/2 = 3
 
-
 // apply i != j in the code of LCS
 
-int LRS(string x , int xlen){
+int LRS(string x, int xlen)
+{
 
     string y = x;
     int ylen = xlen;
 
-    int t[xlen+1][ylen+1];
+    int t[xlen + 1][ylen + 1];
 
-    for(int i = 0 ; i<xlen+1 ; i++){
-        for(int j = 0 ; j<ylen+1 ; j++){
-            if( i == 0 || j == 0){
+    for (int i = 0; i < xlen + 1; i++)
+    {
+        for (int j = 0; j < ylen + 1; j++)
+        {
+            if (i == 0 || j == 0)
+            {
                 t[i][j] = 0;
                 continue;
             }
 
             /** Added this condition on LCS CASE (i != j)*/
-            if(x[i-1] == y[j-1] && i != j ){
-                t[i][j] = 1 + t[i-1][j-1];
-            }else{
-                t[i][j] = max(t[i-1][j] , t[i][j-1]);
+            if (x[i - 1] == y[j - 1] && i != j)
+            {
+                t[i][j] = 1 + t[i - 1][j - 1];
+            }
+            else
+            {
+                t[i][j] = max(t[i - 1][j], t[i][j - 1]);
             }
         }
     }
@@ -359,11 +382,19 @@ int LRS(string x , int xlen){
     return t[xlen][ylen];
 }
 
+// Sequence Pattern Matching
+//  Input : x  , Y String
+//  Output : True/false --> is x string a subsequence of string y
+
+bool sequencePatternMatching(string x, string y, int xlen, int ylen)
+{
+    return LCS(x , y , xlen , ylen) == min(xlen , ylen);
+}
 
 int main()
 {
-    string x = "aabebcdd";
-    string y = "abcdaf";
+    string x = "axy";
+    string y = "adxcpy";
     // cout<<LCS(x , y , 5 , 3);
 
     // memset(t , -1 , sizeof(t));
@@ -385,6 +416,8 @@ int main()
 
     // cout<<printLongestCommonSupersequence(x , y , 5 , 6);
 
-    cout<<LRS(x , 8);
+    // cout << LRS(x, 8);
+
+    cout<<sequencePatternMatching(x , y , 3 , 6);
     return 0;
 }
