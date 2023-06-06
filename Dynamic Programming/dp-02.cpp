@@ -407,6 +407,26 @@ int minInsertionToMakeAPalindrome(string x ,int xlen){
     return xlen-LPS(x , xlen);
 }
 
+
+// Longest Increasing Subsequence
+int LIS(vector<int> x){
+    int n = x.size();
+
+    vector<int> t(n , 1);
+    int maxLength = 1;
+
+    for(int i = 1 ; i<n ; i++){
+        for(int j = 0 ; j<i ; j++){
+            if(x[i] > x[j])
+                t[i] = max(t[i] , t[j]+1);
+        }
+        maxLength = max(maxLength , t[i]);
+    }
+
+    return maxLength;
+
+}
+
 int main()
 {
     string x = "acbcbda";
