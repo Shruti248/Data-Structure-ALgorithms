@@ -244,7 +244,11 @@ int LPS(string x , int xlen){
     string revX = x;
     reverse(revX.begin() , revX.end());
     return LCS(x ,  revX , xlen , xlen);
+}
 
+// Minimum no of deletion in a string to make it palindrome
+int minNoOfDeletionForPalindrome(string x , int xlen){
+    return xlen - LPS(x , xlen);
 }
 
 int main()
@@ -266,6 +270,8 @@ int main()
 
     // cout<<minInsertionAndDeletiontoOConvertString(x , y , 5 , 4);
 
-    cout<<LPS(x , 6)<<endl;
+    // cout<<LPS(x , 6)<<endl;
+
+    cout<<minNoOfDeletionForPalindrome(x , 5);
     return 0;
 }
