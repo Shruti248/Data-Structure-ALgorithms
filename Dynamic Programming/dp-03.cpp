@@ -87,17 +87,41 @@ int solve(int arr[], int i, int j)
     // Calculating the cost of 2 groups
     // arr[i-1]*arr[k]*arr[j];
 
+    int ans = INT_MAX;
+    for (int k = i; k <= j - 1; k++)
+    {
+        int cost = arr[i - 1] * arr[k] * arr[j];
+        int tempAns = solve(arr, i, k) + solve(arr, k + 1, j) + cost;
+
+        ans = min(ans, tempAns);
+    }
+
+    return ans;
+}
+
+// MCM Memorized (Bottom Up)
+
+int static t[1001][1001];
+int solveMemorized(int arr[], int i, int j)
+{
+    if (i >= j)
+    {
+        return 0;
+    }
+
+    if(t[i][j] != -1){
+        return t[i][j];
+    }
 
     int ans = INT_MAX;
     for (int k = i; k <= j - 1; k++)
     {
-        int cost = arr[i-1]*arr[k]*arr[j];
-        int tempAns = solve(arr, i, k) + solve(arr, k + 1, j) + cost;
+        int tempAns = solve(arr, i, k) + solve(arr, k + 1, j) + arr[i - 1] * arr[k] * arr[j];
 
-        ans = min(ans , tempAns);
+        ans = min(ans, tempAns);
     }
 
-    return ans;
+    return t[i][j] = ans;
 }
 
 int main()
@@ -105,7 +129,10 @@ int main()
     // int arr[] = {40, 20, 30, 10, 30};
     // cout << solve(arr, 1 /**i*/, 4 /**j*/);
 
-    int arr[] = {1 , 2 , 3 , 4 , 3};
-    cout<<solve(arr , 1 , 4);
+    int arr[] = {1, 2, 3, 4, 3};
+    // cout << solve(arr, 1, 4);
+
+    memset(t , -1 , sizeof(t));
+    cout<<solveMemorized(arr , 1 , 4);
     return 0;
 }
