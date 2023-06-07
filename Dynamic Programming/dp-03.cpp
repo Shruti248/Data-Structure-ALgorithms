@@ -186,7 +186,52 @@ int palindromePartioningMemorized(string s, int i, int j)
     int ans = INT_MAX;
     for (int k = i; k < j; k++)
     {
-        int tempAns = palindromePartioning(s, i, k) + palindromePartioning(s, k + 1, j) + 1 /**Partition of groups*/;
+        int tempAns = palindromePartioningMemorized(s, i, k) + palindromePartioningMemorized(s, k + 1, j) + 1 /**Partition of groups*/;
+        ans = min(ans, tempAns);
+    }
+
+    return t[i][j] = ans;
+}
+
+// Memorized Optimized
+int palindromePartioningMemorizedOptimized(string s, int i, int j)
+{
+
+    // i == j , string klength 1 , 0 partition required
+    // is s is palindrome , 0 partition
+    if (i >= j || isPalindrome(s, i, j))
+    {
+        t[i][j] = 0;
+        return 0;
+    }
+
+    if(t[i][j] != -1){
+        return t[i][j];
+    }
+
+    int ans = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        // int tempAns = palindromePartioning(s, i, k) + palindromePartioning(s, k + 1, j) + 1;
+
+        // Checking if the recursive calls are already solved in the table
+        int left , right;
+        if(t[i][k] != -1){
+            left =  t[i][k];
+        }else{
+            left = palindromePartioningMemorizedOptimized(s , i , k);
+            t[i][k] = left;
+        }
+
+        if(t[k+1][j] != -1){
+            right = t[k+1][j];
+        }else{
+            right = palindromePartioningMemorizedOptimized(s , k+1 , j);
+            t[k+1][j] = right;
+        }
+
+        int tempAns = left + right + 1;
+
         ans = min(ans, tempAns);
     }
 
