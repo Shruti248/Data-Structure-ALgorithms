@@ -167,6 +167,32 @@ int palindromePartioning(string s, int i, int j)
     return ans;
 }
 
+// Recursive
+int palindromePartioningMemorized(string s, int i, int j)
+{
+
+    // i == j , string klength 1 , 0 partition required
+    // is s is palindrome , 0 partition
+    if (i >= j || isPalindrome(s, i, j))
+    {
+        t[i][j] = 0;
+        return 0;
+    }
+
+    if(t[i][j] != -1){
+        return t[i][j];
+    }
+
+    int ans = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        int tempAns = palindromePartioning(s, i, k) + palindromePartioning(s, k + 1, j) + 1 /**Partition of groups*/;
+        ans = min(ans, tempAns);
+    }
+
+    return t[i][j] = ans;
+}
+
 int main()
 {
     // int arr[] = {40, 20, 30, 10, 30};
@@ -176,11 +202,12 @@ int main()
     // cout << solve(arr, 1, 4);
 
     // int arr[] = {1 , 2 , 3};
-    // memset(t , -1 , sizeof(t));
+    memset(t , -1 , sizeof(t));
     // cout<<solveMemorized(arr , 1 , 2);
 
     string s = "YnitinX";
-    cout << palindromePartioning(s, 0, s.length() - 1);
+    cout << palindromePartioning(s, 0, s.length() - 1)<<endl;
+    cout<<palindromePartioningMemorized(s , 0 , s.length()-1);
 
     return 0;
 }
