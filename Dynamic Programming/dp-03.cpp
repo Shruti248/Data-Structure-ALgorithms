@@ -179,7 +179,8 @@ int palindromePartioningMemorized(string s, int i, int j)
         return 0;
     }
 
-    if(t[i][j] != -1){
+    if (t[i][j] != -1)
+    {
         return t[i][j];
     }
 
@@ -205,7 +206,8 @@ int palindromePartioningMemorizedOptimized(string s, int i, int j)
         return 0;
     }
 
-    if(t[i][j] != -1){
+    if (t[i][j] != -1)
+    {
         return t[i][j];
     }
 
@@ -215,19 +217,25 @@ int palindromePartioningMemorizedOptimized(string s, int i, int j)
         // int tempAns = palindromePartioning(s, i, k) + palindromePartioning(s, k + 1, j) + 1;
 
         // Checking if the recursive calls are already solved in the table
-        int left , right;
-        if(t[i][k] != -1){
-            left =  t[i][k];
-        }else{
-            left = palindromePartioningMemorizedOptimized(s , i , k);
+        int left, right;
+        if (t[i][k] != -1)
+        {
+            left = t[i][k];
+        }
+        else
+        {
+            left = palindromePartioningMemorizedOptimized(s, i, k);
             t[i][k] = left;
         }
 
-        if(t[k+1][j] != -1){
-            right = t[k+1][j];
-        }else{
-            right = palindromePartioningMemorizedOptimized(s , k+1 , j);
-            t[k+1][j] = right;
+        if (t[k + 1][j] != -1)
+        {
+            right = t[k + 1][j];
+        }
+        else
+        {
+            right = palindromePartioningMemorizedOptimized(s, k + 1, j);
+            t[k + 1][j] = right;
         }
 
         int tempAns = left + right + 1;
@@ -236,6 +244,75 @@ int palindromePartioningMemorizedOptimized(string s, int i, int j)
     }
 
     return t[i][j] = ans;
+}
+
+// Boolean Parentheses
+// evaluate expression to true
+// input : STring (Constitues of this symbols : T F & | ^(XOR))
+// Output : int (Number of ways to evaluate the expression to true)
+
+// How to place brackets in the string to evaluate the expression to true
+
+// K will be always on operator(| & ^) bcoz thane only it will be evaluated
+// Eg : T | F & T ^ F
+// k on 1 , 3 , 5 indexes
+// k incremented by 2 --->  k+=k+2
+
+// i = 0 & j= s.length()-1;
+
+// k is on some operator
+// 1st expression : i to k-1
+// 2md expression : k+1 to j
+
+// Subprobelms when evaluated can be true or false.. Therefore the numbers of ways in which the subporblems can result in true and false is also needed ..... Therefore on eargument in teh function increases
+
+// boolean isTrue --> true --> NUmber of ways in which expression is evaluated true
+// boolean isTrue --> false --> NUmber of ways in which expression is evaluated false
+
+int booleanParentheses(string s, int i, int j, bool isTrue)
+{
+    if (i > j)
+    {
+        return false;
+    }
+    if (i == j)
+    {
+        if (isTrue)
+            return s[i] == 'T';
+        return s[i] == 'F';
+    }
+
+    int ans = 0;
+    for (int k = i + 1; k <= j - 1; k += 2)
+    {
+
+        // Temp Ans
+        int leftTrue = booleanParentheses(s, i, k - 1, true);
+        int leftFalse = booleanParentheses(s, i, k - 1, false);
+        int rightTrue = booleanParentheses(s, k + 1, j, true);
+        int rightFalse = booleanParentheses(s, k + 1, j, false);
+
+        // Ans
+        if (s[k] == '&')
+        {
+            if (isTrue)
+                ans += leftTrue * rightTrue;
+            else
+                ans += leftTrue * rightFalse + leftFalse * rightTrue + leftFalse * rightFalse;
+        }else if(s[k] == '|'){
+            if(isTrue)
+                ans += leftTrue*rightTrue + leftTrue+rightFalse + leftFalse*rightTrue;
+            else
+                ans += leftFalse*rightFalse;
+        }else if(s[k] == '^'){
+            if(isTrue)
+                ans += leftTrue*rightFalse + leftFalse*rightTrue;
+            else
+                ans += leftTrue*rightTrue + leftFalse*rightFalse;
+        }
+    }
+
+    return ans;
 }
 
 int main()
@@ -247,12 +324,16 @@ int main()
     // cout << solve(arr, 1, 4);
 
     // int arr[] = {1 , 2 , 3};
-    memset(t , -1 , sizeof(t));
+    memset(t, -1, sizeof(t));
     // cout<<solveMemorized(arr , 1 , 2);
 
-    string s = "YnitinX";
-    cout << palindromePartioning(s, 0, s.length() - 1)<<endl;
-    cout<<palindromePartioningMemorized(s , 0 , s.length()-1);
+    // string s = "abcbdd";
+    // cout << palindromePartioning(s, 0, s.length() - 1)<<endl;
+    // cout<<palindromePartioningMemorized(s , 0 , s.length()-1)<<endl;
+    // cout<<palindromePartioningMemorizedOptimized(s , 0 , s.length()-1);
+
+    string s = "T^F&T";
+    cout << booleanParentheses(s, 0, s.length() - 1, true);
 
     return 0;
 }
