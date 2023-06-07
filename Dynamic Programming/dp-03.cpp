@@ -109,7 +109,8 @@ int solveMemorized(int arr[], int i, int j)
         return 0;
     }
 
-    if(t[i][j] != -1){
+    if (t[i][j] != -1)
+    {
         return t[i][j];
     }
 
@@ -124,15 +125,62 @@ int solveMemorized(int arr[], int i, int j)
     return t[i][j] = ans;
 }
 
+// Palindrome Partioning
+// Divide the string in such a way that all the substrings are plaindrome , return the number of partitions done
+
+// Input : String
+// Output : No of partition (Minimize) --> each partition should be a palindrome
+
+// i =  0 , j - s.length()-1;
+
+bool isPalindrome(string s, int i, int j)
+{
+    while (i <= j)
+    {
+        if (s[i] != s[j])
+            return false;
+        i++;
+        j--;
+    }
+
+    return true;
+}
+
+// Recursive
+int palindromePartioning(string s, int i, int j)
+{
+
+    // i == j , string klength 1 , 0 partition required
+    // is s is palindrome , 0 partition
+    if (i >= j || isPalindrome(s, i, j))
+    {
+        return 0;
+    }
+
+    int ans = INT_MAX;
+    for (int k = i; k < j; k++)
+    {
+        int tempAns = palindromePartioning(s, i, k) + palindromePartioning(s, k + 1, j) + 1 /**Partition of groups*/;
+        ans = min(ans, tempAns);
+    }
+
+    return ans;
+}
+
 int main()
 {
     // int arr[] = {40, 20, 30, 10, 30};
     // cout << solve(arr, 1 /**i*/, 4 /**j*/);
 
-    int arr[] = {1, 2, 3, 4, 3};
+    // int arr[] = {1, 2, 3, 4, 3};
     // cout << solve(arr, 1, 4);
 
-    memset(t , -1 , sizeof(t));
-    cout<<solveMemorized(arr , 1 , 4);
+    // int arr[] = {1 , 2 , 3};
+    // memset(t , -1 , sizeof(t));
+    // cout<<solveMemorized(arr , 1 , 2);
+
+    string s = "YnitinX";
+    cout << palindromePartioning(s, 0, s.length() - 1);
+
     return 0;
 }
