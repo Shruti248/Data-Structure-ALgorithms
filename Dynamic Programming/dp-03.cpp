@@ -299,18 +299,82 @@ int booleanParentheses(string s, int i, int j, bool isTrue)
                 ans += leftTrue * rightTrue;
             else
                 ans += leftTrue * rightFalse + leftFalse * rightTrue + leftFalse * rightFalse;
-        }else if(s[k] == '|'){
-            if(isTrue)
-                ans += leftTrue*rightTrue + leftTrue+rightFalse + leftFalse*rightTrue;
+        }
+        else if (s[k] == '|')
+        {
+            if (isTrue)
+                ans += leftTrue * rightTrue + leftTrue + rightFalse + leftFalse * rightTrue;
             else
-                ans += leftFalse*rightFalse;
-        }else if(s[k] == '^'){
-            if(isTrue)
-                ans += leftTrue*rightFalse + leftFalse*rightTrue;
+                ans += leftFalse * rightFalse;
+        }
+        else if (s[k] == '^')
+        {
+            if (isTrue)
+                ans += leftTrue * rightFalse + leftFalse * rightTrue;
             else
-                ans += leftTrue*rightTrue + leftFalse*rightFalse;
+                ans += leftTrue * rightTrue + leftFalse * rightFalse;
         }
     }
+
+    return ans;
+}
+
+// Evaluate Expression to True
+// Balanced Parentheses
+
+// Memorized
+int dp[2][1001][1001];
+int booleanParenthesesMemorized(string s, int i, int j, bool isTrue)
+{
+    if (i >= j)
+    {
+        if (isTrue)
+            dp[1][i][j] = s[i] == 'T';
+        else
+            dp[0][i][j] = s[i] == 'F';
+        return dp[isTrue][i][j];
+    }
+
+    if (dp[isTrue][i][j] != -1)
+    {
+        return dp[isTrue][i][j];
+    }
+
+    int ans = 0;
+    for (int k = i + 1; k <= j - 1; k += 2)
+    {
+
+        // Temp Ans
+        int leftTrue = booleanParentheses(s, i, k - 1, true);
+        int leftFalse = booleanParentheses(s, i, k - 1, false);
+        int rightTrue = booleanParentheses(s, k + 1, j, true);
+        int rightFalse = booleanParentheses(s, k + 1, j, false);
+
+        // Ans
+        if (s[k] == '&')
+        {
+            if (isTrue)
+                ans += leftTrue * rightTrue;
+            else
+                ans += leftTrue * rightFalse + leftFalse * rightTrue + leftFalse * rightFalse;
+        }
+        else if (s[k] == '|')
+        {
+            if (isTrue)
+                ans += leftTrue * rightTrue + leftTrue + rightFalse + leftFalse * rightTrue;
+            else
+                ans += leftFalse * rightFalse;
+        }
+        else if (s[k] == '^')
+        {
+            if (isTrue)
+                ans += leftTrue * rightFalse + leftFalse * rightTrue;
+            else
+                ans += leftTrue * rightTrue + leftFalse * rightFalse;
+        }
+    }
+
+    dp[isTrue][i][j] = ans;
 
     return ans;
 }
@@ -333,7 +397,11 @@ int main()
     // cout<<palindromePartioningMemorizedOptimized(s , 0 , s.length()-1);
 
     string s = "T^F&T";
-    cout << booleanParentheses(s, 0, s.length() - 1, true);
+    cout << booleanParentheses(s, 0, s.length() - 1, true) << endl;
+
+    memset(dp[0], -1, sizeof(dp[0]));
+	memset(dp[1], -1, sizeof(dp[1]));
+    cout << booleanParenthesesMemorized(s, 0, s.length() - 1, true) << endl;
 
     return 0;
 }
