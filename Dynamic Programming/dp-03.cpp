@@ -473,6 +473,47 @@ bool isScrambledStringMemorized(string a, string b) {
     return mp[key] = false;
 }
 
+// Egg Dropping Problem
+// Input : No of eggs , no of floors
+// output : FInd threshold floor or crotical floor & minimze the number of attempts
+
+// Threshold floor : The floor above which if the egg is dropped then it will break , and below it will not break
+// Eg : e = 3 , f = 5
+// Threshold floor : 3
+
+// Starting from teh top floor , we have to check whether egg breaks or not & when the 1st floor is found where egg does not break from top then it is threshold floor.
+// The number of such attempts should be minimized
+
+// Worst case : Top floor
+
+// k is 1 to f
+
+// Two Possibilities
+// Egg breaks at kth floor : Threshold floor is below it (solve(e-1 , k-1))
+// Egg does not break at kth floor : Threshold Floor is above it(solve(e , f-k))
+
+int eggDropping(int e , int f){
+
+    // Base
+    if(e == 0 || e == 1){
+        return f;
+    }
+
+    if(f == 0 || f == 1){
+        return f;
+    }
+
+    int mn = INT_MAX;
+    for(int k = 1 ; k<=f ; k++){
+        // Either egg breaks or does not break
+        // max bcoz we find the worst case
+        int temp = 1+ max(eggDropping(e-1 , k-1) , eggDropping(e , f-k));
+
+        mn = min(mn , temp);
+    }
+
+    return mn;
+}
 
 
 int main()
@@ -499,11 +540,13 @@ int main()
 	// memset(dp[1], -1, sizeof(dp[1]));
     // cout << booleanParenthesesMemorized(s, 0, s.length() - 1, true) << endl;
 
-    string a = "great";
-    string b = "rgeta";
+    // string a = "great";
+    // string b = "rgeta";
 
-    cout<<isScrambledString(a , b)<<endl;
-    cout<<isScrambledStringMemorized(a , b);
+    // cout<<isScrambledString(a , b)<<endl;
+    // cout<<isScrambledStringMemorized(a , b);
+
+    cout<<eggDropping(3 , 5);
 
     return 0;
 }
