@@ -434,6 +434,45 @@ bool isScrambledString(string a, string b) {
     return false;
 }
 
+// Memorized : Bottom Up Approach
+unordered_map<string , bool> mp;
+bool isScrambledStringMemorized(string a, string b) {
+
+    // Base condition
+    if (a.compare(b) == 0) {
+        // Equal strings
+        return true;
+    }
+
+    if (a.length() <= 1) {
+        // No string can be empty
+        return false;
+    }
+
+    int n = a.length();
+
+    string key = a;
+    key.push_back(' '); // a_
+    key.append(b);   //a_b
+
+    if(mp.find(key) != mp.end()){
+        return mp[key];
+    }
+
+    for (int i = 1; i < n; i++) {
+
+        bool condition1 = isScrambledStringMemorized(a.substr(0, i), b.substr(n - i, i)) && isScrambledStringMemorized(a.substr(i, n - i), b.substr(0, n - i));
+
+        bool condition2 = isScrambledStringMemorized(a.substr(0, i), b.substr(0, i)) && isScrambledStringMemorized(a.substr(i, n - i), b.substr(i, n - i));
+
+        if (condition1 || condition2) {
+            return mp[key] =  true;
+        }
+    }
+
+    return mp[key] = false;
+}
+
 
 
 int main()
@@ -463,7 +502,8 @@ int main()
     string a = "great";
     string b = "rgeta";
 
-    cout<<isScrambledString(a , b);
+    cout<<isScrambledString(a , b)<<endl;
+    cout<<isScrambledStringMemorized(a , b);
 
     return 0;
 }
