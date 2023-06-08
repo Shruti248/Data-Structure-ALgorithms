@@ -110,6 +110,28 @@ int maxPathSum(Node* root , int &res){
     return temp;
 }
 
+// Max Path Sum from leaf to leaf
+int maxPathSumLeafToLeaf(Node* root , int &res){
+    if(root == NULL){
+        return 0;
+    }
+
+    int l = maxPathSumLeafToLeaf(root->left , res);
+    int r = maxPathSumLeafToLeaf(root->right , res);
+
+    int temp = root->data + max(l , r);
+
+    if(root ->left == NULL && root->right == NULL){
+        temp = max(temp , root->data);
+    }
+
+    int ans = max(temp , root->data + l + r);
+
+    res = max(ans , res);
+
+    return temp;
+}
+
 
 int main(){
 
