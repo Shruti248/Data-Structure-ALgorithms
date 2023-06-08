@@ -393,40 +393,44 @@ int booleanParenthesesMemorized(string s, int i, int j, bool isTrue)
 
 // k = 1 to n-1 --> We break the string
 
-
 // Eg :
-    // great (For k = 2 we are breaking the string )
-    // gr    eat
-    // We can either swap or not swap :
-    // Swap : eat    gr --> Scrambled string
-    // No Swap : gr   eat --> Scrambled string
+// great (For k = 2 we are breaking the string )
+// gr    eat
+// We can either swap or not swap :
+// Swap : eat    gr --> Scrambled string
+// No Swap : gr   eat --> Scrambled string
 
-    // We recursively cahcek gr of 1st and gr of last if they are scrambled , similarly we check for eat & eat --> if both scrambled than whole string scrambled
+// We recursively cahcek gr of 1st and gr of last if they are scrambled , similarly we check for eat & eat --> if both scrambled than whole string scrambled
 
 // The 2 strings can be further broen down to either swap or not to get the desired scrambled string
 
-bool isScrambledString(string a, string b) {
+bool isScrambledString(string a, string b)
+{
 
     // Base condition
-    if (a.compare(b) == 0) {
+    if (a.compare(b) == 0)
+    {
         // Equal strings
         return true;
     }
 
-    if (a.length() <= 1) {
+    if (a.length() <= 1)
+    {
         // No string can be empty
         return false;
     }
 
     int n = a.length();
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; i++)
+    {
 
         bool condition1 = isScrambledString(a.substr(0, i), b.substr(n - i, i)) && isScrambledString(a.substr(i, n - i), b.substr(0, n - i));
 
         bool condition2 = isScrambledString(a.substr(0, i), b.substr(0, i)) && isScrambledString(a.substr(i, n - i), b.substr(i, n - i));
 
-        if (condition1 || condition2) {
+        if (condition1 || condition2)
+        {
             return true;
         }
     }
@@ -435,16 +439,19 @@ bool isScrambledString(string a, string b) {
 }
 
 // Memorized : Bottom Up Approach
-unordered_map<string , bool> mp;
-bool isScrambledStringMemorized(string a, string b) {
+unordered_map<string, bool> mp;
+bool isScrambledStringMemorized(string a, string b)
+{
 
     // Base condition
-    if (a.compare(b) == 0) {
+    if (a.compare(b) == 0)
+    {
         // Equal strings
         return true;
     }
 
-    if (a.length() <= 1) {
+    if (a.length() <= 1)
+    {
         // No string can be empty
         return false;
     }
@@ -453,20 +460,23 @@ bool isScrambledStringMemorized(string a, string b) {
 
     string key = a;
     key.push_back(' '); // a_
-    key.append(b);   //a_b
+    key.append(b);      // a_b
 
-    if(mp.find(key) != mp.end()){
+    if (mp.find(key) != mp.end())
+    {
         return mp[key];
     }
 
-    for (int i = 1; i < n; i++) {
+    for (int i = 1; i < n; i++)
+    {
 
         bool condition1 = isScrambledStringMemorized(a.substr(0, i), b.substr(n - i, i)) && isScrambledStringMemorized(a.substr(i, n - i), b.substr(0, n - i));
 
         bool condition2 = isScrambledStringMemorized(a.substr(0, i), b.substr(0, i)) && isScrambledStringMemorized(a.substr(i, n - i), b.substr(i, n - i));
 
-        if (condition1 || condition2) {
-            return mp[key] =  true;
+        if (condition1 || condition2)
+        {
+            return mp[key] = true;
         }
     }
 
@@ -492,29 +502,62 @@ bool isScrambledStringMemorized(string a, string b) {
 // Egg breaks at kth floor : Threshold floor is below it (solve(e-1 , k-1))
 // Egg does not break at kth floor : Threshold Floor is above it(solve(e , f-k))
 
-int eggDropping(int e , int f){
+int eggDropping(int e, int f)
+{
 
     // Base
-    if(e == 0 || e == 1){
+    if (e == 0 || e == 1)
+    {
         return f;
     }
 
-    if(f == 0 || f == 1){
+    if (f == 0 || f == 1)
+    {
         return f;
     }
 
     int mn = INT_MAX;
-    for(int k = 1 ; k<=f ; k++){
+    for (int k = 1; k <= f; k++)
+    {
         // Either egg breaks or does not break
         // max bcoz we find the worst case
-        int temp = 1+ max(eggDropping(e-1 , k-1) , eggDropping(e , f-k));
+        int temp = 1 + max(eggDropping(e - 1, k - 1), eggDropping(e, f - k));
 
-        mn = min(mn , temp);
+        mn = min(mn, temp);
     }
 
     return mn;
 }
 
+// Memoization
+// int t[1001][1001];
+int eggDroppingMemoization(int e, int f)
+{
+    if(t[e][f] != -1){
+        return t[e][f];
+    }
+    if (e == 0 || e == 1)
+    {
+        t[e][f] = f;
+        return f;
+    }
+
+    if (f == 0 || f == 1)
+    {
+        t[e][f] = f;
+        return f;
+    }
+
+
+    int mn = INT_MAX;
+    for(int k = 1 ; k<=f  ; k++){
+        int temp = 1+max(eggDroppingMemoization(e-1 , k-1) , eggDroppingMemoization(e , f-k));
+
+        mn = min(mn , temp);
+    }
+
+    return t[e][f] = mn;
+}
 
 int main()
 {
@@ -525,7 +568,7 @@ int main()
     // cout << solve(arr, 1, 4);
 
     // int arr[] = {1 , 2 , 3};
-    memset(t, -1, sizeof(t));
+    // memset(t, -1, sizeof(t));
     // cout<<solveMemorized(arr , 1 , 2);
 
     // string s = "abcbdd";
@@ -537,7 +580,7 @@ int main()
     // cout << booleanParentheses(s, 0, s.length() - 1, true) << endl;
 
     // memset(dp[0], -1, sizeof(dp[0]));
-	// memset(dp[1], -1, sizeof(dp[1]));
+    // memset(dp[1], -1, sizeof(dp[1]));
     // cout << booleanParenthesesMemorized(s, 0, s.length() - 1, true) << endl;
 
     // string a = "great";
@@ -546,7 +589,9 @@ int main()
     // cout<<isScrambledString(a , b)<<endl;
     // cout<<isScrambledStringMemorized(a , b);
 
-    cout<<eggDropping(3 , 5);
+    memset(t , -1 , sizeof(t));
+    cout << eggDropping(3, 5)<<endl;
+    cout << eggDroppingMemoization(3, 5)<<endl;
 
     return 0;
 }
