@@ -320,7 +320,7 @@ int booleanParentheses(string s, int i, int j, bool isTrue)
 }
 
 // Evaluate Expression to True
-// Balanced Parentheses
+// Boolean Parentheses
 
 // Memorized
 int dp[2][1001][1001];
@@ -345,10 +345,10 @@ int booleanParenthesesMemorized(string s, int i, int j, bool isTrue)
     {
 
         // Temp Ans
-        int leftTrue = booleanParentheses(s, i, k - 1, true);
-        int leftFalse = booleanParentheses(s, i, k - 1, false);
-        int rightTrue = booleanParentheses(s, k + 1, j, true);
-        int rightFalse = booleanParentheses(s, k + 1, j, false);
+        int leftTrue = booleanParenthesesMemorized(s, i, k - 1, true);
+        int leftFalse = booleanParenthesesMemorized(s, i, k - 1, false);
+        int rightTrue = booleanParenthesesMemorized(s, k + 1, j, true);
+        int rightFalse = booleanParenthesesMemorized(s, k + 1, j, false);
 
         // Ans
         if (s[k] == '&')
@@ -379,6 +379,63 @@ int booleanParenthesesMemorized(string s, int i, int j, bool isTrue)
     return ans;
 }
 
+// Scrambled String
+// Input : String a , b
+// Output : T/F(is the string a scarmbled string of other string)
+
+// Constraint
+// COnstruct a biary tree of string
+// No child should be empty
+
+// You can swap 0 or more non leaf nodes --> to get teh second string --> The 2 strings formed are said to be scrambled sring
+
+// Sum up : Generate a binary tree for one string , swap the non leaft nodes & get the other strings...This strings so formed are said to be scrambled string ...
+
+// k = 1 to n-1 --> We break the string
+
+
+// Eg :
+    // great (For k = 2 we are breaking the string )
+    // gr    eat
+    // We can either swap or not swap :
+    // Swap : eat    gr --> Scrambled string
+    // No Swap : gr   eat --> Scrambled string
+
+    // We recursively cahcek gr of 1st and gr of last if they are scrambled , similarly we check for eat & eat --> if both scrambled than whole string scrambled
+
+// The 2 strings can be further broen down to either swap or not to get the desired scrambled string
+
+bool isScrambledString(string a, string b) {
+
+    // Base condition
+    if (a.compare(b) == 0) {
+        // Equal strings
+        return true;
+    }
+
+    if (a.length() <= 1) {
+        // No string can be empty
+        return false;
+    }
+
+    int n = a.length();
+
+    for (int i = 1; i < n; i++) {
+
+        bool condition1 = isScrambledString(a.substr(0, i), b.substr(n - i, i)) && isScrambledString(a.substr(i, n - i), b.substr(0, n - i));
+
+        bool condition2 = isScrambledString(a.substr(0, i), b.substr(0, i)) && isScrambledString(a.substr(i, n - i), b.substr(i, n - i));
+
+        if (condition1 || condition2) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
 int main()
 {
     // int arr[] = {40, 20, 30, 10, 30};
@@ -396,12 +453,17 @@ int main()
     // cout<<palindromePartioningMemorized(s , 0 , s.length()-1)<<endl;
     // cout<<palindromePartioningMemorizedOptimized(s , 0 , s.length()-1);
 
-    string s = "T^F&T";
-    cout << booleanParentheses(s, 0, s.length() - 1, true) << endl;
+    // string s = "T^F&T";
+    // cout << booleanParentheses(s, 0, s.length() - 1, true) << endl;
 
-    memset(dp[0], -1, sizeof(dp[0]));
-	memset(dp[1], -1, sizeof(dp[1]));
-    cout << booleanParenthesesMemorized(s, 0, s.length() - 1, true) << endl;
+    // memset(dp[0], -1, sizeof(dp[0]));
+	// memset(dp[1], -1, sizeof(dp[1]));
+    // cout << booleanParenthesesMemorized(s, 0, s.length() - 1, true) << endl;
+
+    string a = "great";
+    string b = "rgeta";
+
+    cout<<isScrambledString(a , b);
 
     return 0;
 }
