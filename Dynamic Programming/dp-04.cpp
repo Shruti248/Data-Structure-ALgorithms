@@ -91,6 +91,25 @@ int diameterOfTheBinaryTree(Node* root , int &res){
         return tempAns;
 }
 
+// Maximum path Sum from Any Node to Any Node
+
+int maxPathSum(Node* root , int &res){
+    if(root == NULL){
+        return 0;
+    }
+
+    int l = maxPathSum(root->left , res);
+    int r = maxPathSum(root->right , res);
+
+    int temp = max(max(l , r) + root->data , root->data);
+
+    int ans = max(temp , root->data + l + r);
+
+    res = max(ans , res);
+
+    return temp;
+}
+
 
 int main(){
 
@@ -105,8 +124,11 @@ int main(){
     root->right->right = new Node(7);
 
     int res = INT_MIN;
-    diameterOfTheBinaryTree(root , res);
+    // diameterOfTheBinaryTree(root , res);
+    maxPathSum(root , res);
     cout<<res<<endl;
+
+
 
     return 0;
 }
