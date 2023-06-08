@@ -559,6 +559,52 @@ int eggDroppingMemoization(int e, int f)
     return t[e][f] = mn;
 }
 
+// Memoization Optimization
+int eggDroppingMemoizationOptimized(int e, int f)
+{
+    if(t[e][f] != -1){
+        return t[e][f];
+    }
+    if (e == 0 || e == 1)
+    {
+        t[e][f] = f;
+        return f;
+    }
+
+    if (f == 0 || f == 1)
+    {
+        t[e][f] = f;
+        return f;
+    }
+
+
+    int mn = INT_MAX;
+    for(int k = 1 ; k<=f  ; k++){
+
+        int top , bottom;
+
+        if(t[e-1][k-1] != -1){
+            top = t[e-1][k-1];
+        }else{
+            top = eggDroppingMemoizationOptimized(e-1 , k-1);
+            t[e-1][k-1] = top;
+        }
+
+        if(t[e][f-k] != -1){
+            bottom = t[e][f-k];
+        }else{
+            bottom =  eggDroppingMemoizationOptimized(e , f-k);
+            t[e][f-k] = bottom;
+        }
+        int temp = 1+max(top  , bottom);
+
+        mn = min(mn , temp);
+    }
+
+    return t[e][f] = mn;
+}
+
+
 int main()
 {
     // int arr[] = {40, 20, 30, 10, 30};
@@ -592,6 +638,7 @@ int main()
     memset(t , -1 , sizeof(t));
     cout << eggDropping(3, 5)<<endl;
     cout << eggDroppingMemoization(3, 5)<<endl;
+    cout << eggDroppingMemoizationOptimized(3, 5)<<endl;
 
     return 0;
 }
