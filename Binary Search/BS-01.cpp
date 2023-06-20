@@ -319,7 +319,7 @@ char nextAlphabeticalElemen(vector<char> &alpabets, char target)
 
         if (alpabets[mid] == target)
         {
-            start = mid+1;
+            start = mid + 1;
         }
         else if (alpabets[mid] > target)
         {
@@ -335,6 +335,53 @@ char nextAlphabeticalElemen(vector<char> &alpabets, char target)
     }
 
     return res;
+}
+
+// Find the position of the element in the infinite sorted array
+// Mostly for face to face interview
+
+// Modified Binary Search
+// end = infinite --> Therefore we need to find the end index to apply the BS
+
+// Startegy
+// start = 0
+// end = 1
+
+// if ele > end --> means ele does not exist between the selected bound
+
+// increase the end --> end = end*2
+// --> start = end;
+
+// Repeeat the process untiul the ele < end --> which means the lee exists in the given finite BOUND....---> APPLY BS LATER
+
+int binarySearch(vector<int> arr, int l, int r, int x)
+{
+    if (r>=l)
+    {
+        int mid = l + (r - l)/2;
+        if (arr[mid] == x)
+            return mid;
+        if (arr[mid] > x)
+            return binarySearch(arr, l, mid-1, x);
+        return binarySearch(arr, mid+1, r, x);
+    }
+    return -1;
+}
+
+int searchInInfiniteSortedArray(vector<int> nums, int ele)
+{
+
+    int start = 0;
+    int end = 1;
+    int val = nums[0];
+
+    while (val < ele)
+    {
+        start = end;
+        end = 2 * end;
+        val = nums[end];
+    }
+    return binarySearch(nums, start, end, ele);
 }
 
 int main()
@@ -364,9 +411,11 @@ int main()
     // vector<int> nums = {1, 2, 3, 4, 8, 10, 10, 12, 19};
     // cout << ceil(nums, 20);
 
-    vector<char> alphabets = {'a' , 'b' , 'c' , 'g' , 'h'};
-    cout<<nextAlphabeticalElemen(alphabets , 'b');
+    // vector<char> alphabets = {'a' , 'b' , 'c' , 'g' , 'h'};
+    // cout<<nextAlphabeticalElemen(alphabets , 'b');
 
+    vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    cout << searchInInfiniteSortedArray(nums, 7);
 
     return 0;
 }
