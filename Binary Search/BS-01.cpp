@@ -229,34 +229,80 @@ int countSortedArray(vector<int> nums, int ele)
 // Find floor of the element in sorted array
 // Floor : Greatest  element less than or equal to ele
 
-int floor(vector<int> nums , int ele){
-    int start = 0 ;
-    int end = nums.size()-1;
+int floor(vector<int> nums, int ele)
+{
+    int start = 0;
+    int end = nums.size() - 1;
 
     int mx = INT_MIN;
-    while(start <= end){
-        int mid = (start+end)/2;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
 
-        if(nums[mid] == ele){
+        if (nums[mid] == ele)
+        {
             return nums[mid];
-        }else if(nums[mid] > ele){
+        }
+        else if (nums[mid] > ele)
+        {
             // Left
-            end = mid-1;
-        }else {
-            if(nums[mid] > mx){
+            end = mid - 1;
+        }
+        else
+        {
+            if (nums[mid] > mx)
+            {
                 mx = nums[mid];
                 // Right
-                start = mid+1;
+                start = mid + 1;
             }
         }
     }
 
-    if(mx == INT_MIN){
+    if (mx == INT_MIN)
+    {
         return -1;
     }
     return mx;
 }
 
+// Ceil of the element in sorted array
+// Min element greater than or equal to the ele
+int ceil(vector<int> nums, int ele)
+{
+    int start = 0;
+    int end = nums.size() - 1;
+
+    int mn = INT_MAX;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+
+        if (nums[mid] == ele)
+        {
+            return nums[mid];
+        }
+        else if (nums[mid] > ele)
+        {
+            if (nums[mid] < mn)
+                mn = nums[mid];
+            // Left
+            end = mid - 1;
+        }
+        else
+        {
+
+            // Right
+            start = mid + 1;
+        }
+    }
+
+    if (mn == INT_MAX)
+    {
+        return -1;
+    }
+    return mn;
+}
 
 int main()
 {
@@ -279,8 +325,11 @@ int main()
     // vector<int> nums = {1, 1, 1, 10};
     // cout << countSortedArray(nums, 1);
 
-    vector<int> nums = { 1 , 2 , 3 , 4 , 8 , 10 , 10 , 12 , 19};
-    cout<<floor(nums , 20);
+    // vector<int> nums = { 1 , 2 , 3 , 4 , 8 , 10 , 10 , 12 , 19};
+    // cout<<floor(nums , 20);
+
+    vector<int> nums = {1, 2, 3, 4, 8, 10, 10, 12, 19};
+    cout << ceil(nums, 20);
 
     return 0;
 }
