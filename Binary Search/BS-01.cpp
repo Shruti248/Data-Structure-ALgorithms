@@ -495,6 +495,13 @@ int peakEle(vector<int> nums)
     return -1;
 }
 
+// Find max element in the bitonic array
+
+// Bitonic : Monotonic (means no same elements )Increasing and then monotonic decreasing
+
+// This is the peak element only
+
+
 int main()
 {
     // vector<int> nums = {1 , 2 , 3 , 4};
@@ -535,7 +542,9 @@ int main()
     // cout << minDiff(nums, 6);
 
     vector<int> nums = {1 , 3 , 5 , 4 , 10};
-    cout<<peakEle(nums);
+    cout<<"Index : "<<peakEle(nums)<<endl;
+    // max in bitonic array
+    cout<<"Ele : "<<nums[peakEle(nums)];
 
     return 0;
 }
