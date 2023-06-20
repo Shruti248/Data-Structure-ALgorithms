@@ -609,6 +609,27 @@ int searchBitonic(int arr[], int n,
     }
 }
 
+// Check if the array id sorted and rotated
+int checkSortedAndRotated(vector<int> nums)
+{
+    int count = 0;
+
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (nums[i] > nums[(i + 1) % nums.size()])
+        {
+            count++;
+        }
+    }
+
+    if (count > 1)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 int main()
 {
     // vector<int> nums = {1 , 2 , 3 , 4};
@@ -653,11 +674,14 @@ int main()
     // // max in bitonic array
     // cout << "Ele : " << nums[peakEle(nums)];
 
-    int arr[] = { -8, 1, 2, 3, 4, 5, -2, -3 };
-    int key = 5;
-    int index;
-    index = findBitonicPoint(arr, 8 , 0, 7);
-    cout<<searchBitonic(arr , 8 , key , index);
+    // int arr[] = {-8, 1, 2, 3, 4, 5, -2, -3};
+    // int key = 5;
+    // int index;
+    // index = findBitonicPoint(arr, 8, 0, 7);
+    // cout << searchBitonic(arr, 8, key, index);
+
+    vector<int> nums = {5, 1, 2, 3, 4};
+    cout << checkSortedAndRotated(nums);
 
     return 0;
 }
