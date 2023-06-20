@@ -468,26 +468,42 @@ int peakEle(vector<int> nums)
         // Integer overflow : Asked in interview
         int mid = start + (end - start) / 2;
 
-        if(mid > 0 && mid < nums.size() -1){
-            if(nums[mid] > nums[mid-1] && nums[mid] > nums[mid+1]){
+        if (mid > 0 && mid < nums.size() - 1)
+        {
+            if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1])
+            {
                 return mid;
-            }else if(nums[mid-1] > nums[mid]){
-                // Left
-                end = mid-1;
-            }else {
-                start = mid+1;
             }
-        }else if(mid == 0){
-            if(nums[0] > nums[1]){
+            else if (nums[mid - 1] > nums[mid])
+            {
+                // Left
+                end = mid - 1;
+            }
+            else
+            {
+                start = mid + 1;
+            }
+        }
+        else if (mid == 0)
+        {
+            if (nums[0] > nums[1])
+            {
                 return 0;
-            }else{
+            }
+            else
+            {
                 return 1;
             }
-        }else{
-            if(nums[nums.size()-1] > nums[nums.size() -2]){
-                return nums.size()-1;
-            }else{
-                return nums.size()-2;
+        }
+        else
+        {
+            if (nums[nums.size() - 1] > nums[nums.size() - 2])
+            {
+                return nums.size() - 1;
+            }
+            else
+            {
+                return nums.size() - 2;
             }
         }
     }
@@ -501,6 +517,97 @@ int peakEle(vector<int> nums)
 
 // This is the peak element only
 
+// Search an element in bitonic array
+// Beafore peak ele : Sorted increasing
+// After peak Ele : Sorted Decreasing
+
+// Function for binary search in ascending part
+int ascendingBinarySearch(int arr[], int low,
+                          int high, int key)
+{
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == key)
+            return mid;
+        if (arr[mid] > key)
+            high = mid - 1;
+        else
+            low = mid + 1;
+    }
+    return -1;
+}
+
+// Function for binary search in
+// descending part of array
+int descendingBinarySearch(int arr[], int low,
+                           int high, int key)
+{
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (arr[mid] == key)
+            return mid;
+        if (arr[mid] < key)
+            high = mid - 1;
+        else
+            low = mid + 1;
+    }
+    return -1;
+}
+
+// finding bitonic point
+int findBitonicPoint(int arr[], int n,
+                     int l, int r)
+{
+    int mid;
+    int bitonicPoint = 0;
+    mid = (r + l) / 2;
+    if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1])
+    {
+        return mid;
+    }
+
+    else if (arr[mid] > arr[mid - 1] && arr[mid] < arr[mid + 1])
+    {
+        bitonicPoint = findBitonicPoint(arr, n, mid, r);
+    }
+
+    else if (arr[mid] < arr[mid - 1] && arr[mid] > arr[mid + 1])
+    {
+        bitonicPoint = findBitonicPoint(arr, n, l, mid);
+    }
+    return bitonicPoint;
+}
+
+// Function to search key in
+// bitonic array
+int searchBitonic(int arr[], int n,
+                  int key, int index)
+{
+    if (key > arr[index])
+        return -1;
+
+    else if (key == arr[index])
+        return index;
+
+    else
+    {
+        int temp = ascendingBinarySearch(arr,
+                                         0, index - 1,
+                                         key);
+        if (temp != -1)
+        {
+            return temp;
+        }
+
+        // Search in right of k
+        return descendingBinarySearch(arr,
+                                      index + 1,
+                                      n - 1,
+                                      key);
+    }
+}
 
 int main()
 {
@@ -541,10 +648,16 @@ int main()
     // vector<int> nums = {2, 5, 10, 12, 15};
     // cout << minDiff(nums, 6);
 
-    vector<int> nums = {1 , 3 , 5 , 4 , 10};
-    cout<<"Index : "<<peakEle(nums)<<endl;
-    // max in bitonic array
-    cout<<"Ele : "<<nums[peakEle(nums)];
+    // vector<int> nums = {1, 3, 5, 4, 10};
+    // cout << "Index : " << peakEle(nums) << endl;
+    // // max in bitonic array
+    // cout << "Ele : " << nums[peakEle(nums)];
+
+    int arr[] = { -8, 1, 2, 3, 4, 5, -2, -3 };
+    int key = 5;
+    int index;
+    index = findBitonicPoint(arr, 8 , 0, 7);
+    cout<<searchBitonic(arr , 8 , key , index);
 
     return 0;
 }
