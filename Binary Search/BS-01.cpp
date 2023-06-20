@@ -356,14 +356,14 @@ char nextAlphabeticalElemen(vector<char> &alpabets, char target)
 
 int binarySearch(vector<int> arr, int l, int r, int x)
 {
-    if (r>=l)
+    if (r >= l)
     {
-        int mid = l + (r - l)/2;
+        int mid = l + (r - l) / 2;
         if (arr[mid] == x)
             return mid;
         if (arr[mid] > x)
-            return binarySearch(arr, l, mid-1, x);
-        return binarySearch(arr, mid+1, r, x);
+            return binarySearch(arr, l, mid - 1, x);
+        return binarySearch(arr, mid + 1, r, x);
     }
     return -1;
 }
@@ -382,6 +382,39 @@ int searchInInfiniteSortedArray(vector<int> nums, int ele)
         val = nums[end];
     }
     return binarySearch(nums, start, end, ele);
+}
+
+// Index of the first 1 in the binary sprted array
+
+int firstIndex(vector<int> nums)
+{
+    int start = 0;
+    int end = nums.size()-1;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+
+        if (nums[mid] == 1)
+        {
+            if (nums[mid - 1] == 1)
+            {
+                end = mid - 1;
+            }
+            else
+            {
+                return mid;
+            }
+        }
+        else
+        {
+            if (nums[mid] == 0)
+            {
+                start = mid + 1;
+            }
+        }
+    }
+
+    return -1;
 }
 
 int main()
@@ -414,8 +447,11 @@ int main()
     // vector<char> alphabets = {'a' , 'b' , 'c' , 'g' , 'h'};
     // cout<<nextAlphabeticalElemen(alphabets , 'b');
 
-    vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    cout << searchInInfiniteSortedArray(nums, 7);
+    // vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    // cout << searchInInfiniteSortedArray(nums, 7);
+
+    vector<int> nums = {0, 0, 0, 0, 1, 1, 1, 1};
+    cout << firstIndex(nums);
 
     return 0;
 }
