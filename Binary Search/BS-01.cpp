@@ -304,6 +304,39 @@ int ceil(vector<int> nums, int ele)
     return mn;
 }
 
+// Next alphabetical Element
+
+char nextAlphabeticalElemen(vector<char> &alpabets, char target)
+{
+    int start = 0;
+    int end = alpabets.size() - 1;
+
+    char res = alpabets[start];
+
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+
+        if (alpabets[mid] == target)
+        {
+            start = mid+1;
+        }
+        else if (alpabets[mid] > target)
+        {
+            // Left
+            res = alpabets[mid];
+            end = mid - 1;
+        }
+        else
+        {
+            // Right
+            start = mid + 1;
+        }
+    }
+
+    return res;
+}
+
 int main()
 {
     // vector<int> nums = {1 , 2 , 3 , 4};
@@ -328,8 +361,12 @@ int main()
     // vector<int> nums = { 1 , 2 , 3 , 4 , 8 , 10 , 10 , 12 , 19};
     // cout<<floor(nums , 20);
 
-    vector<int> nums = {1, 2, 3, 4, 8, 10, 10, 12, 19};
-    cout << ceil(nums, 20);
+    // vector<int> nums = {1, 2, 3, 4, 8, 10, 10, 12, 19};
+    // cout << ceil(nums, 20);
+
+    vector<char> alphabets = {'a' , 'b' , 'c' , 'g' , 'h'};
+    cout<<nextAlphabeticalElemen(alphabets , 'b');
+
 
     return 0;
 }
