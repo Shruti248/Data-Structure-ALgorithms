@@ -389,7 +389,7 @@ int searchInInfiniteSortedArray(vector<int> nums, int ele)
 int firstIndex(vector<int> nums)
 {
     int start = 0;
-    int end = nums.size()-1;
+    int end = nums.size() - 1;
     while (start <= end)
     {
         int mid = start + (end - start) / 2;
@@ -420,26 +420,79 @@ int firstIndex(vector<int> nums)
 // Minimum Difference Element in the sorted Array
 // Eg : 4 , 6 , 10 --> key = 7 --> if 7 then  diff = 0 , or min of floor or ceil
 
-int minDiff(vector<int> nums , int ele){
-    int start = 0 ;
-    int end = nums.size() -1;
+int minDiff(vector<int> nums, int ele)
+{
+    int start = 0;
+    int end = nums.size() - 1;
 
     int mn = INT_MAX;
-    while(start <= end){
-        int mid = start + (end - start)/2;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
 
-        if(nums[mid] == ele){
+        if (nums[mid] == ele)
+        {
             return 0;
-        }else if(nums[mid] < ele){
-            mn = min(abs(nums[mid] - ele) , mn);
-            start = mid+1;
-        }else{
-            mn = min(abs(nums[mid]-ele) , mn);
-            end = mid-1;
+        }
+        else if (nums[mid] < ele)
+        {
+            mn = min(abs(nums[mid] - ele), mn);
+            start = mid + 1;
+        }
+        else
+        {
+            mn = min(abs(nums[mid] - ele), mn);
+            end = mid - 1;
         }
     }
 
     return mn;
+}
+
+// CONCEPT
+// BInary Search on Answer
+// Applies on Unosroted array as well
+// You need to develop the criteria on whether you nee dto move on left half or right half
+
+// Peek Answer : BAsed on BSA --> IMPORTANT
+// Unsorted array
+// Output : Index of peak element
+
+int peakEle(vector<int> nums)
+{
+    int start = 0;
+    int end = nums.size() - 1;
+
+    while (start <= end)
+    {
+        // Integer overflow : Asked in interview
+        int mid = start + (end - start) / 2;
+
+        if(mid > 0 && mid < nums.size() -1){
+            if(nums[mid] > nums[mid-1] && nums[mid] > nums[mid+1]){
+                return mid;
+            }else if(nums[mid-1] > nums[mid]){
+                // Left
+                end = mid-1;
+            }else {
+                start = mid+1;
+            }
+        }else if(mid == 0){
+            if(nums[0] > nums[1]){
+                return 0;
+            }else{
+                return 1;
+            }
+        }else{
+            if(nums[nums.size()-1] > nums[nums.size() -2]){
+                return nums.size()-1;
+            }else{
+                return nums.size()-2;
+            }
+        }
+    }
+
+    return -1;
 }
 
 int main()
@@ -478,8 +531,11 @@ int main()
     // vector<int> nums = {0, 0, 0, 0, 1, 1, 1, 1};
     // cout << firstIndex(nums);
 
-    vector<int> nums = {0, 1 , 2 , 6 , 10 , 15};
-    cout << minDiff(nums , 8);
+    // vector<int> nums = {2, 5, 10, 12, 15};
+    // cout << minDiff(nums, 6);
+
+    vector<int> nums = {1 , 3 , 5 , 4 , 10};
+    cout<<peakEle(nums);
 
     return 0;
 }
