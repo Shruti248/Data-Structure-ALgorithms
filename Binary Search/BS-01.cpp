@@ -417,6 +417,31 @@ int firstIndex(vector<int> nums)
     return -1;
 }
 
+// Minimum Difference Element in the sorted Array
+// Eg : 4 , 6 , 10 --> key = 7 --> if 7 then  diff = 0 , or min of floor or ceil
+
+int minDiff(vector<int> nums , int ele){
+    int start = 0 ;
+    int end = nums.size() -1;
+
+    int mn = INT_MAX;
+    while(start <= end){
+        int mid = start + (end - start)/2;
+
+        if(nums[mid] == ele){
+            return 0;
+        }else if(nums[mid] < ele){
+            mn = min(abs(nums[mid] - ele) , mn);
+            start = mid+1;
+        }else{
+            mn = min(abs(nums[mid]-ele) , mn);
+            end = mid-1;
+        }
+    }
+
+    return mn;
+}
+
 int main()
 {
     // vector<int> nums = {1 , 2 , 3 , 4};
@@ -450,8 +475,11 @@ int main()
     // vector<int> nums = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     // cout << searchInInfiniteSortedArray(nums, 7);
 
-    vector<int> nums = {0, 0, 0, 0, 1, 1, 1, 1};
-    cout << firstIndex(nums);
+    // vector<int> nums = {0, 0, 0, 0, 1, 1, 1, 1};
+    // cout << firstIndex(nums);
+
+    vector<int> nums = {0, 1 , 2 , 6 , 10 , 15};
+    cout << minDiff(nums , 8);
 
     return 0;
 }
