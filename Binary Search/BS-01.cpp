@@ -215,15 +215,48 @@ int countSortedArray(vector<int> nums, int ele)
         }
     }
 
-    if(first == -1 && last == -1){
+    if (first == -1 && last == -1)
+    {
         return 0;
     }
 
     int res = 0;
-    res = last-first+1;
+    res = last - first + 1;
 
     return res;
 }
+
+// Find floor of the element in sorted array
+// Floor : Greatest  element less than or equal to ele
+
+int floor(vector<int> nums , int ele){
+    int start = 0 ;
+    int end = nums.size()-1;
+
+    int mx = INT_MIN;
+    while(start <= end){
+        int mid = (start+end)/2;
+
+        if(nums[mid] == ele){
+            return nums[mid];
+        }else if(nums[mid] > ele){
+            // Left
+            end = mid-1;
+        }else {
+            if(nums[mid] > mx){
+                mx = nums[mid];
+                // Right
+                start = mid+1;
+            }
+        }
+    }
+
+    if(mx == INT_MIN){
+        return -1;
+    }
+    return mx;
+}
+
 
 int main()
 {
@@ -243,8 +276,11 @@ int main()
     //     cout << ans[i];
     // }
 
-    vector<int> nums = {1, 1, 1, 10};
-    cout << countSortedArray(nums, 1);
+    // vector<int> nums = {1, 1, 1, 10};
+    // cout << countSortedArray(nums, 1);
+
+    vector<int> nums = { 1 , 2 , 3 , 4 , 8 , 10 , 10 , 12 , 19};
+    cout<<floor(nums , 20);
 
     return 0;
 }
