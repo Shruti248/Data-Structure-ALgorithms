@@ -98,17 +98,71 @@ vector<int> firstNegativeNumber(vector<int> arr, int k)
     return ans;
 }
 
+// Count Occurences of Anagram in string
+
+// construct map of pattern
+// Make a varaible count : to see the distinct occurence of elements == mp.size()
+
+int countOccurencesOfAnagram(string txt, string pat)
+{
+    unordered_map<char, int> m;
+    for (auto i : pat)
+        m[i]++;
+
+    int k = pat.size();
+    int count = m.size();
+    int ans = 0;
+    int i = 0, j = 0;
+
+    while (j < txt.size())
+    {
+
+        if (m.find(txt[j]) != m.end())
+        {
+            m[txt[j]]--;
+
+            if (m[txt[j]] == 0)
+                count--;
+        }
+
+        if (j - i + 1 < k)
+            j++;
+
+        else if (j - i + 1 == k)
+        {
+            if (count == 0)
+                ans++;
+
+            if (m.find(txt[i]) != m.end())
+            {
+                m[txt[i]]++;
+
+                if (m[txt[i]] == 1)
+                    count++;
+            }
+
+            i++;
+            j++;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // vector<int> arr = {1 , 2 , 3 , 4 , 5};
     // cout<<maxSumSubarray(arr , 3);
 
-    vector<int> arr = {1, -2, -3, 4, -5};
-    vector<int> ans = firstNegativeNumber(arr, 3);
+    // vector<int> arr = {1, -2, -3, 4, -5};
+    // vector<int> ans = firstNegativeNumber(arr, 3);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
+    string s = "forxxorfxdofr";
+    string p = "for";
+    cout << countOccurencesOfAnagram(s, p);
     return 0;
 }
