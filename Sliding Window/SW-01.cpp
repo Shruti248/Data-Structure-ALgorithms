@@ -149,6 +149,50 @@ int countOccurencesOfAnagram(string txt, string pat)
     return ans;
 }
 
+// Maximum of all subarrays of size k
+vector<int> maxEleinSubarrays(vector<int> arr, int k)
+{
+    int i = 0, j = 0;
+    vector<int> ans;
+    list<int> mxArray;
+
+    if (k > arr.size())
+    {
+        ans.push_back(*max_element(mxArray.begin(), mxArray.end()));
+        return ans;
+    }
+
+    while (j < arr.size())
+    {
+
+        while (mxArray.size() > 0 && mxArray.back() < arr[j])
+        {
+            mxArray.pop_back();
+        }
+        mxArray.push_back(arr[j]);
+
+        if (j - i + 1 < k)
+        {
+            j++;
+        }
+        else if (j - i + 1 == k)
+        {
+            ans.push_back(mxArray.front());
+
+            // Slide
+            if (arr[i] == mxArray.front())
+            {
+                mxArray.pop_front();
+            }
+
+            i++;
+            j++;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // vector<int> arr = {1 , 2 , 3 , 4 , 5};
@@ -161,8 +205,16 @@ int main()
     // {
     //     cout << ans[i] << " ";
     // }
-    string s = "forxxorfxdofr";
-    string p = "for";
-    cout << countOccurencesOfAnagram(s, p);
+    // string s = "forxxorfxdofr";
+    // string p = "for";
+    // cout << countOccurencesOfAnagram(s, p);
+
+    vector<int> arr = {1, 3, -1, -3, 5, 3, 6, 7};
+    vector<int> ans = maxEleinSubarrays(arr, 3);
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
