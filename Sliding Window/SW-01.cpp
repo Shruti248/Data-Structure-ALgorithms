@@ -365,7 +365,6 @@ int pickToys(vector<int> arr)
     {
         mp[arr[j]]++;
 
-
         if (mp.size() <= 2)
         {
             mx = max(mx, j - i + 1);
@@ -391,6 +390,69 @@ int pickToys(vector<int> arr)
 
     return mx;
 }
+
+// Minimum Window Substring
+
+int minWindowSubstring(string s, string p)
+{
+    int i = 0, j = 0;
+    unordered_map<char, int> mp;
+
+    for (auto ch : p)
+    {
+        mp[ch]++;
+    }
+
+    int count = mp.size();
+    int ans = INT_MAX;
+    int start = 0;
+    int end = 0;
+
+    while (j < s.size())
+    {
+        if (mp.find(s[j]) != mp.end())
+        {
+            mp[s[j]]--;
+
+            if (mp[s[j]] == 0)
+            {
+                count--;
+            }
+        }
+
+        while (count == 0)
+        {
+            if (j - i + 1 < ans)
+            {
+                ans = j - i + 1;
+                start = i;
+                end = j;
+            }
+
+            if (mp.find(s[i]) != mp.end())
+            {
+                mp[s[i]]++;
+
+                if (mp[s[i]] > 0)
+                {
+                    count++;
+                }
+            }
+
+            i++;
+        }
+
+        j++;
+    }
+
+    if (ans == INT_MAX)
+    {
+        return 0; // No valid window found
+    }
+
+    return ans;
+}
+
 
 int main()
 {
@@ -423,6 +485,8 @@ int main()
     // cout<<longestSustringWithKUniqueCharacters("aabacebebee" , 3);
     // cout << longestSustringWithNoRepeatingCharacters("abcabcbb");
 
-    cout<<pickToys({1 , 2 ,1 , 1 , 4});
+    // cout << pickToys({1, 2, 1, 1, 4});
+
+    cout<<minWindowSubstring("ADOBECODEBANC" , "ABC");
     return 0;
 }
