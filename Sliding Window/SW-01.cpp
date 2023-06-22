@@ -236,12 +236,10 @@ int longestSubarrayOfSumK(vector<int> arr, int k)
             }
             j++;
         }
-
     }
 
     return mx;
 }
-
 
 // Fixed sized Sliding Window Gneral Format
 
@@ -249,14 +247,13 @@ int longestSubarrayOfSumK(vector<int> arr, int k)
 
 //     // Calculation
 
-
 //     if(j-i+1  < k){
 //         j++;
 //     }else if(j - i + 1 == k){
 
 //             // Ans From Calculation
 
-                // Remove caluclation of i
+// Remove caluclation of i
 
 //             // Slide the Window (i++)
 //     }
@@ -281,6 +278,47 @@ int longestSubarrayOfSumK(vector<int> arr, int k)
 //         j++:
 //     }
 // }
+
+// Longest substring with k unique characters
+
+int longestSustringWithKUniqueCharacters(string arr, int k)
+{
+    int i = 0, j = 0;
+    unordered_map<int, int> mp;
+    int mx = INT_MIN;
+
+    while (j < arr.size())
+    {
+        mp[arr[j]]++;
+
+        if (mp.size() < k)
+        {
+            j++;
+        }
+        else if (mp.size() == k)
+        {
+            mx = max(j - i + 1, mx);
+            j++;
+        }
+        else if (mp.size() > k)
+        {
+            while (mp.size() > k)
+            {
+
+                mp[arr[i]]--;
+
+                if (mp[arr[i]] == 0)
+                {
+                    mp.erase(arr[i]);
+                }
+                i++;
+            }
+            j++;
+        }
+    }
+
+    return mx;
+}
 
 int main()
 {
@@ -307,7 +345,9 @@ int main()
     // }
 
     // Variable sized sliding window
-    vector<int> arr = {4, 1, 1, 1, 2, 3, 5};
-    cout << longestSubarrayOfSumK(arr, 5);
+    // vector<int> arr = {4, 1, 1, 1, 2, 3, 5};
+    // cout << longestSubarrayOfSumK(arr, 5);
+
+    cout<<longestSustringWithKUniqueCharacters("aabacebebee" , 3);
     return 0;
 }
