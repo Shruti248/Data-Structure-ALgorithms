@@ -320,6 +320,50 @@ int longestSustringWithKUniqueCharacters(string arr, int k)
     return mx;
 }
 
+// Longest Substring with NO Repeating Characters/All Unique Characters
+// Same question as above with k = j-i+1;
+
+int longestSustringWithNoRepeatingCharacters(string arr)
+{
+    int i = 0, j = 0;
+    unordered_map<int, int> mp;
+    int mx = INT_MIN;
+
+    while (j < arr.size())
+    {
+        // Only thsi added
+        int k = j - i + 1;
+        mp[arr[j]]++;
+
+        if (mp.size() < k)
+        {
+            j++;
+        }
+        else if (mp.size() == k)
+        {
+            mx = max(j - i + 1, mx);
+            j++;
+        }
+        else if (mp.size() > k)
+        {
+            while (mp.size() > k)
+            {
+
+                mp[arr[i]]--;
+
+                if (mp[arr[i]] == 0)
+                {
+                    mp.erase(arr[i]);
+                }
+                i++;
+            }
+            j++;
+        }
+    }
+
+    return mx;
+}
+
 int main()
 {
     // vector<int> arr = {1 , 2 , 3 , 4 , 5};
@@ -348,6 +392,7 @@ int main()
     // vector<int> arr = {4, 1, 1, 1, 2, 3, 5};
     // cout << longestSubarrayOfSumK(arr, 5);
 
-    cout<<longestSustringWithKUniqueCharacters("aabacebebee" , 3);
+    // cout<<longestSustringWithKUniqueCharacters("aabacebebee" , 3);
+    cout << longestSustringWithNoRepeatingCharacters("abcabcbb");
     return 0;
 }
