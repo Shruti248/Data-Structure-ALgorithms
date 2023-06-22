@@ -325,43 +325,33 @@ int longestSustringWithKUniqueCharacters(string arr, int k)
 
 int longestSustringWithNoRepeatingCharacters(string arr)
 {
-    int i = 0, j = 0;
-    unordered_map<int, int> mp;
-    int mx = INT_MIN;
+            int i = 0, j = 0;
+        unordered_map<int, int> mp;
+        int mx = INT_MIN;
 
-    while (j < arr.size())
-    {
-        // Only thsi added
-        int k = j - i + 1;
-        mp[arr[j]]++;
+        while (j < arr.size())
+        {
+            int k = j - i + 1;
+            mp[arr[j]]++;
 
-        if (mp.size() < k)
-        {
-            j++;
-        }
-        else if (mp.size() == k)
-        {
-            mx = max(j - i + 1, mx);
-            j++;
-        }
-        else if (mp.size() > k)
-        {
-            while (mp.size() > k)
+            if (mp.size() < k)
             {
-
                 mp[arr[i]]--;
-
                 if (mp[arr[i]] == 0)
                 {
                     mp.erase(arr[i]);
                 }
                 i++;
             }
+            else if (mp.size() == k)
+            {
+                mx = max(j - i + 1, mx);
+            }
             j++;
         }
-    }
 
-    return mx;
+
+        return mx;
 }
 
 int main()
