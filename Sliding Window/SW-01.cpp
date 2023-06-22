@@ -193,6 +193,60 @@ vector<int> maxEleinSubarrays(vector<int> arr, int k)
     return ans;
 }
 
+// Variable Sized Sliding Window
+// COndition : Given
+// Window Size : Maximimze or minimize
+
+// How to move the window
+// Start : i = 0 , j = 0
+// increase j till condition is reached
+
+// Longest Subarray of sum K
+
+// Does not work for negative nubers
+int longestSubarrayOfSumK(vector<int> arr, int k)
+{
+    int i = 0, j = 0;
+    long long sum = 0;
+    int mx = INT_MIN;
+
+    while (j < arr.size())
+    {
+        sum += arr[j];
+
+        if (sum < k)
+        {
+            j++;
+        }
+        else if (sum == k)
+        {
+            // Ans
+            // Size of window : j - i + 1
+            mx = max(j - i + 1, mx);
+
+            // Slide : Now sum is greater than k
+            j++;
+        }
+        else if (sum > k)
+        {
+            while (sum > k)
+            {
+                sum -= arr[i];
+                i++;
+            }
+        }
+
+        if (sum == k)
+        {
+            mx = max(j - i + 1, mx);
+        }
+
+        j++;
+    }
+
+    return mx;
+}
+
 int main()
 {
     // vector<int> arr = {1 , 2 , 3 , 4 , 5};
@@ -209,12 +263,16 @@ int main()
     // string p = "for";
     // cout << countOccurencesOfAnagram(s, p);
 
-    vector<int> arr = {1, 3, -1, -3, 5, 3, 6, 7};
-    vector<int> ans = maxEleinSubarrays(arr, 3);
+    // vector<int> arr = {1, 3, -1, -3, 5, 3, 6, 7};
+    // vector<int> ans = maxEleinSubarrays(arr, 3);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
+
+    // Variable sized sliding window
+    vector<int> arr = {4, 1, 1, 1, 2, 3, 5};
+    cout << longestSubarrayOfSumK(arr, 5);
     return 0;
 }
