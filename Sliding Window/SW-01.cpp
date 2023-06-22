@@ -234,18 +234,53 @@ int longestSubarrayOfSumK(vector<int> arr, int k)
                 sum -= arr[i];
                 i++;
             }
+            j++;
         }
 
-        if (sum == k)
-        {
-            mx = max(j - i + 1, mx);
-        }
-
-        j++;
     }
 
     return mx;
 }
+
+
+// Fixed sized Sliding Window Gneral Format
+
+// while(j < arr.size()){
+
+//     // Calculation
+
+
+//     if(j-i+1  < k){
+//         j++;
+//     }else if(j - i + 1 == k){
+
+//             // Ans From Calculation
+
+                // Remove caluclation of i
+
+//             // Slide the Window (i++)
+//     }
+// }
+
+// Variable sized sliding Window General Format
+
+// while(j < arr.size()){
+//     // Calculation
+
+//     if(condition < k){
+//         j++;
+//     }else if(condition == k){
+//         //  Ans form Calculations
+//         j++;
+//     }else if(condition > k){
+//         while(condition > k){
+//             // remove calculation for i
+//             i++;
+//         }
+
+//         j++:
+//     }
+// }
 
 int main()
 {
