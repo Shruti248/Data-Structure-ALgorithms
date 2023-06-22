@@ -325,33 +325,71 @@ int longestSustringWithKUniqueCharacters(string arr, int k)
 
 int longestSustringWithNoRepeatingCharacters(string arr)
 {
-            int i = 0, j = 0;
-        unordered_map<int, int> mp;
-        int mx = INT_MIN;
+    int i = 0, j = 0;
+    unordered_map<int, int> mp;
+    int mx = INT_MIN;
 
-        while (j < arr.size())
+    while (j < arr.size())
+    {
+        int k = j - i + 1;
+        mp[arr[j]]++;
+
+        if (mp.size() < k)
         {
-            int k = j - i + 1;
-            mp[arr[j]]++;
+            mp[arr[i]]--;
+            if (mp[arr[i]] == 0)
+            {
+                mp.erase(arr[i]);
+            }
+            i++;
+        }
+        else if (mp.size() == k)
+        {
+            mx = max(j - i + 1, mx);
+        }
+        j++;
+    }
 
-            if (mp.size() < k)
+    return mx;
+}
+
+// Pick Toys
+
+int pickToys(vector<int> arr)
+{
+    int i = 0, j = 0;
+    int mx = 0;
+    map<int, int> mp;
+
+    while (j < arr.size())
+    {
+        mp[arr[j]]++;
+
+
+        if (mp.size() <= 2)
+        {
+            mx = max(mx, j - i + 1);
+
+            j++;
+        }
+        else if (mp.size() > 2)
+        {
+            while (mp.size() > 2)
             {
                 mp[arr[i]]--;
+
                 if (mp[arr[i]] == 0)
                 {
                     mp.erase(arr[i]);
                 }
+
                 i++;
-            }
-            else if (mp.size() == k)
-            {
-                mx = max(j - i + 1, mx);
             }
             j++;
         }
+    }
 
-
-        return mx;
+    return mx;
 }
 
 int main()
@@ -383,6 +421,8 @@ int main()
     // cout << longestSubarrayOfSumK(arr, 5);
 
     // cout<<longestSustringWithKUniqueCharacters("aabacebebee" , 3);
-    cout << longestSustringWithNoRepeatingCharacters("abcabcbb");
+    // cout << longestSustringWithNoRepeatingCharacters("abcabcbb");
+
+    cout<<pickToys({1 , 2 ,1 , 1 , 4});
     return 0;
 }
