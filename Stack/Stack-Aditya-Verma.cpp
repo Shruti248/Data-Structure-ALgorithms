@@ -385,20 +385,80 @@ int maxAreaHistogram(vector<int> arr)
     return maxArea;
 }
 
+// MAx Area of the rectangle in Binary Matrix
+
+// max area with rectangle formed from 1's
+
+// MAH : 1D array
+// Here : 2D
+
+// convert 2D to 1D and then do max area histogram
+
+// 4x4 matrix : broken down into 4 H1 , H2 , H3 , H4
+
+// MAx aof all is the ans
+
+// ans = max(MAH(H1) , MAH(H2) , MAH(H3) , MAH(H4))
+
+int maxAreaOfRectangleInBinaryMatrix(int **arr, int n, int m)
+{
+    vector<int> v;
+
+    // n : rows
+    // m : cols
+    for (int j = 0; j < m; j++)
+    {
+        v.push_back(arr[0][j]);
+    }
+
+    int mx = maxAreaHistogram(v);
+
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            if(arr[i][j] == 0){
+                v[j] = 0;
+            }else{
+                v[j] = v[j] + arr[i][j];
+            }
+        }
+        mx = max(mx , maxAreaHistogram(v));
+    }
+
+    return mx;
+}
+
 int main()
 {
-    vector<int> arr = {2, 1, 5, 6, 2, 3};
+    // vector<int> arr = {2, 1, 5, 6, 2, 3};
     // vector<int> ans = nextLargestElement(arr);
     // vector<int> ans = nearestGreaterToLeft(arr);
     // vector<int> ans = nearestSmallerToLeft(arr);
     // vector<int> ans = nearestSmallerToRight(arr);
 
     // vector<int> ans = stockSpan(arr);
-    cout << maxAreaHistogram(arr);
+    // cout << maxAreaHistogram(arr);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
     //     cout << ans[i] << " ";
     // }
+
+    int arr[4][4] = {
+        { 0, 1, 1, 0 },
+        { 1, 1, 1, 1 },
+        { 1, 1, 1, 1 },
+        { 1, 1, 0, 0 },
+    };
+
+    int** ptr = new int*[4];
+    for (int i = 0; i < 4; i++) {
+        ptr[i] = arr[i];
+    }
+
+    cout << maxAreaOfRectangleInBinaryMatrix(ptr , 4, 4);
+
+    delete[] ptr;
     return 0;
 }
