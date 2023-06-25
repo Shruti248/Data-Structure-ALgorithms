@@ -11,7 +11,7 @@
 
 // Therefire ---> if j loop is dependent on i --> USE STACK for otpimized
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // Nearest greater to right OR Next largest Element
@@ -35,29 +35,39 @@ using namespace std;
 // Stack empty --> -1
 // s.top() > arr[i] --> s.top()
 // s.top() <= arr[i] --POP ---> till stack is empty
-                        // --> or till s.top() is greater than arr[i]
-
+// --> or till s.top() is greater than arr[i]
 
 // Time Complexity: O(N)
 // Auxiliary Space: O(N)
 
-vector<int> nextLargestElement(vector<int> arr){
+vector<int> nextLargestElement(vector<int> arr)
+{
     stack<int> st;
     vector<int> ans;
 
-    for(int i = arr.size()-1 ; i>=0 ; i--){
-        if(st.empty()){
+    for (int i = arr.size() - 1; i >= 0; i--)
+    {
+        if (st.empty())
+        {
             ans.push_back(-1);
-        }else if(st.size() > 0 && st.top() > arr[i]){
+        }
+        else if (st.size() > 0 && st.top() > arr[i])
+        {
             ans.push_back(st.top());
-        }else if(st.size() > 0 && st.top() <= arr[i]){
-            while(st.top() <= arr[i] && st.size() > 0){
+        }
+        else if (st.size() > 0 && st.top() <= arr[i])
+        {
+            while (st.size() > 0 && st.top() <= arr[i])
+            {
                 st.pop();
             }
 
-            if(st.empty()){
+            if (st.empty())
+            {
                 ans.push_back(-1);
-            }else{
+            }
+            else
+            {
                 ans.push_back(st.top());
             }
         }
@@ -65,16 +75,63 @@ vector<int> nextLargestElement(vector<int> arr){
         st.push(arr[i]);
     }
 
-    reverse(ans.begin() , ans.end());
+    reverse(ans.begin(), ans.end());
     return ans;
 }
 
-int main(){
-    vector<int> arr = {1 , 3  , 2 , 4};
-    vector<int> ans = nextLargestElement(arr);
+// Nearest greater to left
+// Traverse : Levft to right
+// No need to reverse the ans....
 
-    for(int i = 0 ; i<ans.size() ; i++){
-        cout<<ans[i]<<" ";
+// Time Complexity: O(N)
+// Auxiliary Space: O(N)
+vector<int> nearestGreaterToLeft(vector<int> arr)
+{
+    stack<int> st;
+    vector<int> ans;
+
+    for (int i = 0; i < arr.size() ; i++)
+    {
+        if (st.empty())
+        {
+            ans.push_back(-1);
+        }
+        else if (st.size() > 0 && st.top() > arr[i])
+        {
+            ans.push_back(st.top());
+        }
+        else if (st.size() > 0 && st.top() <= arr[i])
+        {
+            while (st.size() > 0 && st.top() <= arr[i])
+            {
+                st.pop();
+            }
+
+            if (st.empty())
+            {
+                ans.push_back(-1);
+            }
+            else
+            {
+                ans.push_back(st.top());
+            }
+        }
+
+        st.push(arr[i]);
+    }
+
+    return ans;
+}
+
+int main()
+{
+    vector<int> arr = {1, 3, 2, 4};
+    // vector<int> ans = nextLargestElement(arr);
+    vector<int> ans = nearestGreaterToLeft(arr);
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
     }
     return 0;
 }
