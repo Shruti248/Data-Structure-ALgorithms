@@ -90,7 +90,7 @@ vector<int> nearestGreaterToLeft(vector<int> arr)
     stack<int> st;
     vector<int> ans;
 
-    for (int i = 0; i < arr.size() ; i++)
+    for (int i = 0; i < arr.size(); i++)
     {
         if (st.empty())
         {
@@ -129,7 +129,7 @@ vector<int> nearestSmallerToLeft(vector<int> arr)
     stack<int> st;
     vector<int> ans;
 
-    for (int i = 0; i < arr.size() ; i++)
+    for (int i = 0; i < arr.size(); i++)
     {
         if (st.empty())
         {
@@ -168,7 +168,7 @@ vector<int> nearestSmallerToRight(vector<int> arr)
     stack<int> st;
     vector<int> ans;
 
-    for (int i = arr.size()-1; i >= 0 ; i--)
+    for (int i = arr.size() - 1; i >= 0; i--)
     {
         if (st.empty())
         {
@@ -198,14 +198,14 @@ vector<int> nearestSmallerToRight(vector<int> arr)
         st.push(arr[i]);
     }
 
-    reverse(ans.begin() , ans.end());
+    reverse(ans.begin(), ans.end());
     return ans;
 }
 
 // Nearest greater to left : Equivalent Problem : consecutive smaller or equal before it --> Stock Span Problem
 
 // arr : 100 80 60 70 60 75 85
-//First : Find nearest Greater elemenet to the left  for each element
+// First : Find nearest Greater elemenet to the left  for each element
 // 100 80 80 80 70 80 100
 
 // Now suppose you want to find consecutive smaller or equal before it
@@ -213,21 +213,19 @@ vector<int> nearestSmallerToRight(vector<int> arr)
 
 // Required ans : Substract the indices of the current element with the nearest greater element
 
-
 // We used to store the element in vector : Now we store the indices
 // Indices of nearest greater to left : -1 0 1 1 3 0
 // Output : i - indexFound : Eg (0- -1 : 1) (1 - 0 : 1)...So on
-
 
 // Required : Index and element in stack
 // Use : stack<pair<int , int> st;
 
 vector<int> stockSpan(vector<int> arr)
 {
-    stack<pair<int , int>> st;
+    stack<pair<int, int>> st;
     vector<int> ans;
 
-    for (int i = 0; i < arr.size() ; i++)
+    for (int i = 0; i < arr.size(); i++)
     {
         if (st.empty())
         {
@@ -235,9 +233,9 @@ vector<int> stockSpan(vector<int> arr)
         }
         else if (st.size() > 0 && st.top().first > arr[i])
         {
-            ans.push_back(st.top().second); //in the vector store indexes only
+            ans.push_back(st.top().second); // in the vector store indexes only
         }
-        else if (st.size() > 0 && st.top().first<= arr[i])
+        else if (st.size() > 0 && st.top().first <= arr[i])
         {
             while (st.size() > 0 && st.top().first <= arr[i])
             {
@@ -254,10 +252,11 @@ vector<int> stockSpan(vector<int> arr)
             }
         }
 
-        st.push({arr[i] , i});
+        st.push({arr[i], i});
     }
 
-    for(int i = 0 ; i<ans.size() ; i++){
+    for (int i = 0; i < ans.size(); i++)
+    {
         ans[i] = i - ans[i];
         // cout<<i-ans[i]<<" ";
     }
@@ -265,25 +264,141 @@ vector<int> stockSpan(vector<int> arr)
     return ans;
 }
 
+// Maximum area of the historgram
 
+// max area : nearest smaller element to the left and right combined...
 
+// find index of : Nearest smaller element to left & nearest smallest element to right
 
+// MAX AREA : (rightIndex - LeftIndex - 1 ) * height
 
+// Right array : NSR indices
+// left array : NSL indices
+// Width array : rightarray[i] - leftArray[i] - 1
+// Area Array : arr[i] * width[i]
+
+// retrun max in area array
+
+// Nearest Smaller to left
+vector<int> nearestSmallerToLeftIndices(vector<int> arr)
+{
+    stack<pair<int, int>> st;
+    vector<int> ans;
+    int psuedoIndex = -1;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (st.empty())
+        {
+            ans.push_back(psuedoIndex);
+        }
+        else if (st.size() > 0 && st.top().first < arr[i])
+        {
+            ans.push_back(st.top().second);
+        }
+        else if (st.size() > 0 && st.top().first >= arr[i])
+        {
+            while (st.size() > 0 && st.top().first >= arr[i])
+            {
+                st.pop();
+            }
+
+            if (st.empty())
+            {
+                ans.push_back(psuedoIndex);
+            }
+            else
+            {
+                ans.push_back(st.top().second);
+            }
+        }
+
+        st.push({arr[i], i});
+    }
+
+    return ans;
+}
+
+// Nearest Smaller to right
+vector<int> nearestSmallerToRightIndices(vector<int> arr)
+{
+    stack<pair<int, int>> st;
+    vector<int> ans;
+    int psuedoIndex = arr.size();
+
+    for (int i = arr.size() - 1; i >= 0; i--)
+    {
+        if (st.empty())
+        {
+            ans.push_back(psuedoIndex);
+        }
+        else if (st.size() > 0 && st.top().first < arr[i])
+        {
+            ans.push_back(st.top().second);
+        }
+        else if (st.size() > 0 && st.top().first >= arr[i])
+        {
+            while (st.size() > 0 && st.top().first >= arr[i])
+            {
+                st.pop();
+            }
+
+            if (st.empty())
+            {
+                ans.push_back(psuedoIndex);
+            }
+            else
+            {
+                ans.push_back(st.top().second);
+            }
+        }
+
+        st.push({arr[i], i});
+    }
+
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int maxAreaHistogram(vector<int> arr)
+{
+    vector<int> left = nearestSmallerToLeftIndices(arr);
+    vector<int> right = nearestSmallerToRightIndices(arr);
+    vector<int> width;
+    vector<int> area;
+    int maxArea = INT_MIN;
+
+    width.resize(arr.size());
+    area.resize(arr.size());
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        width[i] = right[i] - left[i] - 1;
+    }
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        area[i] = arr[i] * width[i];
+        maxArea = max(area[i], maxArea);
+    }
+
+    return maxArea;
+}
 
 int main()
 {
-    vector<int> arr = {100 , 80 , 60 , 70 , 60 , 75 , 85};
+    vector<int> arr = {2, 1, 5, 6, 2, 3};
     // vector<int> ans = nextLargestElement(arr);
     // vector<int> ans = nearestGreaterToLeft(arr);
     // vector<int> ans = nearestSmallerToLeft(arr);
     // vector<int> ans = nearestSmallerToRight(arr);
 
-    vector<int> ans = stockSpan(arr);
+    // vector<int> ans = stockSpan(arr);
+    cout << maxAreaHistogram(arr);
 
-
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
