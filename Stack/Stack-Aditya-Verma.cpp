@@ -485,6 +485,58 @@ int rainWaterTrapping(vector<int> arr)
     return totalWater;
 }
 
+// IMP
+// Implement Minimum stack with extra space
+
+// We will implement push and pop operations
+
+// 2 stacks used : one for pushing and poping elements
+// other supporting stack for storing the min element
+
+// if new min element in the stack then only push it in supporting stack
+
+// if element is popped then check it in supporting stack , if present there pop that too
+
+// both stacks will e empty at space time
+
+stack<int> st;
+stack<int> supportingst;
+
+void push(int a)
+{
+    st.push(a);
+
+    if(supportingst.size() == 0 || a <= supportingst.top()){
+        supportingst.push(a);
+    }
+
+    return;
+}
+
+int pop(){
+
+    if(st.size() == 0){
+        return -1;
+    }
+    st.pop();
+
+    int ans = st.top();
+    if(ans == supportingst.top()){
+        supportingst.pop();
+    }
+
+    return ans;
+}
+
+int minElement()
+{
+    if(supportingst.size() == 0){
+        return -1;
+    }
+
+    return supportingst.top();
+}
+
 int main()
 {
     // vector<int> arr = {2, 1, 5, 6, 2, 3};
@@ -517,8 +569,8 @@ int main()
 
     // delete[] ptr;
 
-    vector<int> arr = {4 , 2 , 0 , 3 , 2 , 5};
+    // vector<int> arr = {4, 2, 0, 3, 2, 5};
 
-    cout << rainWaterTrapping(arr);
+    // cout << rainWaterTrapping(arr);
     return 0;
 }
