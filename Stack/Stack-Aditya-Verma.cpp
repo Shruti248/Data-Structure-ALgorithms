@@ -417,16 +417,72 @@ int maxAreaOfRectangleInBinaryMatrix(int **arr, int n, int m)
     {
         for (int j = 0; j < m; j++)
         {
-            if(arr[i][j] == 0){
+            if (arr[i][j] == 0)
+            {
                 v[j] = 0;
-            }else{
+            }
+            else
+            {
                 v[j] = v[j] + arr[i][j];
             }
         }
-        mx = max(mx , maxAreaHistogram(v));
+        mx = max(mx, maxAreaHistogram(v));
     }
 
     return mx;
+}
+
+// No concept of NGR NGL
+// Rain Water Trapping
+// arr : 300204
+
+// if we are at arr[] = 0 , then we get the max of left array and max of right array
+// actual height of water : min(max(left , right))
+
+// Levl of water in each building
+//  height of water i height of building --> Add all
+
+// Algo
+// First find max of left and max of right
+// left array : campare all element and find max
+// Eg : 3 0 0 2 0 4 --> 3 3 3 3 3 4(start from first)
+
+// Right array : 300204(start from last) --> 444444
+
+// Therefore :
+// water[i] = min(max L[i] , max R[i]) - arr[i];
+// All all water
+
+int rainWaterTrapping(vector<int> arr)
+{
+    vector<int> mxL;
+    vector<int> mxR;
+
+    mxL.push_back(arr[0]);
+
+    for (int i = 1; i < arr.size(); i++)
+    {
+        mxL.push_back(max(mxL[i - 1], arr[i]));
+    }
+
+    mxR.push_back(arr[arr.size() - 1]);
+
+    for (int i = arr.size() - 2; i >= 0; i--)
+    {
+        mxR.push_back(max(mxR[i + 1], arr[i]));
+    }
+
+    reverse(mxR.begin(), mxR.end());
+
+    vector<int> water;
+    int totalWater = 0;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        water.push_back(min(mxL[i], mxR[i]) - arr[i]);
+        totalWater += water[i];
+    }
+
+    return totalWater;
 }
 
 int main()
@@ -445,20 +501,24 @@ int main()
     //     cout << ans[i] << " ";
     // }
 
-    int arr[4][4] = {
-        { 0, 1, 1, 0 },
-        { 1, 1, 1, 1 },
-        { 1, 1, 1, 1 },
-        { 1, 1, 0, 0 },
-    };
+    // int arr[4][4] = {
+    //     { 0, 1, 1, 0 },
+    //     { 1, 1, 1, 1 },
+    //     { 1, 1, 1, 1 },
+    //     { 1, 1, 0, 0 },
+    // };
 
-    int** ptr = new int*[4];
-    for (int i = 0; i < 4; i++) {
-        ptr[i] = arr[i];
-    }
+    // int** ptr = new int*[4];
+    // for (int i = 0; i < 4; i++) {
+    //     ptr[i] = arr[i];
+    // }
 
-    cout << maxAreaOfRectangleInBinaryMatrix(ptr , 4, 4);
+    // cout << maxAreaOfRectangleInBinaryMatrix(ptr , 4, 4);
 
-    delete[] ptr;
+    // delete[] ptr;
+
+    vector<int> arr = {4 , 2 , 0 , 3 , 2 , 5};
+
+    cout << rainWaterTrapping(arr);
     return 0;
 }
