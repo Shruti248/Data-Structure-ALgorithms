@@ -537,6 +537,61 @@ int minElement()
     return supportingst.top();
 }
 
+
+// Implement Minimum stack with O(1) space
+
+// O(1) : Only variables
+
+int minEle;
+
+void pushOptimized(int x){
+    if(st.size() == 0){
+        st.push(x);
+        minEle = x;
+    }else{
+        if(x >= minEle){
+            st.push(x);
+        }else if(x < minEle){
+            st.push(2*x - minEle);
+            minEle = x;
+        }
+    }
+}
+
+void popOptimized(){
+    if(st.size() == 0){
+        return;
+    }else {
+        if(st.top() >= minEle){
+            st.pop();
+        }else if(st.top() < minEle){
+            minEle = 2*minEle - st.top();
+            s.pop();
+        }
+    }
+}
+
+int topOptimized(){
+    if(st.size() == 0){
+        return -1;
+    }
+    else{
+        if(st.top() >= minEle){
+            return st.top();
+        }else if(st.top() < minEle){
+            return minEle;
+        }
+    }
+}
+
+int getminEle(){
+    if(st.size() == 0){
+        return -1;
+    }
+
+    return minEle;
+}
+
 int main()
 {
     // vector<int> arr = {2, 1, 5, 6, 2, 3};
