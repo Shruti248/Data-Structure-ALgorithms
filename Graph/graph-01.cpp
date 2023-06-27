@@ -108,6 +108,58 @@ public:
     }
 };
 
+// BFS Traversal in Graph
+
+// unordered-map : Visited(Keeps track of visited nodes) --> All are initially false , if visited then true
+// Queue : FIFO
+
+// Front Node = 0
+// Make queue and push the first source node
+// visited(0) == true
+// Print front Node
+// see adjacent nodes of 0 and 0 is removed from front node
+
+// front node : 3
+// Push 3
+// vistied(3);
+// print front node
+// see adjacent nodes of 3 (If not visisted add to queue) and remove 3 from front node
+
+// Repeat same process
+
+// Do it while queue is empty
+
+
+// When some nodes are not connected : Disconnected graph
+
+// given : Source Node : 0
+vector<int> bfsTraversal(int V/**No of nodes*/ , vector<int> adj[] /**List of edges*/){
+    vector<int> result;
+    queue<int> q;
+
+    q.push(0);
+
+    int visited[V] = {0};
+
+    visited[0] = 1;
+
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+        result.push_back(node);
+
+        for(auto a : adj[node]){
+            if(!visited[a]){
+                q.push(a);
+                visited[a] = 1;
+            }
+        }
+    }
+
+    return result;
+
+}
+
 int main()
 {
     int n;
