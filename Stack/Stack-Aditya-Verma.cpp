@@ -566,7 +566,7 @@ void popOptimized(){
             st.pop();
         }else if(st.top() < minEle){
             minEle = 2*minEle - st.top();
-            s.pop();
+            st.pop();
         }
     }
 }
