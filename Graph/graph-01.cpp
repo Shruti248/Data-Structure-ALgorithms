@@ -51,3 +51,67 @@
 // map<int , list<int>>
 
 // can alos be implemented using vector<vector<int>
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class graph
+{
+
+public:
+    unordered_map<int, list<int>> adj;
+
+    void addEdge(int u, int v, bool direction)
+    {
+        // direction = 0 : Undirected Graph
+        // direction = 1 : Directed Graph
+
+        // Create a edge from u to v(for both directed and undirected graph)
+        adj[u].push_back(v); // u --> v edge
+
+        // /Reverse edge exist only for udirected graph
+        if (direction == 0)
+        {
+            adj[v].push_back(u); // v --> u edge
+        }
+    }
+
+    void printAdjList()
+    {
+        for (auto i : adj)
+        {
+            cout << i.first << " --> ";
+            for (auto j : i.second)
+            {
+                cout << j << ", ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main()
+{
+    int n;
+    cout << "No of nodes : ";
+    cin >> n;
+
+    int m;
+    cout << "No of edges : ";
+    cin >> m;
+
+    graph g;
+
+    for (int i = 0; i < m; i++)
+    {
+        int u, v;
+        cin >> u >> v;
+
+        // Creating a undirected graph
+        g.addEdge(u, v, 0);
+    }
+
+    g.printAdjList();
+
+    return 0;
+}
