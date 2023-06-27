@@ -88,6 +88,24 @@ public:
             cout << endl;
         }
     }
+
+
+    // Using Vector<vector<int>> GFG
+    vector<vector<int>> printGraph(int V, vector<int> adj[]) {
+            vector<vector<int>> ans;
+
+            for(int i = 0 ; i<V ; i++){
+                vector<int> a;
+                a.push_back(i); //--> Nodes
+
+                for(int j = 0 ; j<adj[i].size() ; j++){
+                    a.push_back(adj[i][j]); //Edgest list
+                }
+                ans.push_back(a);
+            }
+            return ans;
+
+    }
 };
 
 int main()
