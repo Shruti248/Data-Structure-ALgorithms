@@ -454,6 +454,35 @@ int minWindowSubstring(string s, string p)
 }
 
 
+// O(nlogn)
+int chocolateDistribution(vector<int> arr, int k)
+{
+
+    sort(arr.begin() , arr.end());
+    int i = 0, j = 0;
+
+    int mn = INT_MAX;
+    int ans = 0;
+
+    while (j < arr.size())
+    {
+        if (j - i + 1 < k)
+        {
+            j++;
+        }
+        else if (j - i + 1 == k)
+        {
+            ans = arr[j] - arr[i];
+            mn = min(mn, ans);
+
+            i++;
+            j++;
+        }
+    }
+
+    return mn;
+}
+
 int main()
 {
     // vector<int> arr = {1 , 2 , 3 , 4 , 5};
@@ -487,6 +516,12 @@ int main()
 
     // cout << pickToys({1, 2, 1, 1, 4});
 
-    cout<<minWindowSubstring("ADOBECODEBANC" , "ABC");
+    // cout<<minWindowSubstring("ADOBECODEBANC" , "ABC");
+
+    vector<int> arr = {12, 4, 7, 9, 2, 23, 25, 41, 30,
+                       40, 28, 42, 30, 44, 48, 43, 50};
+
+    cout << chocolateDistribution(arr, 7);
+
     return 0;
 }
