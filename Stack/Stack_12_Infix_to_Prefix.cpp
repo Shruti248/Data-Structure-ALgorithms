@@ -48,7 +48,7 @@ string infix_to_prefix(string infix_expression)
         {
             prefix_expression += infix_expression[i];
         }
-        // Opening will become closing and closing will become opening : difference frompostfix 
+        // Opening will become closing and closing will become opening : difference frompostfix
         else if (infix_expression[i] == ')')
         {
             st.push(infix_expression[i]);
