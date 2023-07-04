@@ -583,40 +583,124 @@ int maxPathSum(Node *root)
     int singlePathSum = maxPathSumUtil(root, ans);
     // cout<<"Single Path Sum :"<<singlePathSum<<endl;
 
-    //Max path between any 2 nodes , may or may not pass through the root node
+    // Max path between any 2 nodes , may or may not pass through the root node
     return ans;
 }
 
 // Path Sum with the Traget Sum Given : Given the root of a binary tree and an integer targetSum, return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
 
-bool pathSumWithGiventargetSum(Node* root , int target){
+bool pathSumWithGiventargetSum(Node *root, int target)
+{
 
-    if(root == NULL){
+    if (root == NULL)
+    {
         return false;
     }
 
-    if(root->data == target){
+    if (root->data == target)
+    {
         return true;
     }
 
-    int left = pathSumWithGiventargetSum(root->left , target - root->data);
-    int right = pathSumWithGiventargetSum(root->right , target - root->data);
+    int left = pathSumWithGiventargetSum(root->left, target - root->data);
+    int right = pathSumWithGiventargetSum(root->right, target - root->data);
 
     return left || right;
+}
 
+// Boundary Traversal Of the Binary Tree
+
+// Time Complexity: O(N).
+// Reason: The time complexity will be O(H) + O(H) + O(N) which is ≈ O(N)
+// Space Complexity: O(N)
+// Reason: Space is needed for the recursion stack while adding leaves. In the worst case (skewed tree), space complexity can be O(N).
+
+bool isLeaf(Node *root)
+{
+    return root->left == NULL && root->right == NULL;
+}
+void addLeftBoundary(Node *root, vector<int> &ans)
+{
+    Node *curr = root->left;
+
+    while (curr)
+    {
+        if (!isLeaf(curr))
+        {
+            ans.push_back(curr->data);
+        }
+        if (curr->left)
+            curr = curr->left;
+        else
+            curr = curr->right;
+    }
+}
+void addLeaves(Node *root, vector<int> &ans)
+{
+    if (isLeaf(root))
+    {
+        ans.push_back(root->data);
+        return;
+    }
+
+    if (root->left)
+        addLeaves(root->left, ans);
+    if (root->right)
+        addLeaves(root->right, ans);
+}
+void addRightBoundary(Node *root, vector<int> &ans)
+{
+    Node *curr = root->right;
+    vector<int> temp;
+
+    while (curr)
+    {
+        if (!isLeaf(curr))
+            temp.push_back(curr->data);
+        if (curr->right)
+            curr = curr->right;
+        else
+            curr = curr->left;
+    }
+
+    for (int i = temp.size() - 1; i >= 0; i--)
+    {
+        ans.push_back(temp[i]);
+    }
+}
+
+vector<int> boundaryTraversal(Node *root)
+{
+    vector<int> ans;
+
+    if (root == NULL)
+    {
+        return ans;
+    }
+
+    if (!isLeaf(root))
+    {
+        ans.push_back(root->data);
+    }
+
+    addLeftBoundary(root, ans);
+    addLeaves(root, ans);
+    addRightBoundary(root, ans);
+
+    return ans;
 }
 
 int main()
 {
-    struct Node *root = new Node(1);
-    root->left = new Node(2);
-    root->right = new Node(3);
+    // struct Node *root = new Node(1);
+    // root->left = new Node(2);
+    // root->right = new Node(3);
 
-    root->left->left = new Node(4);
-    root->left->right = new Node(5);
+    // root->left->left = new Node(4);
+    // root->left->right = new Node(5);
 
-    root->right->left = new Node(6);
-    root->right->right = new Node(7);
+    // root->right->left = new Node(6);
+    // root->right->right = new Node(7);
 
     // preOrder(root);
     // cout<<endl;
@@ -659,6 +743,27 @@ int main()
 
     // cout << maxPathSum(root);
 
-    cout<<pathSumWithGiventargetSum(root , 3);
+    // cout << pathSumWithGiventargetSum(root, 3);
+
+    struct Node *root = new Node(1);
+    root->left = new Node(2);
+    root->left->left = new Node(3);
+    root->left->left->right = new Node(4);
+    root->left->left->right->left = new Node(5);
+    root->left->left->right->right = new Node(6);
+    root->right = new Node(7);
+    root->right->right = new Node(8);
+    root->right->right->left = new Node(9);
+    root->right->right->left->left = new Node(10);
+    root->right->right->left->right = new Node(11);
+
+    vector<int> printboundaryTraversal = boundaryTraversal(root);
+
+    cout << "The Boundary Traversal is : ";
+    for (int i = 0; i < printboundaryTraversal.size(); i++)
+    {
+        cout << printboundaryTraversal[i] << " ";
+    }
+
     return 0;
 }
