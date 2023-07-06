@@ -6,7 +6,6 @@
 
 // If this 2 given in question : Definitely Heap Problem
 
-
 // 2 types
 // Min Heap , max Heap
 
@@ -20,8 +19,7 @@
 // All question sof heap are of sorting : SOrting (O(nlogn))
 
 // IMP
-//With heap this sorting happens in nlogk times(Reducing the extra work done in soring) : Sort only k elements
-
+// With heap this sorting happens in nlogk times(Reducing the extra work done in soring) : Sort only k elements
 
 // WORKING
 // Eg : kth smallest element
@@ -43,21 +41,23 @@
 
 // #type def pair<int , <pair<int , int>> ppi; --> pair of pair of int
 
-
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 // kth smallest element
 // 1) Sorting : return arr[k-1]; -->nlogn
 // 2) Heap : nlogk
 
-int kthSmallestElement(vector<int> arr , int k){
+int kthSmallestElement(vector<int> arr, int k)
+{
     priority_queue<int> pq;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         pq.push(arr[i]);
 
-        if(pq.size() > k){
+        if (pq.size() > k)
+        {
             pq.pop();
         }
     }
@@ -67,20 +67,24 @@ int kthSmallestElement(vector<int> arr , int k){
 
 // Return k largest elements in the array
 
-vector<int> kLargestElement(vector<int> arr , int k){
-    priority_queue<int , vector<int> , greater<int>> pq;
+vector<int> kLargestElement(vector<int> arr, int k)
+{
+    priority_queue<int, vector<int>, greater<int>> pq;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         pq.push(arr[i]);
 
-        if(pq.size() > k){
+        if (pq.size() > k)
+        {
             pq.pop();
         }
     }
 
     // Now all the elements in the heap is the k largest elements
     vector<int> ans;
-    while(!pq.empty()){
+    while (!pq.empty())
+    {
         ans.push_back(pq.top());
         pq.pop();
     }
@@ -88,8 +92,7 @@ vector<int> kLargestElement(vector<int> arr , int k){
     return ans;
 }
 
-
-//IMP :  Sort a k sorted array/Nearly sorted array
+// IMP :  Sort a k sorted array/Nearly sorted array
 
 // k sorted array : elements are present at k range away from there original position in the sorted array
 
@@ -107,20 +110,24 @@ vector<int> kLargestElement(vector<int> arr , int k){
 
 // min heap : bcoz we want min element at the top of heap
 
-vector<int> sortKSortedArray(vector<int> arr , int k){
+vector<int> sortKSortedArray(vector<int> arr, int k)
+{
     vector<int> ans;
 
-    priority_queue<int , vector<int> , greater<int>> pq;
-    for(int i = 0 ; i<arr.size() ; i++){
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for (int i = 0; i < arr.size(); i++)
+    {
         pq.push(arr[i]);
 
-        if(pq.size() > k){
+        if (pq.size() > k)
+        {
             ans.push_back(pq.top());
             pq.pop();
         }
     }
 
-    while(!pq.empty()){
+    while (!pq.empty())
+    {
         ans.push_back(pq.top());
         pq.pop();
     }
@@ -164,15 +171,52 @@ vector<int> sortKSortedArray(vector<int> arr , int k){
 
 // Heap : pair<int , int> : Automatically sorting on first int
 
-vector<int> kClosestElements(vector<int> arr , int k , int num){
+vector<int> kClosestElements(vector<int> arr, int k, int num)
+{
 
     // Max Heap of type pair<int , int>
-    priority_queue<pair<int , int>> pq;
+    priority_queue<pair<int, int>> pq;
 
     // first value L key , second : Element
 
+    for (int i = 0; i < arr.size(); i++)
+    {
+        pq.push({abs(arr[i] - num), arr[i]});
+
+        if (pq.size() > k)
+        {
+            pq.pop();
+        }
+    }
+
+    vector<int> ans;
+    while (!pq.empty())
+    {
+        ans.push_back(pq.top().second);
+        pq.pop();
+    }
+
+    return ans;
+}
+
+// Top k frequent(largest) numbers
+// Key : Frequency
+
+vector<int> topKFrequent(vector<int> arr , int k){
+    unordered_map<int , int> mp;
+
+    // COnverted array to hash
     for(int i = 0 ; i<arr.size() ; i++){
-        pq.push({abs(arr[i] - num) , arr[i]});
+            mp[arr[i]]++;
+    }
+
+    // Using this hash for heap
+    // Sort the frequency
+
+    priority_queue<pair<int , int> , vector<pair<int , int>> , greater<pair<int , int>>> pq;
+
+    for(auto i = mp.begin() ;  i != mp.end() ; i++){
+        pq.push({i->second , i->first});
 
         if(pq.size() > k){
             pq.pop();
@@ -189,16 +233,18 @@ vector<int> kClosestElements(vector<int> arr , int k , int num){
 }
 
 
-
-int main(){
+int main()
+{
     // cout<<kthSmallestElement({9 , 6 , 3 , 4 ,5} , 3);
 
     // vector<int> ans = kLargestElement({7 , 10 , 4 , 3 , 20 , 15} , 3);
     // vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
-    vector<int> ans = kClosestElements({5 , 6, 7 , 10  , 9} , 3 , 7);
+    // vector<int> ans = kClosestElements({5, 6, 7, 10, 9}, 3, 7);
+    vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
 
-    for(int i = 0 ; i<ans.size() ; i++){
-        cout<<ans[i]<<" ";
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
     }
     return 0;
 }
