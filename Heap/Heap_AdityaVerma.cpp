@@ -322,6 +322,40 @@ vector<vector<int>> kClosestPointsToOrigin(vector<vector<int>> &arr, int k)
     return ans;
 }
 
+
+// connect ropes : to minimize the cost
+// at any time , add 2 ropes that is minimum --> Most optimal cost occurs in this only
+
+// take min 2 element : add them to ans : push back to heap
+
+// if(heap.size() < 2) --> STOP --> return ans
+
+int connectRopes(vector<int> arr){
+
+    // Min heap : Boz we want 2 min elements
+    priority_queue<int , vector<int> , greater<int>> pq;
+
+    for(int i = 0  ; i<arr.size() ; i++){
+        pq.push(arr[i]);
+    }
+
+    int cost = 0;
+    while(pq.size() >= 2){
+        int first = pq.top();
+        pq.pop();
+        int second = pq.top();
+        pq.pop();
+
+        cost += first+second;
+
+        pq.push(first+second);
+    }
+
+    return cost;
+}
+
+
+
 int main()
 {
     // cout<<kthSmallestElement({9 , 6 , 3 , 4 ,5} , 3);
@@ -330,11 +364,12 @@ int main()
     // vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
     // vector<int> ans = kClosestElements({5, 6, 7, 10, 9}, 3, 7);
     // vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
-    vector<int> ans = frequencySort({5, 5, 6, 3, 2, 5, 3, 2});
+    // vector<int> ans = frequencySort({5, 5, 6, 3, 2, 5, 3, 2});
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    cout<<connectRopes({1 , 2 , 3 , 4 , 5});
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
