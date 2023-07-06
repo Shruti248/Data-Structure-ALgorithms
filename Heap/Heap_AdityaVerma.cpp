@@ -127,13 +127,76 @@ vector<int> sortKSortedArray(vector<int> arr , int k){
     return ans;
 }
 
+// k closest elements
+// Brute force : SUbtract all teh values from the element whose closest si to be found
+// Eg : 5 6 7 8 9
+// 3 closest to 7
+
+// 2 1 0 1 2 --> subtratcting abs value
+// we sort acc to this values : return thos number by adding it again to this
+
+// Sorting is done in this abs difference array
+// then we find the ans with first k elements
+
+// Using sorting
+// vector<int> kClosestElements(vector<int> arr , int k , int num){
+//     vector<int> ans;
+
+//     vector<pair<int , int>> temp;
+
+//     for(int i = 0 ; i<arr.size() ; i++){
+//         temp.push_back({abs(arr[i] - num) , arr[i]});
+//     }
+
+//     sort(temp.begin() , temp.end() ,  [](const pair<int, int>& a, const pair<int, int>& b) {
+//         return a.first < b.first;
+//     });
+
+//     for(int i = 0 ; i<k ; i++){
+//         ans.push_back(temp[i].second);
+//     }
+
+//     return ans;
+// }
+
+// Using Heap : Key is the absolute difference
+// Closest : smallest : Max Heap : therefore larger values are popped out
+
+// Heap : pair<int , int> : Automatically sorting on first int
+
+vector<int> kClosestElements(vector<int> arr , int k , int num){
+
+    // Max Heap of type pair<int , int>
+    priority_queue<pair<int , int>> pq;
+
+    // first value L key , second : Element
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        pq.push({abs(arr[i] - num) , arr[i]});
+
+        if(pq.size() > k){
+            pq.pop();
+        }
+    }
+
+    vector<int> ans;
+    while(!pq.empty()){
+        ans.push_back(pq.top().second);
+        pq.pop();
+    }
+
+    return ans;
+}
+
 
 
 int main(){
     // cout<<kthSmallestElement({9 , 6 , 3 , 4 ,5} , 3);
 
     // vector<int> ans = kLargestElement({7 , 10 , 4 , 3 , 20 , 15} , 3);
-    vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
+    // vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
+    vector<int> ans = kClosestElements({5 , 6, 7 , 10  , 9} , 3 , 7);
+
     for(int i = 0 ; i<ans.size() ; i++){
         cout<<ans[i]<<" ";
     }
