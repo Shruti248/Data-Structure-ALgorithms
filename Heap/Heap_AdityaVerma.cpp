@@ -354,6 +354,25 @@ int connectRopes(vector<int> arr){
     return cost;
 }
 
+// Sum of elements between k1th smallest and k2th largest
+// input : arr , k1 : k1th smallest element , k2 : k2th smallest element
+// output : return the sum of elements between k1 and k2
+
+int sum(vector<int> arr , int k1 , int k2){
+    int x = kthSmallestElement(arr , k1);
+    int y = kthSmallestElement(arr , k2);
+
+    int ans = 0;
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(arr[i] > x && arr[i] < y){
+            ans += arr[i];
+        }
+    }
+
+    return ans;
+}
+
+
 
 
 int main()
@@ -366,7 +385,8 @@ int main()
     // vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
     // vector<int> ans = frequencySort({5, 5, 6, 3, 2, 5, 3, 2});
 
-    cout<<connectRopes({1 , 2 , 3 , 4 , 5});
+    // cout<<connectRopes({1 , 2 , 3 , 4 , 5});
+    cout<<sum({1 , 2 , 3 , 4 , 5} , 2 , 5);
     // for (int i = 0; i < ans.size(); i++)
     // {
     //     cout << ans[i] << " ";
