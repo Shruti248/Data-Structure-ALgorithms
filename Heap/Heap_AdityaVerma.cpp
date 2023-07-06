@@ -232,6 +232,41 @@ vector<int> topKFrequent(vector<int> arr , int k){
     return ans;
 }
 
+// Frequency sort : Sort based on frequency
+// Ans : 1 1 1  2 2 3 4
+
+// Compare function approach is also done
+
+// Using heap
+
+vector<int> frequencySort(vector<int> arr){
+    vector<int> ans;
+    unordered_map<int , int> mp;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        mp[arr[i]]++;
+    }
+
+    // Max heap
+    priority_queue<pair<int  , int>> pq;
+
+    for(auto i = mp.begin() ; i != mp.end() ; i++){
+        pq.push({i->second , i->first});
+    }
+
+    while(!pq.empty()){
+        int freq = pq.top().first;
+        while(freq != 0){
+            ans.push_back(pq.top().second);
+            freq--;
+        }
+        pq.pop();
+    }
+
+    return ans;
+}
+
+
 
 int main()
 {
@@ -240,7 +275,8 @@ int main()
     // vector<int> ans = kLargestElement({7 , 10 , 4 , 3 , 20 , 15} , 3);
     // vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
     // vector<int> ans = kClosestElements({5, 6, 7, 10, 9}, 3, 7);
-    vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
+    // vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
+    vector<int> ans = frequencySort({5, 5 , 6 , 3 , 2 , 5 , 3 , 2});
 
     for (int i = 0; i < ans.size(); i++)
     {
