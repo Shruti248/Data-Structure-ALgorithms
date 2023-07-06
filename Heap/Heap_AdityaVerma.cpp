@@ -202,29 +202,34 @@ vector<int> kClosestElements(vector<int> arr, int k, int num)
 // Top k frequent(largest) numbers
 // Key : Frequency
 
-vector<int> topKFrequent(vector<int> arr , int k){
-    unordered_map<int , int> mp;
+vector<int> topKFrequent(vector<int> arr, int k)
+{
+    unordered_map<int, int> mp;
 
     // COnverted array to hash
-    for(int i = 0 ; i<arr.size() ; i++){
-            mp[arr[i]]++;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        mp[arr[i]]++;
     }
 
     // Using this hash for heap
     // Sort the frequency
 
-    priority_queue<pair<int , int> , vector<pair<int , int>> , greater<pair<int , int>>> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
-    for(auto i = mp.begin() ;  i != mp.end() ; i++){
-        pq.push({i->second , i->first});
+    for (auto i = mp.begin(); i != mp.end(); i++)
+    {
+        pq.push({i->second, i->first});
 
-        if(pq.size() > k){
+        if (pq.size() > k)
+        {
             pq.pop();
         }
     }
 
     vector<int> ans;
-    while(!pq.empty()){
+    while (!pq.empty())
+    {
         ans.push_back(pq.top().second);
         pq.pop();
     }
@@ -239,24 +244,29 @@ vector<int> topKFrequent(vector<int> arr , int k){
 
 // Using heap
 
-vector<int> frequencySort(vector<int> arr){
+vector<int> frequencySort(vector<int> arr)
+{
     vector<int> ans;
-    unordered_map<int , int> mp;
+    unordered_map<int, int> mp;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         mp[arr[i]]++;
     }
 
     // Max heap
-    priority_queue<pair<int  , int>> pq;
+    priority_queue<pair<int, int>> pq;
 
-    for(auto i = mp.begin() ; i != mp.end() ; i++){
-        pq.push({i->second , i->first});
+    for (auto i = mp.begin(); i != mp.end(); i++)
+    {
+        pq.push({i->second, i->first});
     }
 
-    while(!pq.empty()){
+    while (!pq.empty())
+    {
         int freq = pq.top().first;
-        while(freq != 0){
+        while (freq != 0)
+        {
             ans.push_back(pq.top().second);
             freq--;
         }
@@ -266,7 +276,51 @@ vector<int> frequencySort(vector<int> arr){
     return ans;
 }
 
+// IMPPP
+// k closest point to origin
+// Input : 2D Array  or pair<int, int> --> x & y corrdinate are given
 
+// Find distance of points from origin
+
+// Sice second point is origin : Hence distance formula becomes : underroot(x2+y2)
+// We need to minimize the value of underroot(x2+y2); ---> KEYYYYY
+// Sort on the basis of this
+
+// underroot(x2+y2); ---> KEYYYYY
+
+// EVen if we find just the x2+ y2 that is the whole sqaure of underoot(....) ---> No difference just the calculation is less
+
+// x2+y2 == KEY
+
+// Closest --> nearest --> smallest --> max Heap
+
+// priority_queue<pair<int /**Key : x2+y2*/,pair<int , int> /**x y coordinates*/>>>
+
+vector<vector<int>> kClosestPointsToOrigin(vector<vector<int>> &arr, int k)
+{
+
+    priority_queue<pair<int, pair<int, int>>> pq;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        pq.push({arr[i][0] * arr[i][0] + arr[i][1] * arr[i][1], {arr[i][0], arr[i][1]}});
+
+        if (pq.size() > k)
+        {
+            pq.pop();
+        }
+    }
+
+    vector<vector<int>> ans;
+    while (!pq.empty())
+    {
+        auto point = pq.top().second;
+        ans.push_back({point.first, point.second});
+        pq.pop();
+    }
+
+    return ans;
+}
 
 int main()
 {
@@ -276,7 +330,7 @@ int main()
     // vector<int> ans = sortKSortedArray({6 , 5 , 3 , 2 , 8 , 9 , 10} , 3);
     // vector<int> ans = kClosestElements({5, 6, 7, 10, 9}, 3, 7);
     // vector<int> ans = topKFrequent({5, 6, 5, 6, 9}, 2);
-    vector<int> ans = frequencySort({5, 5 , 6 , 3 , 2 , 5 , 3 , 2});
+    vector<int> ans = frequencySort({5, 5, 6, 3, 2, 5, 3, 2});
 
     for (int i = 0; i < ans.size(); i++)
     {
