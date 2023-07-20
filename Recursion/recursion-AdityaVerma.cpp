@@ -81,6 +81,16 @@ int factorial(int n){
     return n*factorial(n-1);
 }
 
+// What are the disadvantages of recursive programming over iterative programming?
+// 1) More space complexity
+// 2) Stack Overflow
+// 2) Less line of codes -> More complex to handle if not managed properly
+
+// What are the advantages of recursive programming over iterative programming?
+// 1) Less lines of code
+
+// Do the practice Sets of recursion on GFG
+
 int main()
 {
     // print(5);
@@ -91,6 +101,7 @@ int main()
     //     cout<<fibonacci(i)<<endl;
     // }
 
-    cout<<factorial(4);
+    // cout<<factorial(4);
+
     return 0;
 }
