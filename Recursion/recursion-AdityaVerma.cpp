@@ -13,3 +13,12 @@
 // 2 steps to solve any recursive problem
         // 1) Design a recursive tree
         // 2) Write Code
+
+// ------------- Recursion is Everywhere ----------
+// array , string
+// tree
+// Graph
+// Heap , stack --> less
+
+// Algo
+// DP , backtracking , Divide and conquer
