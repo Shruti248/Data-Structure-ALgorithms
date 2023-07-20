@@ -73,14 +73,24 @@ int fibonacci(int n){
     return fibonacci(n-1) + fibonacci(n-2);
 }
 
+int factorial(int n){
+    if( n == 0 | n == 1){
+        return n;
+    }
+
+    return n*factorial(n-1);
+}
+
 int main()
 {
     // print(5);
     // cout<<endl;
     // printReverse(5);
 
-    for(int i = 0 ; i<2 ; i++){
-        cout<<fibonacci(i)<<endl;
-    }
+    // for(int i = 0 ; i<2 ; i++){
+    //     cout<<fibonacci(i)<<endl;
+    // }
+
+    cout<<factorial(4);
     return 0;
 }
