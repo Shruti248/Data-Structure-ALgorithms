@@ -29,6 +29,11 @@ int fibTabulation(int n , vector<int> &dp){
     return dp[n];
 }
 
+// 1D DP
+
+// 1) Climbing Stairs
+// Same as fibonnaci --> Just the variation dp[0] = 1 -- Else same
+
 int main(){
     int n;
     cin>>n;
