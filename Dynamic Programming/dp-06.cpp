@@ -34,12 +34,34 @@ int fibTabulation(int n , vector<int> &dp){
 // 1) Climbing Stairs
 // Same as fibonnaci --> Just the variation dp[0] = 1 -- Else same
 
-int main(){
-    int n;
-    cin>>n;
-    vector<int> dp(n+1 , -1);
-    // cout<<fibonnaci(n , dp);
-    cout<<fibTabulation(n , dp);
+// Frog Jump : Find min energy consumed
+int frogJump(int n , vector<int> ht){
+    vector<int> dp(n , -1);
 
+    dp[0] = 0;
+
+    for(int i = 1 ; i<n ; i++){
+        int jumpTwo = INT_MAX;
+
+        int jumpOne = dp[i-1] + abs(ht[i] - ht[i-1]);
+
+        if(i > 1){
+            jumpTwo = dp[i-2] + abs(ht[i] - ht[i-2]);
+        }
+
+        dp[i] = min(jumpOne , jumpTwo);
+    }
+
+    return dp[n-1];
+}
+
+int main(){
+    // int n;
+    // cin>>n;
+    // vector<int> dp(n+1 , -1);
+    // cout<<fibonnaci(n , dp);
+    // cout<<fibTabulation(n , dp);
+
+    cout<<frogJump(6 , {30 , 10 , 60 , 10 , 60 , 50});
     return 0;
 }
