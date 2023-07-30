@@ -150,61 +150,89 @@ void binaryNumberTrianglePattern(int n)
     for (int i = 1; i <= n; i++)
     {
 
-        i%2 == 0 ? flag = 0 : flag = 1;
+        i % 2 == 0 ? flag = 0 : flag = 1;
         for (int j = 1; j <= i; j++)
         {
-            cout<<flag;
+            cout << flag;
             flag == 1 ? flag = 0 : flag = 1;
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
-void increaisngNumberedRightTraingle(int n){
+void increaisngNumberedRightTraingle(int n)
+{
     int num = 1;
 
-    for(int i = 1 ; i<= n ; i++){
-        for(int j = 1 ; j<=i ; j++){
-            cout<<num<<" ";
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            cout << num << " ";
             num++;
         }
-        cout<<endl;
+        cout << endl;
     }
 }
 
-void numberCrownPattern(int n){
+void numberCrownPattern(int n)
+{
     // Number -- Spaces -- Number
-    for(int i = 1 ; i<=n ; i++){
-        for(int j = 1 ; j<=i ; j++){
-            cout<<j;
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            cout << j;
         }
 
-        for(int j = 1 ; j<=2*(n-i) ; j++){
-            cout<<" ";
+        for (int j = 1; j <= 2 * (n - i); j++)
+        {
+            cout << " ";
         }
 
-        for(int j = i ; j>=1 ; j--){
-            cout<<j;
+        for (int j = i; j >= 1; j--)
+        {
+            cout << j;
         }
 
-        cout<<endl;
+        cout << endl;
     }
 }
 
-void increasingLetterTrianglePattern(int n){
-    for(int i = 0 ; i<n ; i++){
-        for(char ch = 'A' ; ch<='A'+i ; ch++){
-            cout<<ch;
+void increasingLetterTrianglePattern(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (char ch = 'A'; ch <= 'A' + i; ch++)
+        {
+            cout << ch;
         }
-        cout<<endl;
+        cout << endl;
     }
 }
-void reverseIncreasingLetterTrianglePattern(int n){
-    for(int i = 0 ; i<n ; i++){
-        for(char ch = 'A' ; ch<='A'+ (n-i-1) ; ch++){
-            cout<<ch;
+void reverseIncreasingLetterTrianglePattern(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (char ch = 'A'; ch <= 'A' + (n - i - 1); ch++)
+        {
+            cout << ch;
         }
-        cout<<endl;
+        cout << endl;
+    }
+}
+
+void alphaRampPattern(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        char ch = 'A' + i;
+
+        for (int j = 0; j <= i; j++)
+        {
+            cout << ch;
+        }
+        cout << endl;
     }
 }
 
@@ -224,6 +252,7 @@ int main()
     // increaisngNumberedRightTraingle(4);
     // numberCrownPattern(5);
     // increasingLetterTrianglePattern(5);
-    reverseIncreasingLetterTrianglePattern(5);
+    // reverseIncreasingLetterTrianglePattern(5);
+    alphaRampPattern(5);
     return 0;
 }
