@@ -89,6 +89,25 @@ int GCDUsingEuclideanTheorem(int x, int y)
     return GCDUsingEuclideanTheorem(y, x % y);
 }
 
+// Armstrong Number
+// Armstrong Numbers are the numbers having the sum of digits raised to power no. of digits is equal to a given number.
+// O(n) O(1)
+bool armstrong(int n)
+{
+    int numberOfDigits = countDigitsII(n);
+    int originalNumber = n;
+
+    int sum = 0;
+    while (n)
+    {
+        int digit = n % 10;
+        sum += pow(digit, numberOfDigits);
+        n /= 10;
+    }
+
+    return sum == originalNumber;
+}
+
 int main()
 {
     // cout<<countDigitsI(158);
@@ -97,6 +116,7 @@ int main()
     // cout<<reverseNumber(123456789);
     // cout<<isPalindrome(12132);
     // cout << GCD(16, 8);
-    cout << GCDUsingEuclideanTheorem(16, 32);
+    // cout << GCDUsingEuclideanTheorem(16, 32);
+    cout << armstrong(1634);
     return 0;
 }
