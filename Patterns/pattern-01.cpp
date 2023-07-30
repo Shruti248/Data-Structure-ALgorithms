@@ -62,6 +62,26 @@ void invertedNumberedRightPyramid(int n){
     }
 }
 
+void starPyramid(int n){
+    for(int i = 1 ; i<=n ; i++){
+
+            // Spaces
+            for(int j = 1 ; j <= n-i ; j++){
+                cout<<" ";
+            }
+
+            for(int j = 1 ; j<= 2*i-1 ; j++){
+                cout<<"*";
+            }
+
+            for(int j = 1 ; j <= n-i ; j++){
+                cout<<" ";
+            }
+
+            cout<<endl;
+    }
+}
+
 int main(){
     // square(3);
     // rightAngledTriangle(6);
@@ -69,5 +89,6 @@ int main(){
     // rightAngledNumberedPyramidII(7);
     // invertedRightPyramid(5);
     // invertedNumberedRightPyramid(6);
+    starPyramid(5);
     return 0;
 }
