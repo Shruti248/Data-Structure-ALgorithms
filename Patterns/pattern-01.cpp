@@ -355,6 +355,36 @@ void symmetricVoid(int n)
     }
 }
 
+void symmetricButterflyPattern(int n){
+    for(int i = 1 ; i<= n ; i++){
+        for(int star1 = 1 ; star1<=i ; star1++){
+            cout<<"*";
+        }
+        for(int space = 1 ; space<=2*(n-i) ; space++){
+            cout<<" ";
+        }
+        for(int star2 = 1 ; star2<=i ; star2++){
+            cout<<"*";
+        }
+        cout<<endl;
+    }
+
+    for(int i = n+1 ; i<= 2*n - 1 ; i++){
+        for(int star1 = 1 ; star1<=(2*n - i) ; star1++){
+            cout<<"*";
+        }
+        for(int space = 1 ; space<=2*(i-n) ; space++){
+            cout<<" ";
+        }
+        for(int star2 = 1 ; star2<=(2*n - i); star2++){
+            cout<<"*";
+        }
+        cout<<endl;
+    }
+
+
+}
+
 int main()
 {
     // square(3);
@@ -377,6 +407,7 @@ int main()
     // alphatriangle(5);
     // leftAngledpyramid(5);
     // invertedleftAngledpyramid(5);
-    symmetricVoid(5);
+    // symmetricVoid(5);
+    symmetricButterflyPattern(3);
     return 0;
 }
