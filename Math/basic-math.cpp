@@ -108,6 +108,27 @@ bool armstrong(int n)
     return sum == originalNumber;
 }
 
+// Print all Divisors of a given Number
+//Brute Force :  O(n) O(1)
+void allDivisors(int n){
+    for(int i = 1 ; i<=n ; i++){
+        if(n%i == 0){
+            cout<<i<<" ";
+        }
+    }
+}
+
+//  If we take a closer look, we can notice that the quotient of a division by one of the divisors is actually another divisor. Like, 4 divides 36. The quotient is 9, and 9 also divides 36.
+// O(sqrt(n))
+// O(1)
+void allDivisorsOptimized(int n){
+    for(int i = 1 ; i<= sqrt(n) ; i++){
+        if(n%i == 0){
+            cout<<i<<" "<<n/i<<" ";
+        }
+    }
+}
+
 int main()
 {
     // cout<<countDigitsI(158);
@@ -117,6 +138,8 @@ int main()
     // cout<<isPalindrome(12132);
     // cout << GCD(16, 8);
     // cout << GCDUsingEuclideanTheorem(16, 32);
-    cout << armstrong(1634);
+    // cout << armstrong(1634);
+    // allDivisors(12);
+    allDivisorsOptimized(12);
     return 0;
 }
