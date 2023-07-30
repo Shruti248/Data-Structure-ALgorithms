@@ -102,6 +102,12 @@ void invertedstarPyramid(int n){
     }
 }
 
+void diamondStarPattern(int n){
+
+    starPyramid(n);
+    invertedstarPyramid(n);
+}
+
 int main(){
     // square(3);
     // rightAngledTriangle(6);
@@ -110,6 +116,7 @@ int main(){
     // invertedRightPyramid(5);
     // invertedNumberedRightPyramid(6);
     // starPyramid(5);
-    invertedstarPyramid(5);
+    // invertedstarPyramid(5);
+    diamondStarPattern(3);
     return 0;
 }
