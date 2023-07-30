@@ -277,6 +277,84 @@ void alphatriangle(int n)
     }
 }
 
+void invertedleftAngledpyramid(int n)
+{
+    for (int i = n; i > 0; i--)
+    {
+        for (int j = 0; j < n - i; j++)
+        {
+            cout << " ";
+        }
+
+        for (int j = 0; j < i; j++)
+        {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+}
+
+void leftAngledpyramid(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n - i; j++)
+        {
+            cout << " ";
+        }
+
+        for (int j = 0; j <= i; j++)
+        {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+}
+
+void symmetricVoid(int n)
+{
+
+    for (int i = 1; i <= n; i++)
+    {
+        for (int star1 = 1; star1 <= n - i + 1; star1++)
+        {
+            cout << "*";
+        }
+
+        for (int space = 1; space <= 2 * (i - 1); space++)
+        {
+            cout << " ";
+        }
+
+        for (int star2 = 1; star2 <= n - i + 1; star2++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+
+    for (int i = n+1; i <= 2*n; i++)
+    {
+        for (int star1 = 1; star1 <= i - n; star1++)
+        {
+            cout << "*";
+        }
+
+        for (int space = 1; space <= 4 * n - 2 * i; space++)
+        {
+            cout << " ";
+        }
+
+        for (int star2 = 1; star2 <= i - n; star2++)
+        {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
     // square(3);
@@ -296,6 +374,9 @@ int main()
     // reverseIncreasingLetterTrianglePattern(5);
     // alphaRampPattern(5);
     // alphaHill(5);
-    alphatriangle(5);
+    // alphatriangle(5);
+    // leftAngledpyramid(5);
+    // invertedleftAngledpyramid(5);
+    symmetricVoid(5);
     return 0;
 }
