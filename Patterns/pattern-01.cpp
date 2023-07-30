@@ -191,6 +191,15 @@ void numberCrownPattern(int n){
     }
 }
 
+void increasingLetterTrianglePattern(int n){
+    for(int i = 0 ; i<n ; i++){
+        for(char ch = 'A' ; ch<='A'+i ; ch++){
+            cout<<ch;
+        }
+        cout<<endl;
+    }
+}
+
 int main()
 {
     // square(3);
@@ -205,6 +214,7 @@ int main()
     // halfDiamondStarPattern(5);
     // binaryNumberTrianglePattern(3);
     // increaisngNumberedRightTraingle(4);
-    numberCrownPattern(5);
+    // numberCrownPattern(5);
+    increasingLetterTrianglePattern(5);
     return 0;
 }
