@@ -249,7 +249,7 @@ void alphaHill(int n)
 
         char ch = 'A';
         int breakpoint = (2 * i + 1) / 2;
-        for (int j = 1; j <= 2 * i +1; j++)
+        for (int j = 1; j <= 2 * i + 1; j++)
         {
             cout << ch;
 
@@ -261,6 +261,18 @@ void alphaHill(int n)
             cout << " ";
         }
 
+        cout << endl;
+    }
+}
+
+void alphatriangle(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (char ch = ('A' + n - 1) - i; ch <= ('A' + n - 1); ch++)
+        {
+            cout << ch;
+        }
         cout << endl;
     }
 }
@@ -283,6 +295,7 @@ int main()
     // increasingLetterTrianglePattern(5);
     // reverseIncreasingLetterTrianglePattern(5);
     // alphaRampPattern(5);
-    alphaHill(5);
+    // alphaHill(5);
+    alphatriangle(5);
     return 0;
 }
