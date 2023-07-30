@@ -109,11 +109,14 @@ bool armstrong(int n)
 }
 
 // Print all Divisors of a given Number
-//Brute Force :  O(n) O(1)
-void allDivisors(int n){
-    for(int i = 1 ; i<=n ; i++){
-        if(n%i == 0){
-            cout<<i<<" ";
+// Brute Force :  O(n) O(1)
+void allDivisors(int n)
+{
+    for (int i = 1; i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            cout << i << " ";
         }
     }
 }
@@ -121,12 +124,30 @@ void allDivisors(int n){
 //  If we take a closer look, we can notice that the quotient of a division by one of the divisors is actually another divisor. Like, 4 divides 36. The quotient is 9, and 9 also divides 36.
 // O(sqrt(n))
 // O(1)
-void allDivisorsOptimized(int n){
-    for(int i = 1 ; i<= sqrt(n) ; i++){
-        if(n%i == 0){
-            cout<<i<<" "<<n/i<<" ";
+void allDivisorsOptimized(int n)
+{
+    for (int i = 1; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            cout << i << " " << n / i << " ";
         }
     }
+}
+
+// Check if a number is prime or not
+// A prime number is a natural number that is only divisible by 1 and by itself.
+// O(√n) O(1)
+bool isPrime(int n)
+{
+    for (int i = 2; i <= sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 int main()
@@ -140,6 +161,7 @@ int main()
     // cout << GCDUsingEuclideanTheorem(16, 32);
     // cout << armstrong(1634);
     // allDivisors(12);
-    allDivisorsOptimized(12);
+    // allDivisorsOptimized(12);
+    cout << isPrime(17);
     return 0;
 }
