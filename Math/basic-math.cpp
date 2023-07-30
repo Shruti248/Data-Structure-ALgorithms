@@ -43,10 +43,18 @@ int reverseNumber(int n){
     return reversedNum;
 }
 
+// Check if a number is Palindrome or Not
+// O(logn) -- for reversing
+// O(1)
+bool isPalindrome(int n){
+    return n == reverseNumber(n);
+}
+
 int main(){
     // cout<<countDigitsI(158);
     // cout<<countDigitsII(123);
     // cout<<countDigitsIII(124);
-    cout<<reverseNumber(123456789);
+    // cout<<reverseNumber(123456789);
+    cout<<isPalindrome(12132);
     return 0;
 }
