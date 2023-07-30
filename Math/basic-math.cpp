@@ -30,9 +30,23 @@ int countDigitsIII(int n){
     return floor(log10(n) + 1);
 }
 
+// Reverse the Number
+// O(n)
+// O(1)
+int reverseNumber(int n){
+    int reversedNum = 0;
+    while(n > 0){
+        reversedNum = reversedNum*10 + n%10;
+        n = n/10;
+    }
+
+    return reversedNum;
+}
+
 int main(){
     // cout<<countDigitsI(158);
     // cout<<countDigitsII(123);
-    cout<<countDigitsIII(124);
+    // cout<<countDigitsIII(124);
+    cout<<reverseNumber(123456789);
     return 0;
 }
