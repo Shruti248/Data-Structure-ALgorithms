@@ -160,6 +160,18 @@ void binaryNumberTrianglePattern(int n)
     }
 }
 
+void increaisngNumberedRightTraingle(int n){
+    int num = 1;
+
+    for(int i = 1 ; i<= n ; i++){
+        for(int j = 1 ; j<=i ; j++){
+            cout<<num<<" ";
+            num++;
+        }
+        cout<<endl;
+    }
+}
+
 int main()
 {
     // square(3);
@@ -172,6 +184,7 @@ int main()
     // invertedstarPyramid(5);
     // diamondStarPattern(3);
     // halfDiamondStarPattern(5);
-    binaryNumberTrianglePattern(3);
+    // binaryNumberTrianglePattern(3);
+    increaisngNumberedRightTraingle(4);
     return 0;
 }
