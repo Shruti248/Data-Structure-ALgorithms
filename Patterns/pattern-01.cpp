@@ -236,6 +236,35 @@ void alphaRampPattern(int n)
     }
 }
 
+void alphaHill(int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+
+        // Spaces
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            cout << " ";
+        }
+
+        char ch = 'A';
+        int breakpoint = (2 * i + 1) / 2;
+        for (int j = 1; j <= 2 * i +1; j++)
+        {
+            cout << ch;
+
+            j <= breakpoint ? ch++ : ch--;
+        }
+
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            cout << " ";
+        }
+
+        cout << endl;
+    }
+}
+
 int main()
 {
     // square(3);
@@ -253,6 +282,7 @@ int main()
     // numberCrownPattern(5);
     // increasingLetterTrianglePattern(5);
     // reverseIncreasingLetterTrianglePattern(5);
-    alphaRampPattern(5);
+    // alphaRampPattern(5);
+    alphaHill(5);
     return 0;
 }
