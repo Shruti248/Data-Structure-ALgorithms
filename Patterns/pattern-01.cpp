@@ -22,7 +22,7 @@ void rightAngledTriangle(int n){
         // }
 
         for(int j = 0 ; j<=i ; j++){
-            cout<<" * ";
+            cout<<"*";
         }
         cout<<endl;
     }
@@ -108,6 +108,11 @@ void diamondStarPattern(int n){
     invertedstarPyramid(n);
 }
 
+void halfDiamondStarPattern(int n){
+    rightAngledTriangle(n-1);
+    invertedRightPyramid(n);
+}
+
 int main(){
     // square(3);
     // rightAngledTriangle(6);
@@ -117,6 +122,7 @@ int main(){
     // invertedNumberedRightPyramid(6);
     // starPyramid(5);
     // invertedstarPyramid(5);
-    diamondStarPattern(3);
+    // diamondStarPattern(3);
+    halfDiamondStarPattern(5);
     return 0;
 }
