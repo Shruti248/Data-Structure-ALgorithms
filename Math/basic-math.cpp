@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Count Number of Digits
+
+// O(n)
+// O(1)
+int countDigitsI(int n){
+    int count = 0;
+
+    while(n > 0){
+        n = n/10;
+        count++;
+    }
+
+    return count;
+}
+
+// O(1)
+// O(1)
+int countDigitsII(int n){
+    string num = to_string(n);
+    return num.length();
+}
+
+// The number of digits in an integer = the upper bound of log10(n).
+// O(1)
+// O(1)
+int countDigitsIII(int n){
+    return floor(log10(n) + 1);
+}
+
+int main(){
+    // cout<<countDigitsI(158);
+    // cout<<countDigitsII(123);
+    cout<<countDigitsIII(124);
+    return 0;
+}
