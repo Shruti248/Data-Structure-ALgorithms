@@ -172,6 +172,25 @@ void increaisngNumberedRightTraingle(int n){
     }
 }
 
+void numberCrownPattern(int n){
+    // Number -- Spaces -- Number
+    for(int i = 1 ; i<=n ; i++){
+        for(int j = 1 ; j<=i ; j++){
+            cout<<j;
+        }
+
+        for(int j = 1 ; j<=2*(n-i) ; j++){
+            cout<<" ";
+        }
+
+        for(int j = i ; j>=1 ; j--){
+            cout<<j;
+        }
+
+        cout<<endl;
+    }
+}
+
 int main()
 {
     // square(3);
@@ -185,6 +204,7 @@ int main()
     // diamondStarPattern(3);
     // halfDiamondStarPattern(5);
     // binaryNumberTrianglePattern(3);
-    increaisngNumberedRightTraingle(4);
+    // increaisngNumberedRightTraingle(4);
+    numberCrownPattern(5);
     return 0;
 }
