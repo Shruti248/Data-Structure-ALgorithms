@@ -578,6 +578,27 @@ int missingNumberUsingSummation(vector<int> arr){
     return sum - sumOfPresentNumbers;
 }
 
+// Count Maximum Consecutive One’s in the array
+// Using linear search
+// O(N)
+// O(1)
+int maxConsecutiveOnes(vector<int> arr){
+    int mx = INT_MIN;
+    int count = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(arr[i] == 1){
+            count++;
+        }else{
+            count = 0;
+        }
+
+        mx = max(mx , count);
+    }
+
+    return mx;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -603,8 +624,8 @@ int main()
     // vector<int> ans = unionOf2SortedArrayUsing2Pointers({1, 2, 3, 4, 5}, {2, 3, 4, 4, 5});
 
     // cout<<missingNumber({ 1 , 2 , 3 });
-    cout<<missingNumberUsingSummation({ 1 , 2 , 4 });
-
+    // cout<<missingNumberUsingSummation({ 1 , 2 , 4 });
+    cout<<maxConsecutiveOnes({1, 1, 0, 1, 1 , 1 , 1});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
