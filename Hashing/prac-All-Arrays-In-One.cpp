@@ -543,17 +543,21 @@ vector<int> unionOf2SortedArrayUsing2Pointers(vector<int> arr1, vector<int> arr2
 // 1) using bool array :
 // Time Complexity: O(N)
 // Auxiliary Space: O(N)
-int missingNumber(vector<int> arr){
+int missingNumber(vector<int> arr)
+{
 
-    vector<bool> isPresent(arr.size() + 1 , false);
+    vector<bool> isPresent(arr.size() + 1, false);
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         isPresent[arr[i] - 1] = true;
     }
 
-    for(int i = 0 ; i<isPresent.size() ; i++){
-        if(isPresent[i] == false){
-            return i+1;
+    for (int i = 0; i < isPresent.size(); i++)
+    {
+        if (isPresent[i] == false)
+        {
+            return i + 1;
         }
     }
 
@@ -562,18 +566,19 @@ int missingNumber(vector<int> arr){
 
 // Time Complexity: O(N)
 // Auxiliary Space: O(1)
-int missingNumberUsingSummation(vector<int> arr){
+int missingNumberUsingSummation(vector<int> arr)
+{
 
     int n = arr.size() + 1;
 
-    long sum = (n*(n+1))/ 2;
+    long sum = (n * (n + 1)) / 2;
 
     long sumOfPresentNumbers = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         sumOfPresentNumbers += arr[i];
     }
-
 
     return sum - sumOfPresentNumbers;
 }
@@ -582,21 +587,50 @@ int missingNumberUsingSummation(vector<int> arr){
 // Using linear search
 // O(N)
 // O(1)
-int maxConsecutiveOnes(vector<int> arr){
+int maxConsecutiveOnes(vector<int> arr)
+{
     int mx = INT_MIN;
     int count = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        if(arr[i] == 1){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] == 1)
+        {
             count++;
-        }else{
+        }
+        else
+        {
             count = 0;
         }
 
-        mx = max(mx , count);
+        mx = max(mx, count);
     }
 
     return mx;
+}
+
+// Find the number that appears once, and the other numbers twice
+// Most intuitive : Hashing
+//  O(N*logM) + O(M) : We are inserting N elements in the map data structure and insertion takes logM time
+// O(M)
+int numberAppearingOnce(vector<int> arr)
+{
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        mp[arr[i]]++;
+    }
+
+    for (auto i : mp)
+    {
+        if (i.second == 1)
+        {
+            return i.first;
+        }
+    }
+
+    return -1;
 }
 
 int main()
@@ -625,7 +659,8 @@ int main()
 
     // cout<<missingNumber({ 1 , 2 , 3 });
     // cout<<missingNumberUsingSummation({ 1 , 2 , 4 });
-    cout<<maxConsecutiveOnes({1, 1, 0, 1, 1 , 1 , 1});
+    // cout<<maxConsecutiveOnes({1, 1, 0, 1, 1 , 1 , 1});
+    cout << numberAppearingOnce({2, 1, 2, 1, 3});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
