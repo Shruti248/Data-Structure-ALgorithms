@@ -361,28 +361,28 @@ void reverseArr(vector<int> &arr, int start, int end)
     }
 }
 
-vector<int> rotateFromrightByKUsingReversalAlgo(vector<int> arr , int k)
+vector<int> rotateFromrightByKUsingReversalAlgo(vector<int> arr, int k)
 {
     // first n-k elements
-    reverseArr(arr , 0 , arr.size()-k-1);
+    reverseArr(arr, 0, arr.size() - k - 1);
 
     // last k elements
-    reverseArr(arr , arr.size()-k , arr.size() - 1);
+    reverseArr(arr, arr.size() - k, arr.size() - 1);
 
-    reverseArr(arr , 0 , arr.size()-1);
+    reverseArr(arr, 0, arr.size() - 1);
 
     return arr;
 }
 
-vector<int> rotateFromLeftByKUsingReversalAlgo(vector<int> arr , int k)
+vector<int> rotateFromLeftByKUsingReversalAlgo(vector<int> arr, int k)
 {
     // first k elements
-    reverseArr(arr , 0 , k-1);
+    reverseArr(arr, 0, k - 1);
 
     // last n-k elements
-    reverseArr(arr , k , arr.size() - 1);
+    reverseArr(arr, k, arr.size() - 1);
 
-    reverseArr(arr , 0 , arr.size()-1);
+    reverseArr(arr, 0, arr.size() - 1);
 
     return arr;
 }
@@ -393,19 +393,25 @@ vector<int> rotateFromLeftByKUsingReversalAlgo(vector<int> arr , int k)
 // Brute Force : Using extra array
 // O(n)
 // O(n)
-vector<int> moveAllZeroesToEnd(vector<int> arr){
+vector<int> moveAllZeroesToEnd(vector<int> arr)
+{
     vector<int> ans;
     int zeroCount = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        if(arr[i] != 0){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] != 0)
+        {
             ans.push_back(arr[i]);
-        }else{
+        }
+        else
+        {
             zeroCount++;
         }
     }
 
-    while(zeroCount > 0){
+    while (zeroCount > 0)
+    {
         ans.push_back(0);
         zeroCount--;
     }
@@ -416,34 +422,121 @@ vector<int> moveAllZeroesToEnd(vector<int> arr){
 // Optimal : Using 2 pointers
 // O(N) O(1)
 
-vector<int> moveAllZeroesToEndUsing2pointers(vector<int> arr){
+vector<int> moveAllZeroesToEndUsing2pointers(vector<int> arr)
+{
     int j = 0;
     int i;
 
-    while(j < arr.size()){
-        if(arr[j] != 0){
+    while (j < arr.size())
+    {
+        if (arr[j] != 0)
+        {
             j++;
-        }else{
-            i = j+1;
+        }
+        else
+        {
+            i = j + 1;
 
-            while(i < arr.size() && arr[i] == 0){
+            while (i < arr.size() && arr[i] == 0)
+            {
                 i++;
             }
 
-            if(i <arr.size()){
+            if (i < arr.size())
+            {
                 // Swap
                 int temp = arr[j];
                 arr[j] = arr[i];
                 arr[i] = temp;
 
                 j++;
-            }else{
+            }
+            else
+            {
                 break;
             }
         }
     }
 
     return arr;
+}
+
+// Union Of the 2 Sorted array : Common of both + Distint elements in both arrays
+// Using Set(Same method for map) : Works for both sorted and unsorted array
+// Time Compleixty : O( (m+n)log(m+n) ) . Inserting an element in a set takes logN time,
+// Space Complexity : O(m+n)
+// Using 2 pointers : Only Sorted
+vector<int> unionOf2SortedArray(vector<int> arr1, vector<int> arr2)
+{
+    vector<int> ans;
+
+    set<int> s;
+
+    for (int i = 0; i < arr1.size(); i++)
+    {
+        s.insert(arr1[i]);
+    }
+
+    for (int i = 0; i < arr2.size(); i++)
+    {
+        s.insert(arr2[i]);
+    }
+
+    for (auto i : s)
+    {
+        ans.push_back(i);
+    }
+
+    return ans;
+}
+
+// Time : O(m+n)
+// Space : O(m+n)
+vector<int> unionOf2SortedArrayUsing2Pointers(vector<int> arr1, vector<int> arr2)
+{
+    vector<int> ans;
+
+    int i = 0, j = 0;
+
+    while (i < arr1.size() && j < arr2.size())
+    {
+        if (arr1[i] <= arr2[j])
+        {
+            if (ans.size() == 0 || arr1[i] != ans.back())
+            {
+                ans.push_back(arr1[i]);
+            }
+            i++;
+        }
+        else
+        {
+            if (ans.size() == 0 || arr2[j] != ans.back())
+            {
+                ans.push_back(arr2[j]);
+            }
+            j++;
+        }
+    }
+
+    while (i < arr1.size())
+    {
+        if (arr1[i] != ans.back())
+        {
+            ans.push_back(arr1[i]);
+        }
+        i++;
+    }
+
+    while (j < arr2.size())
+    {
+        if (arr2[j] != ans.back())
+        {
+            ans.push_back(arr2[j]);
+        }
+        j++;
+    }
+
+    return ans;
 }
 
 int main()
@@ -466,7 +559,9 @@ int main()
     // vector<int> ans = rotateFromrightByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
     // vector<int> ans = rotateFromLeftByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
     // vector<int> ans = moveAllZeroesToEnd({1 , 0 , 2 , 3 , 0 , 4 , 0 , 1});
-    vector<int> ans = moveAllZeroesToEndUsing2pointers({1 , 0 , 2 , 3 , 0 , 4 , 0 , 1});
+    // vector<int> ans = moveAllZeroesToEndUsing2pointers({1 , 0 , 2 , 3 , 0 , 4 , 0 , 1});
+    vector<int> ans = unionOf2SortedArray({1, 2, 3, 4, 5}, {2, 3, 4, 4, 5});
+    vector<int> ans = unionOf2SortedArrayUsing2Pointers({1, 2, 3, 4, 5}, {2, 3, 4, 4, 5});
 
     for (int i = 0; i < ans.size(); i++)
     {
