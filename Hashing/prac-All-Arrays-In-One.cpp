@@ -633,6 +633,69 @@ int numberAppearingOnce(vector<int> arr)
     return -1;
 }
 
+// Longest Subarray with given Sum K(Positives)
+
+// Brute force : All possible subarrays
+// O(N2)
+// O(1)
+int longestSubarrayBruteForce(vector<int> arr, int sum)
+{
+
+    int mx = INT_MIN;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        long long s = 0;
+        for (int j = i; j < arr.size(); j++)
+        {
+            s += arr[j];
+
+            if (s == sum)
+            {
+                mx = max(mx, j - i + 1);
+            }
+        }
+    }
+
+    return mx;
+}
+
+// Time Complexity: O(2*N)
+//Space Complexity: O(1)
+int longestSubarrayUsingSlidingWindow(vector<int> arr, int sum)
+{
+    int i = 0, j = 0;
+    int s = 0;
+    int mx = INT_MIN;
+
+    while (j < arr.size())
+    {
+        s += arr[j];
+
+        if (s < sum)
+        {
+            j++;
+        }
+        else if (s == sum)
+        {
+            mx = max(mx, j - i + 1);
+
+            j++;
+        }
+        else if (s > sum)
+        {
+            while (s > sum)
+            {
+                s -= arr[i];
+                i++;
+            }
+            j++;
+        }
+    }
+
+    return mx;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -660,7 +723,10 @@ int main()
     // cout<<missingNumber({ 1 , 2 , 3 });
     // cout<<missingNumberUsingSummation({ 1 , 2 , 4 });
     // cout<<maxConsecutiveOnes({1, 1, 0, 1, 1 , 1 , 1});
-    cout << numberAppearingOnce({2, 1, 2, 1, 3});
+    // cout << numberAppearingOnce({2, 1, 2, 1, 3});
+
+    // cout<<longestSubarrayBruteForce({2 , 3 , 5 , 1 , 9 } , 10);
+    cout << longestSubarrayUsingSlidingWindow({2, 3, 5, 1, 9}, 10);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
