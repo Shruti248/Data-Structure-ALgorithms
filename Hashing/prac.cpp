@@ -273,6 +273,35 @@ vector<int> leftRotate(vector<int> arr){
     return arr;
 }
 
+// Rotate array in Right by K elements
+
+// 1) use temp array
+vector<int> rotateRightByK(vector<int> arr , int k){
+
+    if(arr.size() == 0){
+        return arr;
+    }
+
+    k = k%arr.size();
+
+    if(arr.size() == k){
+        return arr;
+    }
+
+    vector<int> temp(arr.begin() + k + 1, arr.end());
+
+    // REMEMBER THIS : COpy from last , else the repeated elements will be copied
+    for(int i = arr.size() - k - 1 ; i>=0 ; i--){
+        arr[i+k] = arr[i];
+    }
+
+    for(int i = 0 ; i<k ; i++){
+        arr[i] = temp[i];
+    }
+
+    return arr;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -287,7 +316,8 @@ int main()
 
     // vector<int> ans = removeDuplicatesInPlace({1, 4, 2, 1, 6, 8});
     // vector<int> ans = removeDupicatesInPlaceUsing2Pointers({1,1,2,2,2,3,3});
-    vector<int> ans = leftRotate({1 , 2 , 3 , 4 , 5});
+    // vector<int> ans = leftRotate({1 , 2 , 3 , 4 , 5});
+    vector<int> ans = rotateRightByK({1 , 2 , 3 , 4 , 5} , 2);
 
     for (int i = 0; i < ans.size(); i++)
     {
