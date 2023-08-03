@@ -234,7 +234,6 @@ vector<int> removeDuplicatesInPlace(vector<int> arr)
     return vector<int>(arr.begin(), arr.begin() + k);
 }
 
-
 // Time Complexity: O(N)
 // Space Complexity: O(1)
 // Ofc used in sorted array
@@ -244,31 +243,35 @@ vector<int> removeDupicatesInPlaceUsing2Pointers(vector<int> arr)
 
     for (int j = 1; j < arr.size(); j++)
     {
-        if(arr[i] != arr[j]){
+        if (arr[i] != arr[j])
+        {
             i++;
             arr[i] = arr[j];
         }
     }
 
-    return vector<int>(arr.begin() , arr.begin() + (i+1));
+    return vector<int>(arr.begin(), arr.begin() + (i + 1));
 }
 
 // Left Rotate the Array by One
 // Time Complexity: O(n), as we iterate through the array only once.
 // Space Complexity: O(1) as no extra space is used
 
-vector<int> leftRotate(vector<int> arr){
+vector<int> leftRotate(vector<int> arr)
+{
 
-    if(arr.size() <= 1){
+    if (arr.size() <= 1)
+    {
         return arr;
     }
     int firstEle = arr[0];
 
-    for(int i = 1 ; i<arr.size() ; i++){
-        arr[i-1] = arr[i];
+    for (int i = 1; i < arr.size(); i++)
+    {
+        arr[i - 1] = arr[i];
     }
 
-    arr[arr.size()-1] = firstEle;
+    arr[arr.size() - 1] = firstEle;
 
     return arr;
 }
@@ -276,59 +279,113 @@ vector<int> leftRotate(vector<int> arr){
 // Rotate array in Right by K elements
 
 // 1) use temp array
-    // Time Complexity: O(n)
-   // Space Complexity: O(k) since k array element needs to be stored in temp array
-vector<int> rotateRightByK(vector<int> arr , int k){
+// Time Complexity: O(n)
+// Space Complexity: O(k) since k array element needs to be stored in temp array
+vector<int> rotateRightByK(vector<int> arr, int k)
+{
 
-    if(arr.size() == 0){
+    if (arr.size() == 0)
+    {
         return arr;
     }
 
-    k = k%arr.size();
+    k = k % arr.size();
 
-    if(arr.size() == k){
+    if (arr.size() == k)
+    {
         return arr;
     }
 
     vector<int> temp(arr.begin() + k + 1, arr.end());
 
     // REMEMBER THIS : COpy from last , else the repeated elements will be copied
-    for(int i = arr.size() - k - 1 ; i>=0 ; i--){
-        arr[i+k] = arr[i];
+    for (int i = arr.size() - k - 1; i >= 0; i--)
+    {
+        arr[i + k] = arr[i];
     }
 
-    for(int i = 0 ; i<k ; i++){
+    for (int i = 0; i < k; i++)
+    {
         arr[i] = temp[i];
     }
 
     return arr;
 }
 
-vector<int> rotateLeftByK(vector<int> arr , int k){
+vector<int> rotateLeftByK(vector<int> arr, int k)
+{
 
-    if(arr.size() == 0){
+    if (arr.size() == 0)
+    {
         return arr;
     }
 
-    k = k%arr.size();
+    k = k % arr.size();
 
-    if(arr.size() == k){
+    if (arr.size() == k)
+    {
         return arr;
     }
 
-    vector<int> temp(arr.begin(), arr.begin()+k);
+    vector<int> temp(arr.begin(), arr.begin() + k);
 
-    for(int i = k ; i<arr.size() ; i++){
-        arr[i-k] = arr[i];
+    for (int i = k; i < arr.size(); i++)
+    {
+        arr[i - k] = arr[i];
     }
 
-    for(int i =  arr.size() - k; i < arr.size() ; i++){
+    for (int i = arr.size() - k; i < arr.size(); i++)
+    {
         arr[i] = temp[i - arr.size() + k];
     }
 
     return arr;
 }
 
+// Using Reversal Algorithm
+// Rotate From Right
+// rreverse last k elements
+// rreverse first  n- k elements
+// Reverse whole
+
+// O(N) O(1)
+void reverseArr(vector<int> &arr, int start, int end)
+{
+    while (start <= end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+vector<int> rotateFromrightByKUsingReversalAlgo(vector<int> arr , int k)
+{
+    // first n-k elements
+    reverseArr(arr , 0 , arr.size()-k-1);
+
+    // last k elements
+    reverseArr(arr , arr.size()-k , arr.size() - 1);
+
+    reverseArr(arr , 0 , arr.size()-1);
+
+    return arr;
+}
+
+vector<int> rotateFromLeftByKUsingReversalAlgo(vector<int> arr , int k)
+{
+    // first k elements
+    reverseArr(arr , 0 , k-1);
+
+    // last n-k elements
+    reverseArr(arr , k , arr.size() - 1);
+
+    reverseArr(arr , 0 , arr.size()-1);
+
+    return arr;
+}
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -345,7 +402,9 @@ int main()
     // vector<int> ans = removeDupicatesInPlaceUsing2Pointers({1,1,2,2,2,3,3});
     // vector<int> ans = leftRotate({1 , 2 , 3 , 4 , 5});
     // vector<int> ans = rotateRightByK({1 , 2 , 3 , 4 , 5} , 2);
-    vector<int> ans = rotateLeftByK({1 , 2 , 3 , 4 , 5} , 2);
+    // vector<int> ans = rotateLeftByK({1, 2, 3, 4, 5}, 2);
+    // vector<int> ans = rotateFromrightByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
+    vector<int> ans = rotateFromLeftByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
 
     for (int i = 0; i < ans.size(); i++)
     {
