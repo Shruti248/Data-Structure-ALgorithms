@@ -386,6 +386,66 @@ vector<int> rotateFromLeftByKUsingReversalAlgo(vector<int> arr , int k)
 
     return arr;
 }
+
+// MOSt AskEd
+// move all teh zeroes to the end
+
+// Brute Force : Using extra array
+// O(n)
+// O(n)
+vector<int> moveAllZeroesToEnd(vector<int> arr){
+    vector<int> ans;
+    int zeroCount = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(arr[i] != 0){
+            ans.push_back(arr[i]);
+        }else{
+            zeroCount++;
+        }
+    }
+
+    while(zeroCount > 0){
+        ans.push_back(0);
+        zeroCount--;
+    }
+
+    return ans;
+}
+
+// Optimal : Using 2 pointers
+// O(N) O(1)
+
+vector<int> moveAllZeroesToEndUsing2pointers(vector<int> arr){
+    int j = 0;
+    int i;
+
+    while(j < arr.size()){
+        if(arr[j] != 0){
+            j++;
+        }else{
+            i = j+1;
+
+            while(i < arr.size() && arr[i] == 0){
+                i++;
+            }
+
+            if(i <arr.size()){
+                // Swap
+                int temp = arr[j];
+                arr[j] = arr[i];
+                arr[i] = temp;
+
+                j++;
+            }else{
+                break;
+            }
+        }
+    }
+
+    return arr;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -404,7 +464,9 @@ int main()
     // vector<int> ans = rotateRightByK({1 , 2 , 3 , 4 , 5} , 2);
     // vector<int> ans = rotateLeftByK({1, 2, 3, 4, 5}, 2);
     // vector<int> ans = rotateFromrightByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
-    vector<int> ans = rotateFromLeftByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
+    // vector<int> ans = rotateFromLeftByKUsingReversalAlgo({1, 2, 3, 4, 5}, 2);
+    // vector<int> ans = moveAllZeroesToEnd({1 , 0 , 2 , 3 , 0 , 4 , 0 , 1});
+    vector<int> ans = moveAllZeroesToEndUsing2pointers({1 , 0 , 2 , 3 , 0 , 4 , 0 , 1});
 
     for (int i = 0; i < ans.size(); i++)
     {
