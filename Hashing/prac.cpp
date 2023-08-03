@@ -253,6 +253,26 @@ vector<int> removeDupicatesInPlaceUsing2Pointers(vector<int> arr)
     return vector<int>(arr.begin() , arr.begin() + (i+1));
 }
 
+// Left Rotate the Array by One
+// Time Complexity: O(n), as we iterate through the array only once.
+// Space Complexity: O(1) as no extra space is used
+
+vector<int> leftRotate(vector<int> arr){
+
+    if(arr.size() <= 1){
+        return arr;
+    }
+    int firstEle = arr[0];
+
+    for(int i = 1 ; i<arr.size() ; i++){
+        arr[i-1] = arr[i];
+    }
+
+    arr[arr.size()-1] = firstEle;
+
+    return arr;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -266,7 +286,8 @@ int main()
     // secondLargestEle({1 , 4 , 2 , 6, 7});
 
     // vector<int> ans = removeDuplicatesInPlace({1, 4, 2, 1, 6, 8});
-    vector<int> ans = removeDupicatesInPlaceUsing2Pointers({1,1,2,2,2,3,3});
+    // vector<int> ans = removeDupicatesInPlaceUsing2Pointers({1,1,2,2,2,3,3});
+    vector<int> ans = leftRotate({1 , 2 , 3 , 4 , 5});
 
     for (int i = 0; i < ans.size(); i++)
     {
