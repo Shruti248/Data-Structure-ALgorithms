@@ -989,16 +989,19 @@ int maxSubarraySumII(vector<int> arr)
 // If sum < 0 --- do not consider such subaarray -- reset sum = 0
 // else find max sum
 
-int maxSubarraySumUsingKadanesAlgo(vector<int> arr){
+int maxSubarraySumUsingKadanesAlgo(vector<int> arr)
+{
     int sum = 0;
     int mx = INT_MIN;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         sum += arr[i];
 
-        mx = max(sum , mx);
+        mx = max(sum, mx);
 
-        if(sum < 0){
+        if (sum < 0)
+        {
             sum = 0;
         }
     }
@@ -1010,36 +1013,42 @@ int maxSubarraySumUsingKadanesAlgo(vector<int> arr){
 // Maximum Subarray Sum in an Array :  Kadane’s Algorithm
 
 // Store starting and ending index
-int printmaxSubarraySumUsingKadanesAlgo(vector<int> arr){
+int printmaxSubarraySumUsingKadanesAlgo(vector<int> arr)
+{
     int sum = 0;
     int mx = INT_MIN;
     int startIndex = 0;
     int endIndex = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
 
-        if(sum == 0){
+        if (sum == 0)
+        {
             startIndex = i;
         }
 
         sum += arr[i];
 
-        if(sum > mx){
+        if (sum > mx)
+        {
             mx = sum;
             endIndex = i;
         }
 
-        if(sum < 0){
+        if (sum < 0)
+        {
             sum = 0;
         }
     }
 
     // Printing array
-    for(int i = startIndex ; i<= endIndex ; i++){
-        cout<<arr[i]<<" ";
+    for (int i = startIndex; i <= endIndex; i++)
+    {
+        cout << arr[i] << " ";
     }
 
-    cout<<endl;
+    cout << endl;
     return mx;
 }
 
@@ -1048,12 +1057,16 @@ int printmaxSubarraySumUsingKadanesAlgo(vector<int> arr){
 // brute force
 // O(n2)
 // O(1)
-int stockBuySell(vector<int> arr){
+int stockBuySell(vector<int> arr)
+{
     int profit = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        for(int j = i+1 ; j<arr.size() ; j++){
-            if(arr[j] - arr[i] > profit){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        for (int j = i + 1; j < arr.size(); j++)
+        {
+            if (arr[j] - arr[i] > profit)
+            {
                 profit = arr[j] - arr[i];
             }
         }
@@ -1063,14 +1076,16 @@ int stockBuySell(vector<int> arr){
 }
 
 // O(n)
-//O(1)
-int stockBuySellOptimised(vector<int> arr){
+// O(1)
+int stockBuySellOptimised(vector<int> arr)
+{
     int maxProfit = 0;
     int minPrice = INT_MAX;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        minPrice = min(minPrice , arr[i]);
-        maxProfit = max(maxProfit , arr[i] - minPrice);
+    for (int i = 0; i < arr.size(); i++)
+    {
+        minPrice = min(minPrice, arr[i]);
+        maxProfit = max(maxProfit, arr[i] - minPrice);
     }
 
     return maxProfit;
@@ -1083,16 +1098,21 @@ int stockBuySellOptimised(vector<int> arr){
 // Variety 1 : Equal Number of Positive and Negative Elements
 // O(N)
 // O(N) for ans
-vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
-    vector<int> ans(arr.size() , 0);
+vector<int> rearrangeArrayWithALternateSigns(vector<int> arr)
+{
+    vector<int> ans(arr.size(), 0);
 
-    int posIndex = 0 , negIndex = 1;
+    int posIndex = 0, negIndex = 1;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        if(arr[i] < 0){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] < 0)
+        {
             ans[negIndex] = arr[i];
             negIndex += 2;
-        }else{
+        }
+        else
+        {
             ans[posIndex] = arr[i];
             posIndex += 2;
         }
@@ -1111,17 +1131,22 @@ vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
 // Brute Force
 // o(n2)
 // O(n) -- ans vector
-vector<int> leaders(vector<int> arr){
+vector<int> leaders(vector<int> arr)
+{
     vector<int> ans;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         bool leader = true;
-        for(int j = i+1 ; j<arr.size() ; j++){
-            if(arr[i] < arr[j]){
+        for (int j = i + 1; j < arr.size(); j++)
+        {
+            if (arr[i] < arr[j])
+            {
                 leader = false;
             }
         }
-        if(leader){
+        if (leader)
+        {
             ans.push_back(arr[i]);
         }
     }
@@ -1132,17 +1157,56 @@ vector<int> leaders(vector<int> arr){
 // Using Reverse Traversal
 // O(n)
 // O(n) -- for ans
-vector<int> leadersByTraversingReverse(vector<int> arr){
+vector<int> leadersByTraversingReverse(vector<int> arr)
+{
 
     vector<int> ans;
-    for(int i = arr.size() - 1 ; i>=0 ; i--){
-        if( ans.empty() || arr[i] > ans.back()){
+    for (int i = arr.size() - 1; i >= 0; i--)
+    {
+        if (ans.empty() || arr[i] > ans.back())
+        {
             ans.push_back(arr[i]);
         }
     }
 
-    reverse(ans.begin() , ans.end());
+    reverse(ans.begin(), ans.end());
     return ans;
+}
+
+// Longest Consecutive Sequence in an Array
+// Time Complexity: O(NlogN) + O(N)
+// Space Complexity: O(1)
+
+int longestConsecutiveSeq(vector<int> arr)
+{
+    if (arr.size() == 0)
+    {
+        return 0;
+    }
+
+    sort(arr.begin(), arr.end());
+
+    int lastMin = INT_MIN;
+    int count = 0;
+    int mx = 1;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] - 1 == lastMin)
+        {
+            count++;
+            lastMin = arr[i];
+        }
+        else if (arr[i] != lastMin)
+        {
+            count = 1;
+            lastMin = arr[i];
+        }
+
+        mx = max(mx, count);
+    }
+
+    return mx;
 }
 
 int main()
@@ -1196,11 +1260,12 @@ int main()
     // cout<<stockBuySellOptimised({7,1,5,3,6,4});
     // vector<int> ans = rearrangeArrayWithALternateSigns({1,2,-4,-5});
     // vector<int> ans = leaders({10, 22, 12, 3, 0, 6});
-    vector<int> ans = leadersByTraversingReverse({10, 22, 12, 3, 0, 6});
+    // vector<int> ans = leadersByTraversingReverse({10, 22, 12, 3, 0, 6});
+    cout << longestConsecutiveSeq({100, 200, 1, 3, 2, 4});
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
