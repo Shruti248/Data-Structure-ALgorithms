@@ -1209,6 +1209,89 @@ int longestConsecutiveSeq(vector<int> arr)
     return mx;
 }
 
+// Set Matrix Zero
+
+// Bruet Force : Mark rows and cols with -1 where 0 is encountered -- later replace with 0
+// Time Complexity: O((N*M)*(N + M)) + O(N*M)
+// Space Complexity: O(1)
+void setRow(vector<vector<int>> &arr, int row, int col, int i)
+{
+    for (int j = 0; j < col; j++)
+    {
+        arr[i][j] = -1;
+    }
+}
+
+void setColumn(vector<vector<int>> &arr, int row, int col, int j)
+{
+    for (int i = 0; i < row; i++)
+    {
+        arr[i][j] = -1;
+    }
+}
+
+vector<vector<int>> setMatrixZero(vector<vector<int>> arr, int row, int col)
+{
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (arr[i][j] == 0)
+            {
+                setRow(arr, row, col, i);
+                setColumn(arr, row, col, j);
+            }
+        }
+    }
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (arr[i][j] == -1)
+            {
+                arr[i][j] = 0;
+            }
+        }
+    }
+
+    return arr;
+}
+
+// Approach (Using two extra arrays)
+// Time Complexity: O(2*(N*M))
+//Space Complexity: O(N) + O(M)
+vector<vector<int>> setMatrixZeroUsing2Arrays(vector<vector<int>> arr, int row, int col)
+{
+    int rowArr[row] = {0};
+    int colArr[col] = {0};
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (arr[i][j] == 0)
+            {
+                rowArr[i] = 1;
+                colArr[j] = 1;
+            }
+        }
+    }
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            if (rowArr[i] || colArr[j])
+            {
+                arr[i][j] = 0;
+            }
+        }
+    }
+
+    return arr;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1261,7 +1344,19 @@ int main()
     // vector<int> ans = rearrangeArrayWithALternateSigns({1,2,-4,-5});
     // vector<int> ans = leaders({10, 22, 12, 3, 0, 6});
     // vector<int> ans = leadersByTraversingReverse({10, 22, 12, 3, 0, 6});
-    cout << longestConsecutiveSeq({100, 200, 1, 3, 2, 4});
+    // cout << longestConsecutiveSeq({100, 200, 1, 3, 2, 4});
+
+    // vector<vector<int>> ans = setMatrixZero({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
+    vector<vector<int>> ans = setMatrixZeroUsing2Arrays({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        for (int j = 0; j < ans.size(); j++)
+        {
+            cout << ans[i][j] << " ";
+        }
+        cout << endl;
+    }
 
     // for (int i = 0; i < ans.size(); i++)
     // {
