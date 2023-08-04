@@ -705,6 +705,8 @@ int longestSubarrayUsingSlidingWindow(vector<int> arr, int sum)
 // Learn thsi method in the morning ----
 
 //  2 Sum  : 2 variants : 1) Return true/false 2) return indicies
+// Modifyig variant 2 in the same below codes
+
 
 // Brute Force
 // O(n2)
@@ -717,6 +719,7 @@ bool twoSum(vector<int> arr, int sum)
         {
             if (arr[i] + arr[j] == sum)
             {
+                cout<<arr[i]<<arr[j]<<endl;
                 return true;
             }
         }
@@ -738,6 +741,7 @@ bool twoSumUsing2Pointers(vector<int> arr, int sum)
     {
         if (arr[i] + arr[j] == sum)
         {
+            cout<<arr[i]<<" "<<arr[j]<<endl;
             return true;
         }
         else if (arr[i] + arr[j] < sum)
@@ -771,6 +775,7 @@ bool twoSumUsingHashing(vector<int> arr, int sum)
     for (int i = 0; i < arr.size(); i++)
     {
         if(mp.find(sum-arr[i]) != mp.end()){
+            cout<<arr[i]<<" "<<sum-arr[i]<<endl;
             return true;
         }
     }
@@ -813,7 +818,7 @@ int main()
 
     // cout << twoSum({2, 6, 5, 8, 11}, 14);
     // cout << twoSumUsing2Pointers({2, 6, 5, 8, 11}, 14);
-    cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 15);
+    cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 14);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
