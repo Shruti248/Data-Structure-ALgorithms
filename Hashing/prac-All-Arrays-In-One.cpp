@@ -1106,6 +1106,45 @@ vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
 
 // In this variety, the number of positive and negative numbers shall not necessarily be equal to each other in the given array. So, there can be two cases possible: either the positive elements exceed the negatives or the negatives exceed the positives. So, instead of using the optimal solution discussed for the variety-1 above, we’ll fall back to the brute force solution where we create separate arrays for storing positives and negatives and then put them back into the array alternatively. The remaining negative or positive elements are added to the array at last.
 
+// Leaders in the array : Such elements where all the elements to the right of it are smaller
+
+// Brute Force
+// o(n2)
+// O(n) -- ans vector
+vector<int> leaders(vector<int> arr){
+    vector<int> ans;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        bool leader = true;
+        for(int j = i+1 ; j<arr.size() ; j++){
+            if(arr[i] < arr[j]){
+                leader = false;
+            }
+        }
+        if(leader){
+            ans.push_back(arr[i]);
+        }
+    }
+
+    return ans;
+}
+
+// Using Reverse Traversal
+// O(n)
+// O(n) -- for ans
+vector<int> leadersByTraversingReverse(vector<int> arr){
+
+    vector<int> ans;
+    for(int i = arr.size() - 1 ; i>=0 ; i--){
+        if( ans.empty() || arr[i] > ans.back()){
+            ans.push_back(arr[i]);
+        }
+    }
+
+    reverse(ans.begin() , ans.end());
+    return ans;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1155,7 +1194,9 @@ int main()
     // cout << printmaxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout<<stockBuySell({7,6,4,3,1});
     // cout<<stockBuySellOptimised({7,1,5,3,6,4});
-    vector<int> ans = rearrangeArrayWithALternateSigns({1,2,-4,-5});
+    // vector<int> ans = rearrangeArrayWithALternateSigns({1,2,-4,-5});
+    // vector<int> ans = leaders({10, 22, 12, 3, 0, 6});
+    vector<int> ans = leadersByTraversingReverse({10, 22, 12, 3, 0, 6});
 
     for (int i = 0; i < ans.size(); i++)
     {
