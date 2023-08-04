@@ -1076,6 +1076,30 @@ int stockBuySellOptimised(vector<int> arr){
     return maxProfit;
 }
 
+// Rearrange Array Elements by Sign : There’s an array ‘A’ of size ‘N’ with an equal number of positive and negative elements. Without altering the relative order of positive and negative elements, you must return an array of alternately positive and negative values.
+
+// Note: Start the array with positive elements.
+
+// O(N)
+// O(N) for ans
+vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
+    vector<int> ans(arr.size() , 0);
+
+    int posIndex = 0 , negIndex = 1;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(arr[i] < 0){
+            ans[negIndex] = arr[i];
+            negIndex += 2;
+        }else{
+            ans[posIndex] = arr[i];
+            posIndex += 2;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1124,12 +1148,12 @@ int main()
     // cout << maxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout << printmaxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout<<stockBuySell({7,6,4,3,1});
-    cout<<stockBuySellOptimised({7,1,5,3,6,4});
+    // cout<<stockBuySellOptimised({7,1,5,3,6,4});
+    vector<int> ans = rearrangeArrayWithALternateSigns({1,2,-4,-5});
 
-
-    // for (int i = 0; i < ans.size(); i++)
-    // {
-    //     cout << ans[i] << " ";
-    // }
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
