@@ -707,7 +707,6 @@ int longestSubarrayUsingSlidingWindow(vector<int> arr, int sum)
 //  2 Sum  : 2 variants : 1) Return true/false 2) return indicies
 // Modifyig variant 2 in the same below codes
 
-
 // Brute Force
 // O(n2)
 // O(1)
@@ -719,7 +718,7 @@ bool twoSum(vector<int> arr, int sum)
         {
             if (arr[i] + arr[j] == sum)
             {
-                cout<<arr[i]<<arr[j]<<endl;
+                cout << arr[i] << arr[j] << endl;
                 return true;
             }
         }
@@ -730,7 +729,7 @@ bool twoSum(vector<int> arr, int sum)
 
 // 2 pointers but on sorted array
 // Time Complexity: O(N) + O(N*logN),
-//Space Complexity: O(1)
+// Space Complexity: O(1)
 bool twoSumUsing2Pointers(vector<int> arr, int sum)
 {
     sort(arr.begin(), arr.end());
@@ -741,7 +740,7 @@ bool twoSumUsing2Pointers(vector<int> arr, int sum)
     {
         if (arr[i] + arr[j] == sum)
         {
-            cout<<arr[i]<<" "<<arr[j]<<endl;
+            cout << arr[i] << " " << arr[j] << endl;
             return true;
         }
         else if (arr[i] + arr[j] < sum)
@@ -774,13 +773,98 @@ bool twoSumUsingHashing(vector<int> arr, int sum)
 
     for (int i = 0; i < arr.size(); i++)
     {
-        if(mp.find(sum-arr[i]) != mp.end()){
-            cout<<arr[i]<<" "<<sum-arr[i]<<endl;
+        if (mp.find(sum - arr[i]) != mp.end())
+        {
+            cout << arr[i] << " " << sum - arr[i] << endl;
             return true;
         }
     }
 
     return false;
+}
+
+// Sort an array of 0s, 1s and 2s : in-place sort the array without using inbuilt sort functions. ( Expected: Single pass-O(N) and constant space)
+
+// 1) Simplest brute force : Sorting O(Nlogn)
+
+// 2) Maintaing Count
+// O(N) + O(N)
+// O(1)
+vector<int> sortArrayOfZeroesOnesTwos(vector<int> arr)
+{
+    int count0 = 0;
+    int count1 = 0;
+    int count2 = 0;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] == 0)
+        {
+            count0++;
+        }
+        if (arr[i] == 1)
+        {
+            count1++;
+        }
+
+        if (arr[i] == 2)
+        {
+            count2++;
+        }
+    }
+
+    int i = 0;
+
+    while (count0 != 0)
+    {
+        arr[i] = 0;
+        i++;
+        count0--;
+    }
+
+    while (count1 != 0)
+    {
+        arr[i] = 1;
+        i++;
+        count1--;
+    }
+
+    while (count2 != 0)
+    {
+        arr[i] = 2;
+        i++;
+        count2--;
+    }
+
+    return arr;
+}
+
+// 3) Dutch National flag algorithm.
+// 3 pointers : Low , mid , high
+
+// O(N)
+// O(1)
+vector<int> sortArrayOfZeroesOnesTwosUsingDutchAlgo(vector<int> arr)
+{
+
+    int low = 0, mid = 0, high = arr.size() - 1;
+
+    while (mid <= high)
+    {
+        if(arr[mid] == 0){
+            swap(arr[low] , arr[mid]);
+            low++;
+            mid++;
+        }else if(arr[mid] == 1){
+            mid++;
+        }else{
+            // 2
+            swap(arr[mid] , arr[high]);
+            high--;
+        }
+    }
+
+    return arr;
 }
 
 int main()
@@ -818,11 +902,14 @@ int main()
 
     // cout << twoSum({2, 6, 5, 8, 11}, 14);
     // cout << twoSumUsing2Pointers({2, 6, 5, 8, 11}, 14);
-    cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 14);
+    // cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 14);
 
-    // for (int i = 0; i < ans.size(); i++)
-    // {
-    //     cout << ans[i] << " ";
-    // }
+    // vector<int> ans = sortArrayOfZeroesOnesTwos({2, 0, 2, 1, 1, 0});
+    vector<int> ans = sortArrayOfZeroesOnesTwosUsingDutchAlgo({2, 0, 2, 1, 1, 0});
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
