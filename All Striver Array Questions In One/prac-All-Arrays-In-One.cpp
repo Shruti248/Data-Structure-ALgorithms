@@ -1409,6 +1409,26 @@ int countSubarraysWithGivenSum(vector<int> arr, int k)
     return count;
 }
 
+// Majority Elements(>N/3 times) | Find the elements that appears more than N/3 times in the array
+// O(Nlogn)
+// O(n)
+vector<int> majorityEleNBy3Times(vector<int> arr){
+    unordered_map<int , int> mp;
+    vector<int> ans;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        mp[arr[i]]++;
+    }
+
+    for(auto i : mp){
+        if(i.second > arr.size()/3){
+            ans.push_back(i.first);
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1478,11 +1498,12 @@ int main()
     //     cout << endl;
     // }
 
-    cout<<countSubarraysWithGivenSum({3, 1, 2, 4} , 6);
+    // cout<<countSubarraysWithGivenSum({3, 1, 2, 4} , 6);
+    vector<int> ans = majorityEleNBy3Times({11,33,33,11,33,11});
 
-    // for (int i = 0; i < ans.size(); i++)
-    // {
-    //     cout << ans[i] << " ";
-    // }
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
