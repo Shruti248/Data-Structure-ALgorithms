@@ -851,20 +851,82 @@ vector<int> sortArrayOfZeroesOnesTwosUsingDutchAlgo(vector<int> arr)
 
     while (mid <= high)
     {
-        if(arr[mid] == 0){
-            swap(arr[low] , arr[mid]);
+        if (arr[mid] == 0)
+        {
+            swap(arr[low], arr[mid]);
             low++;
             mid++;
-        }else if(arr[mid] == 1){
+        }
+        else if (arr[mid] == 1)
+        {
             mid++;
-        }else{
+        }
+        else
+        {
             // 2
-            swap(arr[mid] , arr[high]);
+            swap(arr[mid], arr[high]);
             high--;
         }
     }
 
     return arr;
+}
+
+// Find the Majority Element that occurs more than N/2 times
+
+// Sorting
+
+// Frequecy : Therefore Hahsing toh avse j
+// O(nlogn) + o(N)
+// O(N)
+int majorityEle(vector<int> arr)
+{
+    int n = arr.size();
+
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        mp[arr[i]]++;
+    }
+
+    for (auto i : mp)
+    {
+        if (i.second > n / 2)
+        {
+            return i.first;
+        }
+    }
+
+    return -1;
+}
+
+// Optimal Approach: Moore’s Voting Algorithm -- If teh question quarentees that the array contains the majority element
+// If not -- traverse one moere time to check
+
+// Refer striver : GOOD One
+// O(N)
+// O(1)
+int majorityEleUsingMooreVotingAlgo(vector<int> arr)
+{
+    int count = 0;
+    int ele;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (count == 0)
+        {
+            ele = arr[i];
+            count++;
+        }else if (ele == arr[i])
+        {
+            count++;
+        }else{
+            count--;
+        }
+    }
+
+    return ele;
 }
 
 int main()
@@ -905,11 +967,14 @@ int main()
     // cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 14);
 
     // vector<int> ans = sortArrayOfZeroesOnesTwos({2, 0, 2, 1, 1, 0});
-    vector<int> ans = sortArrayOfZeroesOnesTwosUsingDutchAlgo({2, 0, 2, 1, 1, 0});
+    // vector<int> ans = sortArrayOfZeroesOnesTwosUsingDutchAlgo({2, 0, 2, 1, 1, 0});
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // cout << majorityEle({2, 2, 1, 1, 1, 2, 2});
+    cout << majorityEleUsingMooreVotingAlgo({2, 2, 1, 1, 1, 2, 2});
+
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
