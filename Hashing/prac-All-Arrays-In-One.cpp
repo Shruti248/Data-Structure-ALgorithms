@@ -1080,6 +1080,7 @@ int stockBuySellOptimised(vector<int> arr){
 
 // Note: Start the array with positive elements.
 
+// Variety 1 : Equal Number of Positive and Negative Elements
 // O(N)
 // O(N) for ans
 vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
@@ -1099,6 +1100,11 @@ vector<int> rearrangeArrayWithALternateSigns(vector<int> arr){
 
     return ans;
 }
+
+// Variety 2 : Different Number of Positive and Negative Elements
+// There’s an array ‘A’ of size ‘N’ with positive and negative elements (not necessarily equal). Without altering the relative order of positive and negative elements, you must return an array of alternately positive and negative values. The leftover elements should be placed at the very end in the same order as in array A.
+
+// In this variety, the number of positive and negative numbers shall not necessarily be equal to each other in the given array. So, there can be two cases possible: either the positive elements exceed the negatives or the negatives exceed the positives. So, instead of using the optimal solution discussed for the variety-1 above, we’ll fall back to the brute force solution where we create separate arrays for storing positives and negatives and then put them back into the array alternatively. The remaining negative or positive elements are added to the array at last.
 
 int main()
 {
