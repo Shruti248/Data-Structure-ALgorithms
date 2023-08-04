@@ -1321,16 +1321,67 @@ vector<vector<int>> rotateImageBy90DegreeOptimized(vector<vector<int>> arr, int 
     {
         for (int j = 0; j < i; j++)
         {
-            swap(arr[i][j] , arr[j][i]);
+            swap(arr[i][j], arr[j][i]);
         }
     }
 
     for (int i = 0; i < row; i++)
     {
-        reverse(arr[i].begin() , arr[i].end());
+        reverse(arr[i].begin(), arr[i].end());
     }
 
     return arr;
+}
+
+// Spiral Traversal of Matrix
+// Time Complexity: O(m x n) {
+// Space Complexity: O(n)
+vector<int> spiralTraversalOfTheMatrix(vector<vector<int>> mat)
+{
+    // Define ans array to store the result.
+    vector<int> ans;
+
+    int n = mat.size();    // no. of nows
+    int m = mat[0].size(); // no. of columns
+
+    // Initialize the pointers reqd for traversal.
+    int top = 0, left = 0, bottom = n - 1, right = m - 1;
+
+    // Loop until all elements are not traversed.
+    while (top <= bottom && left <= right)
+    {
+
+        // For moving left to right
+        for (int i = left; i <= right; i++)
+            ans.push_back(mat[top][i]);
+
+        top++;
+
+        // For moving top to bottom.
+        for (int i = top; i <= bottom; i++)
+            ans.push_back(mat[i][right]);
+
+        right--;
+
+        // For moving right to left.
+        if (top <= bottom)
+        {
+            for (int i = right; i >= left; i--)
+                ans.push_back(mat[bottom][i]);
+
+            bottom--;
+        }
+
+        // For moving bottom to top.
+        if (left <= right)
+        {
+            for (int i = bottom; i >= top; i--)
+                ans.push_back(mat[i][left]);
+
+            left++;
+        }
+    }
+    return ans;
 }
 
 int main()
@@ -1390,20 +1441,21 @@ int main()
     // vector<vector<int>> ans = setMatrixZero({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
     // vector<vector<int>> ans = setMatrixZeroUsing2Arrays({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
     // vector<vector<int>> ans = rotateImageBy90Degree({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
-    vector<vector<int>> ans = rotateImageBy90DegreeOptimized({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
-
-    for (int i = 0; i < ans.size(); i++)
-    {
-        for (int j = 0; j < ans.size(); j++)
-        {
-            cout << ans[i][j] << " ";
-        }
-        cout << endl;
-    }
+    // vector<vector<int>> ans = rotateImageBy90DegreeOptimized({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
+    vector<int> ans = spiralTraversalOfTheMatrix({{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
-    //     cout << ans[i] << " ";
+    //     for (int j = 0; j < ans.size(); j++)
+    //     {
+    //         cout << ans[i][j] << " ";
+    //     }
+    //     cout << endl;
     // }
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
