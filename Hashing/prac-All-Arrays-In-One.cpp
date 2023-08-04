@@ -1260,7 +1260,7 @@ vector<vector<int>> setMatrixZero(vector<vector<int>> arr, int row, int col)
 
 // Approach (Using two extra arrays)
 // Time Complexity: O(2*(N*M))
-//Space Complexity: O(N) + O(M)
+// Space Complexity: O(N) + O(M)
 vector<vector<int>> setMatrixZeroUsing2Arrays(vector<vector<int>> arr, int row, int col)
 {
     int rowArr[row] = {0};
@@ -1287,6 +1287,47 @@ vector<vector<int>> setMatrixZeroUsing2Arrays(vector<vector<int>> arr, int row, 
                 arr[i][j] = 0;
             }
         }
+    }
+
+    return arr;
+}
+
+// Rotate Image by 90 degree
+// O(N2)
+// O(N2)
+vector<vector<int>> rotateImageBy90Degree(vector<vector<int>> arr, int row, int col)
+{
+    vector<vector<int>> rotated(arr.size(), vector<int>(arr.size(), 0));
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < col; j++)
+        {
+            rotated[j][arr.size() - i - 1] = arr[i][j];
+        }
+    }
+
+    return rotated;
+}
+
+// first do TRanspose of the matrix : rows become col , col become row
+// Then reverse each row
+// O(N*N) + O(N*N)
+// Since we are changing in same matrix -- no extra space
+// O(1)
+vector<vector<int>> rotateImageBy90DegreeOptimized(vector<vector<int>> arr, int row, int col)
+{
+
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            swap(arr[i][j] , arr[j][i]);
+        }
+    }
+
+    for (int i = 0; i < row; i++)
+    {
+        reverse(arr[i].begin() , arr[i].end());
     }
 
     return arr;
@@ -1347,7 +1388,9 @@ int main()
     // cout << longestConsecutiveSeq({100, 200, 1, 3, 2, 4});
 
     // vector<vector<int>> ans = setMatrixZero({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
-    vector<vector<int>> ans = setMatrixZeroUsing2Arrays({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
+    // vector<vector<int>> ans = setMatrixZeroUsing2Arrays({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
+    // vector<vector<int>> ans = rotateImageBy90Degree({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
+    vector<vector<int>> ans = rotateImageBy90DegreeOptimized({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
 
     for (int i = 0; i < ans.size(); i++)
     {
