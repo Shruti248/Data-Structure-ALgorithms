@@ -1043,6 +1043,39 @@ int printmaxSubarraySumUsingKadanesAlgo(vector<int> arr){
     return mx;
 }
 
+// Stock Buy And Sell
+
+// brute force
+// O(n2)
+// O(1)
+int stockBuySell(vector<int> arr){
+    int profit = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        for(int j = i+1 ; j<arr.size() ; j++){
+            if(arr[j] - arr[i] > profit){
+                profit = arr[j] - arr[i];
+            }
+        }
+    }
+
+    return profit;
+}
+
+// O(n)
+//O(1)
+int stockBuySellOptimised(vector<int> arr){
+    int maxProfit = 0;
+    int minPrice = INT_MAX;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        minPrice = min(minPrice , arr[i]);
+        maxProfit = max(maxProfit , arr[i] - minPrice);
+    }
+
+    return maxProfit;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1089,7 +1122,10 @@ int main()
     // cout << maxSubarraySumI({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout << maxSubarraySumII({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout << maxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
-    cout << printmaxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    // cout << printmaxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    // cout<<stockBuySell({7,6,4,3,1});
+    cout<<stockBuySellOptimised({7,1,5,3,6,4});
+
 
     // for (int i = 0; i < ans.size(); i++)
     // {
