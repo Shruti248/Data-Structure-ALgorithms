@@ -1384,6 +1384,31 @@ vector<int> spiralTraversalOfTheMatrix(vector<vector<int>> mat)
     return ans;
 }
 
+// Count Subarray whose sum Equals K
+
+// brute Force : O(n2)
+// Prefix sum Method Left
+int countSubarraysWithGivenSum(vector<int> arr, int k)
+{
+    int count = 0;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        int sum = 0;
+
+        for (int j = i; j < arr.size(); j++)
+        {
+            sum += arr[j];
+
+            if(sum == k){
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1442,7 +1467,7 @@ int main()
     // vector<vector<int>> ans = setMatrixZeroUsing2Arrays({{1, 1, 1}, {1, 0, 1}, {1, 1, 1}}, 3, 3);
     // vector<vector<int>> ans = rotateImageBy90Degree({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
     // vector<vector<int>> ans = rotateImageBy90DegreeOptimized({{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}, 3, 3);
-    vector<int> ans = spiralTraversalOfTheMatrix({{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}});
+    // vector<int> ans = spiralTraversalOfTheMatrix({{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
@@ -1453,9 +1478,11 @@ int main()
     //     cout << endl;
     // }
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    cout<<countSubarraysWithGivenSum({3, 1, 2, 4} , 6);
+
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
