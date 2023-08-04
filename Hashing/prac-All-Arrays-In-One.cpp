@@ -918,15 +918,92 @@ int majorityEleUsingMooreVotingAlgo(vector<int> arr)
         {
             ele = arr[i];
             count++;
-        }else if (ele == arr[i])
+        }
+        else if (ele == arr[i])
         {
             count++;
-        }else{
+        }
+        else
+        {
             count--;
         }
     }
 
     return ele;
+}
+
+// FOr longest subarray : Siding window & prefix sum
+// But for :
+
+// Maximum Subarray Sum in an Array :  Kadane’s Algorithm
+
+// Brute Force : 3 loops
+// O(n3)
+// O(1)
+int maxSubarraySumI(vector<int> arr)
+{
+    int mx = INT_MIN;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        for (int j = i; j < arr.size(); j++)
+        {
+            int sum = 0;
+
+            for (int k = i; k <= j; k++)
+            {
+                sum += arr[k];
+            }
+
+            mx = max(mx, sum);
+        }
+    }
+
+    return mx;
+}
+
+// Brute Force : 2 loops
+// O(n2)
+// O(1)
+int maxSubarraySumII(vector<int> arr)
+{
+    int mx = INT_MIN;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        int sum = 0;
+        for (int j = i; j < arr.size(); j++)
+        {
+
+            sum += arr[j];
+
+            mx = max(mx, sum);
+        }
+    }
+
+    return mx;
+}
+
+// Kadanes ALgo : EASZZZ PEAAZZZZZ
+// SIngle loop : O(N) O(1)
+// If sum < 0 --- do not consider such subaarray -- reset sum = 0
+// else find max sum
+
+int maxSubarraySumUsingKadanesAlgo(vector<int> arr){
+    int sum = 0;
+    int mx = INT_MIN;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        sum += arr[i];
+
+        mx = max(sum , mx);
+
+        if(sum < 0){
+            sum = 0;
+        }
+    }
+
+    return mx;
 }
 
 int main()
@@ -970,7 +1047,11 @@ int main()
     // vector<int> ans = sortArrayOfZeroesOnesTwosUsingDutchAlgo({2, 0, 2, 1, 1, 0});
 
     // cout << majorityEle({2, 2, 1, 1, 1, 2, 2});
-    cout << majorityEleUsingMooreVotingAlgo({2, 2, 1, 1, 1, 2, 2});
+    // cout << majorityEleUsingMooreVotingAlgo({2, 2, 1, 1, 1, 2, 2});
+
+    // cout << maxSubarraySumI({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    // cout << maxSubarraySumII({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    cout << maxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
