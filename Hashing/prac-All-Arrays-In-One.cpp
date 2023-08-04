@@ -661,7 +661,7 @@ int longestSubarrayBruteForce(vector<int> arr, int sum)
 }
 
 // Time Complexity: O(2*N)
-//Space Complexity: O(1)
+// Space Complexity: O(1)
 int longestSubarrayUsingSlidingWindow(vector<int> arr, int sum)
 {
     int i = 0, j = 0;
@@ -696,6 +696,88 @@ int longestSubarrayUsingSlidingWindow(vector<int> arr, int sum)
     return mx;
 }
 
+// Longest Subarray with sum K | [Postives and Negatives]
+// 1) brute force : Above brute force works for all : Since it genreates all possible and then computes answer
+
+// 2) USing hashing : Prefix Sum Method : for both positive and negative
+
+// Prefix : From the front till that portion
+// Learn thsi method in the morning ----
+
+//  2 Sum  : 2 variants : 1) Return true/false 2) return indicies
+
+// Brute Force
+// O(n2)
+// O(1)
+bool twoSum(vector<int> arr, int sum)
+{
+    for (int i = 0; i < arr.size(); i++)
+    {
+        for (int j = i + 1; j < arr.size(); j++)
+        {
+            if (arr[i] + arr[j] == sum)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+// 2 pointers but on sorted array
+// Time Complexity: O(N) + O(N*logN),
+//Space Complexity: O(1)
+bool twoSumUsing2Pointers(vector<int> arr, int sum)
+{
+    sort(arr.begin(), arr.end());
+
+    int i = 0, j = arr.size() - 1;
+
+    while (i <= j)
+    {
+        if (arr[i] + arr[j] == sum)
+        {
+            return true;
+        }
+        else if (arr[i] + arr[j] < sum)
+        {
+            i++;
+        }
+        else
+        {
+            j--;
+        }
+    }
+
+    return false;
+}
+
+// Using Hashing
+// if x exists , and sum -x  exists -- return true
+// Searching in hashing in constant time
+
+// O(N)
+// O(N)
+bool twoSumUsingHashing(vector<int> arr, int sum)
+{
+    unordered_map<int, int> mp;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        mp[arr[i]]++;
+    }
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if(mp.find(sum-arr[i]) != mp.end()){
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -726,7 +808,12 @@ int main()
     // cout << numberAppearingOnce({2, 1, 2, 1, 3});
 
     // cout<<longestSubarrayBruteForce({2 , 3 , 5 , 1 , 9 } , 10);
-    cout << longestSubarrayUsingSlidingWindow({2, 3, 5, 1, 9}, 10);
+    // cout<<longestSubarrayBruteForce({-1, 1, 1} , 1);
+    // cout << longestSubarrayUsingSlidingWindow({2, 3, 5, 1, 9}, 10);
+
+    // cout << twoSum({2, 6, 5, 8, 11}, 14);
+    // cout << twoSumUsing2Pointers({2, 6, 5, 8, 11}, 14);
+    cout << twoSumUsingHashing({2, 6, 5, 8, 11}, 15);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
