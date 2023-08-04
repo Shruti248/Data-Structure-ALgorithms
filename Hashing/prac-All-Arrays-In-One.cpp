@@ -1006,6 +1006,43 @@ int maxSubarraySumUsingKadanesAlgo(vector<int> arr){
     return mx;
 }
 
+// Print the array
+// Maximum Subarray Sum in an Array :  Kadane’s Algorithm
+
+// Store starting and ending index
+int printmaxSubarraySumUsingKadanesAlgo(vector<int> arr){
+    int sum = 0;
+    int mx = INT_MIN;
+    int startIndex = 0;
+    int endIndex = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+
+        if(sum == 0){
+            startIndex = i;
+        }
+
+        sum += arr[i];
+
+        if(sum > mx){
+            mx = sum;
+            endIndex = i;
+        }
+
+        if(sum < 0){
+            sum = 0;
+        }
+    }
+
+    // Printing array
+    for(int i = startIndex ; i<= endIndex ; i++){
+        cout<<arr[i]<<" ";
+    }
+
+    cout<<endl;
+    return mx;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1051,7 +1088,8 @@ int main()
 
     // cout << maxSubarraySumI({-2, 1, -3, 4, -1, 2, 1, -5, 4});
     // cout << maxSubarraySumII({-2, 1, -3, 4, -1, 2, 1, -5, 4});
-    cout << maxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    // cout << maxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
+    cout << printmaxSubarraySumUsingKadanesAlgo({-2, 1, -3, 4, -1, 2, 1, -5, 4});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
