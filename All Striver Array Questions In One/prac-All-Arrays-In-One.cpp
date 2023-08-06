@@ -1400,7 +1400,8 @@ int countSubarraysWithGivenSum(vector<int> arr, int k)
         {
             sum += arr[j];
 
-            if(sum == k){
+            if (sum == k)
+            {
                 count++;
             }
         }
@@ -1412,21 +1413,88 @@ int countSubarraysWithGivenSum(vector<int> arr, int k)
 // Majority Elements(>N/3 times) | Find the elements that appears more than N/3 times in the array
 // O(Nlogn)
 // O(n)
-vector<int> majorityEleNBy3Times(vector<int> arr){
-    unordered_map<int , int> mp;
+vector<int> majorityEleNBy3Times(vector<int> arr)
+{
+    unordered_map<int, int> mp;
     vector<int> ans;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         mp[arr[i]]++;
     }
 
-    for(auto i : mp){
-        if(i.second > arr.size()/3){
+    for (auto i : mp)
+    {
+        if (i.second > arr.size() / 3)
+        {
             ans.push_back(i.first);
         }
     }
 
     return ans;
+}
+
+// Sliding Window
+
+int maxSubarraySumofSizeK(vector<int> arr, int k)
+{
+    int i = 0, j = 0;
+    int sum = 0;
+    int mx = INT_MIN;
+
+    while (j < arr.size())
+    {
+        sum += arr[j];
+
+        if (j - i + 1 < k)
+        {
+            j++;
+        }
+        else if (j - i + 1 == k)
+        {
+            mx = max(mx, sum);
+            sum -= arr[i];
+            i++;
+            j++;
+        }
+    }
+
+    return mx;
+}
+
+// First negative number in every window of size k
+vector<int> firstNegative(vector<int> arr , int k){
+    int i = 0 , j = 0;
+    list<int> negativeNums;
+    vector<int> ans;
+
+    while(j < arr.size()){
+
+        if(arr[j] < 0){
+            negativeNums.push_back(arr[j]);
+        }
+
+        if(j - i + 1 < k){
+            j++;
+        }else if(j - i + 1 == k){
+            if(negativeNums.size() == 0){
+                ans.push_back(0);
+            }else{
+                ans.push_back(negativeNums.front());
+            }
+
+            if(arr[i] < 0){
+                negativeNums.pop_front();
+            }
+
+            i++;
+            j++;
+        }
+
+    }
+
+    return ans;
+
 }
 
 int main()
@@ -1499,7 +1567,10 @@ int main()
     // }
 
     // cout<<countSubarraysWithGivenSum({3, 1, 2, 4} , 6);
-    vector<int> ans = majorityEleNBy3Times({11,33,33,11,33,11});
+    // vector<int> ans = majorityEleNBy3Times({11,33,33,11,33,11});
+
+    // cout << maxSubarraySumofSizeK({1, 2, 3, 4, 5}, 2);
+    vector<int> ans = firstNegative({-2 , 2 , 3 , 3 , -5} , 2);
 
     for (int i = 0; i < ans.size(); i++)
     {
