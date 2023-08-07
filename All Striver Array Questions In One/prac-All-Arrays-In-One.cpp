@@ -2029,6 +2029,41 @@ int peakEle(vector<int> arr)
     return -1;
 }
 
+// Sort Characters by frequency
+// Bruet Force
+// Time Complexity: O(n2)
+// Auxiliary Space: O(n)
+int countFreq(string str , char s){
+    int count = 0;
+
+    for(int i = 0 ; i<str.length() ; i++){
+        if(str[i] == s){
+            count++;
+        }
+    }
+
+    return count;
+}
+
+string sortCharactersByFreq(string str){
+    vector<pair<int , char>> p;
+
+    for(int i = 0 ; i<str.length() ; i++){
+        p.push_back({countFreq(str , str[i]) , str[i]});
+    }
+
+    sort(p.begin() , p.end());
+
+    string ans = "";
+
+    for(int i = 0 ; i<p.size() ; i++){
+        ans += p[i].second;
+    }
+
+    return ans;
+
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2115,7 +2150,8 @@ int main()
     // cout<<minInRotatedSortedArray({3,4,5,1,2});
     // cout << numberOfRotations({66, 67, 7, 10, 14, 19, 27, 33, 36, 40, 44, 54, 60});
     // cout<<searchSingleEleUsingBinarySearch({1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6});
-    cout << peakEle({1, 2, 1, 3, 5, 6, 4});
+    // cout << peakEle({1, 2, 1, 3, 5, 6, 4});
+    cout<<sortCharactersByFreq("geeksforgeeks");
 
     // for (int i = 0; i < ans.size(); i++)
     // {
