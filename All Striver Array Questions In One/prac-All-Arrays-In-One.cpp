@@ -1782,6 +1782,66 @@ int searchInRotatedSOrtedArray(vector<int> arr, int target)
     return -1;
 }
 
+// Search Element in Rotated Sorted Array II
+// May contain duplicates : retrun true or false
+
+// above apprach will not work when : arr[start] == arr[mid] == arr[end] Eg : 1 0 1 1 1
+
+// How to handle the edge case arr[low] = arr[mid] = arr[high]:
+
+bool searchInRotatedSOrtedArrayII(vector<int> arr, int target)
+{
+    int start = 0, end = arr.size() - 1;
+
+    while (start <= end)
+    {
+        int mid = (end + start) / 2;
+
+        if (arr[mid] == target)
+        {
+            return true;
+        }
+
+        // One edge case added
+        if (arr[start] == arr[mid] && arr[mid] == arr[end])
+        {
+            start = start + 1;
+            end = end - 1;
+            continue;
+        }
+
+        else if (arr[start] <= arr[mid])
+        {
+            // Left half SOrted
+            if (arr[start] <= target && target <= arr[mid])
+            {
+                // Target present in left half
+                end = mid - 1;
+            }
+            else
+            {
+                // Target in right half
+                start = mid + 1;
+            }
+        }
+        else
+        {
+            // Right half sorted
+            if (arr[mid] <= target && target <= arr[end])
+            {
+                // Target in right half
+                start = mid + 1;
+            }
+            else
+            {
+                // Target in left half
+                end = mid - 1;
+            }
+        }
+    }
+    return false;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1863,7 +1923,8 @@ int main()
     // cout<<ceil({3, 4, 4, 7, 8, 10} , 9);
     // cout<<lowerBound({3, 5, 8, 15, 19} , 9);
     // cout << upperBound({3, 5, 8, 15, 19}, 9);
-    cout << searchInRotatedSOrtedArray({7, 8, 9, 1, 2, 3, 4, 5, 6}, 1);
+    // cout << searchInRotatedSOrtedArray({7, 8, 9, 1, 2, 3, 4, 5, 6}, 1);
+    cout<<searchInRotatedSOrtedArrayII({1 , 0 , 1 , 1, 1} , 0);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
