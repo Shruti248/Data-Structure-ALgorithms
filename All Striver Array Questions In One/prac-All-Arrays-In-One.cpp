@@ -1585,22 +1585,28 @@ vector<int> maxEleInSubarray(vector<int> arr, int k)
     // return ans;
 
     // Optimzed
-    int i = 0 , j = 0;
+    int i = 0, j = 0;
     vector<int> ans;
     list<int> mxArray;
 
-    while(j < arr.size()){
-        while(mxArray.size() > 0 && mxArray.back() < arr[j]){
+    while (j < arr.size())
+    {
+        while (mxArray.size() > 0 && mxArray.back() < arr[j])
+        {
             mxArray.pop_back();
         }
         mxArray.push_back(arr[j]);
 
-        if(j - i + 1 < k){
+        if (j - i + 1 < k)
+        {
             j++;
-        }else if(j - i + 1 == k){
+        }
+        else if (j - i + 1 == k)
+        {
             ans.push_back(mxArray.front());
 
-            if(arr[i] == mxArray.front()){
+            if (arr[i] == mxArray.front())
+            {
                 mxArray.pop_front();
             }
 
@@ -1612,64 +1618,115 @@ vector<int> maxEleInSubarray(vector<int> arr, int k)
     return ans;
 }
 
-// Lower Bound = Index of Ceil
-// Upper Bound = Index of floor
-
-int floor(vector<int> arr , int ele){
-    int start = 0 , end = arr.size()-1;
-    int upperBound = -1;
+int floor(vector<int> arr, int ele)
+{
+    int start = 0, end = arr.size() - 1;
     int f = INT_MIN;
 
-    while(start <= end){
-        int mid = start + (end-start)/2;
-        if(arr[mid] == ele){
-            upperBound = mid;
-            cout<<upperBound<<endl;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == ele)
+        {
             return arr[mid];
-        }else if(arr[mid] < ele){
+        }
+        else if (arr[mid] < ele)
+        {
 
-            if (arr[mid] > f){
+            if (arr[mid] > f)
+            {
                 f = arr[mid];
-                upperBound = mid;
             }
 
-            start = mid+1;
-        }else{
-            end = mid-1;
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
         }
     }
 
-    if(f == INT_MIN){
+    if (f == INT_MIN)
+    {
         return -1;
     }
 
-    cout<<upperBound<<" "<<endl;
     return f;
 }
 
-
-int ceil(vector<int> arr , int ele){
-    int start = 0 , end = arr.size()-1;
+int ceil(vector<int> arr, int ele)
+{
+    int start = 0, end = arr.size() - 1;
 
     int c = INT_MAX;
 
-    while(start <= end){
-        int mid = start + (end-start)/2;
-        if(arr[mid] == ele){
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+        if (arr[mid] == ele)
+        {
             return arr[mid];
-        }else if(arr[mid] < ele){
-            start = mid+1;
-        }else{
-            c = min(c , arr[mid]);
-            end = mid-1;
+        }
+        else if (arr[mid] < ele)
+        {
+            start = mid + 1;
+        }
+        else
+        {
+            c = min(c, arr[mid]);
+            end = mid - 1;
         }
     }
 
-    if(c == INT_MAX){
+    if (c == INT_MAX)
+    {
         return -1;
     }
 
     return c;
+}
+
+// Lower Bound =  arr[ind] >= x.
+// Upper Bound =  arr[ind] > x.
+
+int lowerBound(vector<int> arr, int ele)
+{
+    int ans = -1;
+    int start = 0 , end = arr.size()-1;
+
+    while(start <= end){
+        int mid = start + (end - start)/2;
+
+        if(arr[mid] >= ele){
+            ans = mid;
+
+            end = mid - 1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return ans;
+}
+
+int upperBound(vector<int> arr, int ele)
+{
+    int ans = -1;
+    int start = 0 , end = arr.size()-1;
+
+    while(start <= end){
+        int mid = start + (end - start)/2;
+
+        if(arr[mid] > ele){
+            ans = mid;
+
+            end = mid - 1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return ans;
 }
 
 int main()
@@ -1749,8 +1806,11 @@ int main()
     // cout << countOccurencesOfAnagram("forxxorfxdofr", "for");
     // vector<int> ans = maxEleInSubarray({8, 5, 10, 7, 9, 4, 15, 12, 90, 13} , 4);
 
-    cout<<floor({3,5,8,15,19} , 9);
+    // cout << floor({3, 5, 8, 15, 19}, 9);
     // cout<<ceil({3, 4, 4, 7, 8, 10} , 9);
+    // cout<<lowerBound({3, 5, 8, 15, 19} , 9);
+    cout<<upperBound({3, 5, 8, 15, 19} , 9);
+
     // for (int i = 0; i < ans.size(); i++)
     // {
     //     cout << ans[i] << " ";
