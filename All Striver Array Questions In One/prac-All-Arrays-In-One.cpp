@@ -1463,74 +1463,92 @@ int maxSubarraySumofSizeK(vector<int> arr, int k)
 }
 
 // First negative number in every window of size k
-vector<int> firstNegative(vector<int> arr , int k){
-    int i = 0 , j = 0;
+vector<int> firstNegative(vector<int> arr, int k)
+{
+    int i = 0, j = 0;
     list<int> negativeNums;
     vector<int> ans;
 
-    while(j < arr.size()){
+    while (j < arr.size())
+    {
 
-        if(arr[j] < 0){
+        if (arr[j] < 0)
+        {
             negativeNums.push_back(arr[j]);
         }
 
-        if(j - i + 1 < k){
+        if (j - i + 1 < k)
+        {
             j++;
-        }else if(j - i + 1 == k){
-            if(negativeNums.size() == 0){
+        }
+        else if (j - i + 1 == k)
+        {
+            if (negativeNums.size() == 0)
+            {
                 ans.push_back(0);
-            }else{
+            }
+            else
+            {
                 ans.push_back(negativeNums.front());
             }
 
-            if(arr[i] < 0){
+            if (arr[i] < 0)
+            {
                 negativeNums.pop_front();
             }
 
             i++;
             j++;
         }
-
     }
 
     return ans;
-
 }
 
-int countOccurencesOfAnagram(string txt, string pat){
-    unordered_map<char , int> mp;
+int countOccurencesOfAnagram(string txt, string pat)
+{
+    unordered_map<char, int> mp;
 
-    for(int i = 0 ; i<pat.length() ; i++){
+    for (int i = 0; i < pat.length(); i++)
+    {
         mp[pat[i]]++;
     }
 
-    int i = 0 , j = 0;
+    int i = 0, j = 0;
     int count = mp.size();
     int ans = 0;
     int k = pat.size();
 
-    while(j < txt.size()){
+    while (j < txt.size())
+    {
 
-        if(mp.find(txt[j]) != mp.end()){
+        if (mp.find(txt[j]) != mp.end())
+        {
             mp[txt[j]]--;
 
-            if(mp[txt[j]] ==  0){
+            if (mp[txt[j]] == 0)
+            {
                 count--;
             }
         }
 
-
-        if(j-i+1 < k){
+        if (j - i + 1 < k)
+        {
             j++;
-        }else if(j-i+1 == k){
-            if(count == 0){
+        }
+        else if (j - i + 1 == k)
+        {
+            if (count == 0)
+            {
                 ans++;
             }
 
-            if(mp.find(txt[i]) != mp.end()){
+            if (mp.find(txt[i]) != mp.end())
+            {
                 mp[txt[i]]++;
 
-                if(mp[txt[i]] == 1){
+                if (mp[txt[i]] == 1)
+                {
                     count++;
                 }
             }
@@ -1538,7 +1556,57 @@ int countOccurencesOfAnagram(string txt, string pat){
             i++;
             j++;
         }
+    }
 
+    return ans;
+}
+
+// Maximum of all subarrays of size k
+vector<int> maxEleInSubarray(vector<int> arr, int k)
+{
+    // int i = 0, j = 0;
+    // vector<int> ans;
+    // list<int> kSizedArr;
+    // while(j < arr.size()){
+    //     kSizedArr.push_back(arr[j]);
+
+    //     if(j - i+1 < k){
+    //         j++;
+    //     }else if(j - i + 1  == k){
+    //         int mx = *max_element(kSizedArr.begin() , kSizedArr.end());
+    //         ans.push_back(mx);
+
+    //         kSizedArr.pop_front();
+    //         i++;
+    //         j++;
+    //     }
+    // }
+
+    // return ans;
+
+    // Optimzed
+    int i = 0 , j = 0;
+    vector<int> ans;
+    list<int> mxArray;
+
+    while(j < arr.size()){
+        while(mxArray.size() > 0 && mxArray.back() < arr[j]){
+            mxArray.pop_back();
+        }
+        mxArray.push_back(arr[j]);
+
+        if(j - i + 1 < k){
+            j++;
+        }else if(j - i + 1 == k){
+            ans.push_back(mxArray.front());
+
+            if(arr[i] == mxArray.front()){
+                mxArray.pop_front();
+            }
+
+            i++;
+            j++;
+        }
     }
 
     return ans;
@@ -1618,11 +1686,12 @@ int main()
 
     // cout << maxSubarraySumofSizeK({1, 2, 3, 4, 5}, 2);
     // vector<int> ans = firstNegative({-2 , 2 , 3 , 3 , -5} , 2);
-    cout<<countOccurencesOfAnagram("forxxorfxdofr" , "for");
+    // cout << countOccurencesOfAnagram("forxxorfxdofr", "for");
+    vector<int> ans = maxEleInSubarray({8, 5, 10, 7, 9, 4, 15, 12, 90, 13} , 4);
 
-    // for (int i = 0; i < ans.size(); i++)
-    // {
-    //     cout << ans[i] << " ";
-    // }
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
     return 0;
 }
