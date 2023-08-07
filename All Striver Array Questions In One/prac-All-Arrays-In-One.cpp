@@ -1868,6 +1868,40 @@ int minInRotatedSortedArray(vector<int> arr){
     return mn;
 }
 
+// Find out how many times the array has been rotated -- Index of the min elemnet is the times the array is rotated
+int numberOfRotations(vector<int> arr){
+    int start = 0 , end = arr.size() -1 ;
+    int mn = INT_MAX;
+    int ind = -1;
+
+    while(start <= end){
+        int mid = (start + end)/2;
+
+        if(arr[start] <= arr[end]){
+            // No rotation form start to end
+            if(arr[start] < mn){
+                mn = arr[start];
+                ind = start;
+            }
+            break;
+        }
+
+        if(arr[mid] < mn){
+            mn = arr[mid];
+            ind = mid;
+        }
+
+        if(arr[mid] <= arr[end]){
+            end = mid-1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return ind;
+}
+
+
 
 int main()
 {
@@ -1952,7 +1986,8 @@ int main()
     // cout << upperBound({3, 5, 8, 15, 19}, 9);
     // cout << searchInRotatedSOrtedArray({7, 8, 9, 1, 2, 3, 4, 5, 6}, 1);
     // cout<<searchInRotatedSOrtedArrayII({1 , 0 , 1 , 1, 1} , 0);
-    cout<<minInRotatedSortedArray({3,4,5,1,2});
+    // cout<<minInRotatedSortedArray({3,4,5,1,2});
+    cout<<numberOfRotations({66, 67 ,7 ,10 ,14 ,19 ,27 ,33 ,36 ,40 ,44 ,54 ,60});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
