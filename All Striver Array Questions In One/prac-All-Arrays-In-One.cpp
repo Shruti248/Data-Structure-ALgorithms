@@ -1942,33 +1942,87 @@ int searchSingleELe(vector<int> arr)
 
 // GOOOD QUE
 // O(logn)
-int searchSingleEleUsingBinarySearch(vector<int> arr){
-    //Edge cases
-    if(arr.size() == 1){
+int searchSingleEleUsingBinarySearch(vector<int> arr)
+{
+    // Edge cases
+    if (arr.size() == 1)
+    {
         return arr[0];
     }
 
-    if(arr[0] != arr[1]){
+    if (arr[0] != arr[1])
+    {
         return arr[0];
     }
 
-    if(arr[arr.size() -1 ] != arr[arr.size() - 2]){
-        return arr[arr.size()-1];
+    if (arr[arr.size() - 1] != arr[arr.size() - 2])
+    {
+        return arr[arr.size() - 1];
     }
 
-    int start = 1 , end = arr.size() - 2;
+    int start = 1, end = arr.size() - 2;
 
-    while(start <= end){
-        int mid = (start + end)/2;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
 
         // Mid is the single ele
-        if(arr[mid] != arr[mid-1] && arr[mid] != arr[mid+1]){
+        if (arr[mid] != arr[mid - 1] && arr[mid] != arr[mid + 1])
+        {
             return arr[mid];
-        }else if((mid%2 == 0 && arr[mid] == arr[mid+1]) || (mid%2 == 1 && arr[mid-1] == arr[mid])){
+        }
+        else if ((mid % 2 == 0 && arr[mid] == arr[mid + 1]) || (mid % 2 == 1 && arr[mid - 1] == arr[mid]))
+        {
             // We are in left half of the single ele
-            start = mid+1;
-        }else{
-            end = mid-1;
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+// Peak element in Array
+// arr[i] > arr[i-1] and arr[i] > arr[i+1]
+int peakEle(vector<int> arr)
+{
+
+    if (arr.size() == 1)
+    {
+        return 0;
+    }
+
+    if (arr[0] > arr[1])
+    {
+        return 0;
+    }
+
+    if (arr[arr.size() - 1] > arr[arr.size() - 2])
+    {
+        return arr.size() - 1;
+    }
+
+    int start = 1, end = arr.size() - 2;
+
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+
+        if (arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1])
+        {
+            return mid;
+        }
+        else if (arr[mid-1] < arr[mid])
+        {
+            // Left half increasing
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
         }
     }
 
@@ -2060,7 +2114,8 @@ int main()
     // cout<<searchInRotatedSOrtedArrayII({1 , 0 , 1 , 1, 1} , 0);
     // cout<<minInRotatedSortedArray({3,4,5,1,2});
     // cout << numberOfRotations({66, 67, 7, 10, 14, 19, 27, 33, 36, 40, 44, 54, 60});
-    cout<<searchSingleEleUsingBinarySearch({1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6});
+    // cout<<searchSingleEleUsingBinarySearch({1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6});
+    cout << peakEle({1, 2, 1, 3, 5, 6, 4});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
