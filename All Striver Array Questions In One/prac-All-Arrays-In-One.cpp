@@ -1612,6 +1612,56 @@ vector<int> maxEleInSubarray(vector<int> arr, int k)
     return ans;
 }
 
+
+int floor(vector<int> arr , int ele){
+    int start = 0 , end = arr.size()-1;
+
+    int f = INT_MIN;
+
+    while(start <= end){
+        int mid = start + (end-start)/2;
+        if(arr[mid] == ele){
+            return arr[mid];
+        }else if(arr[mid] < ele){
+            f = max(f , arr[mid]);
+            start = mid+1;
+        }else{
+            end = mid-1;
+        }
+    }
+
+    if(f == INT_MIN){
+        return -1;
+    }
+
+    return f;
+}
+
+
+int ceil(vector<int> arr , int ele){
+    int start = 0 , end = arr.size()-1;
+
+    int c = INT_MAX;
+
+    while(start <= end){
+        int mid = start + (end-start)/2;
+        if(arr[mid] == ele){
+            return arr[mid];
+        }else if(arr[mid] < ele){
+            start = mid+1;
+        }else{
+            c = min(c , arr[mid]);
+            end = mid-1;
+        }
+    }
+
+    if(c == INT_MAX){
+        return -1;
+    }
+
+    return c;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1687,11 +1737,13 @@ int main()
     // cout << maxSubarraySumofSizeK({1, 2, 3, 4, 5}, 2);
     // vector<int> ans = firstNegative({-2 , 2 , 3 , 3 , -5} , 2);
     // cout << countOccurencesOfAnagram("forxxorfxdofr", "for");
-    vector<int> ans = maxEleInSubarray({8, 5, 10, 7, 9, 4, 15, 12, 90, 13} , 4);
+    // vector<int> ans = maxEleInSubarray({8, 5, 10, 7, 9, 4, 15, 12, 90, 13} , 4);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // cout<<floor({3, 4, 4, 7, 8, 10} , 11);
+    cout<<ceil({3, 4, 4, 7, 8, 10} , 9);
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
