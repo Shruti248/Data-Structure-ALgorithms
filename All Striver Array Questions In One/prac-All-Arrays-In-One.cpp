@@ -1842,6 +1842,33 @@ bool searchInRotatedSOrtedArrayII(vector<int> arr, int target)
     return false;
 }
 
+// Minimum in Rotated Sorted Array
+int minInRotatedSortedArray(vector<int> arr){
+    int start = 0 , end = arr.size() -1 ;
+    int mn = INT_MAX;
+
+    while(start <= end){
+        int mid = (start + end)/2;
+
+        if(arr[start] <= arr[end]){
+            // No rotation form start to end
+            mn = min(arr[start] , mn);
+            break;
+        }
+
+        mn = min(arr[mid] , mn);
+
+        if(arr[mid] <= arr[end]){
+            end = mid-1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return mn;
+}
+
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1924,7 +1951,8 @@ int main()
     // cout<<lowerBound({3, 5, 8, 15, 19} , 9);
     // cout << upperBound({3, 5, 8, 15, 19}, 9);
     // cout << searchInRotatedSOrtedArray({7, 8, 9, 1, 2, 3, 4, 5, 6}, 1);
-    cout<<searchInRotatedSOrtedArrayII({1 , 0 , 1 , 1, 1} , 0);
+    // cout<<searchInRotatedSOrtedArrayII({1 , 0 , 1 , 1, 1} , 0);
+    cout<<minInRotatedSortedArray({3,4,5,1,2});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
