@@ -610,24 +610,52 @@ int searchBitonic(int arr[], int n,
 }
 
 // Check if the array id sorted and rotated
-int checkSortedAndRotated(vector<int> nums)
+int checkSortedAndRotated(vector<int> arr)
 {
-    int count = 0;
+    // int count = 0;
 
-    for (int i = 0; i < nums.size(); i++)
-    {
-        if (nums[i] > nums[(i + 1) % nums.size()])
-        {
-            count++;
-        }
-    }
+    // for (int i = 0; i < nums.size(); i++)
+    // {
+    //     if (nums[i] > nums[(i + 1) % nums.size()])
+    //     {
+    //         count++;
+    //     }
+    // }
 
-    if (count > 1)
-    {
-        return false;
-    }
+    // if (count > 1)
+    // {
+    //     return false;
+    // }
 
-    return true;
+    // return true;
+
+    int x = 0 , y = 0;
+
+            for(int i = 0 ; i<arr.size()-1 ; i++){
+                if(arr[i] <= arr[i+1]){
+                    x++;
+                }else{
+                    y++;
+                }
+            }
+
+            if(y == 0){
+                return true;
+            }
+
+            if(y == 1){
+                if(arr[arr.size()-1] <= arr[0]){
+                    x++;
+                }else{
+                    y++;
+                }
+
+                if(y == 1){
+                    return true;
+                }
+            }
+
+            return false;
 }
 
 int main()
