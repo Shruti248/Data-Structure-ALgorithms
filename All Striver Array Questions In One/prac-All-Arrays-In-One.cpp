@@ -1692,17 +1692,21 @@ int ceil(vector<int> arr, int ele)
 int lowerBound(vector<int> arr, int ele)
 {
     int ans = -1;
-    int start = 0 , end = arr.size()-1;
+    int start = 0, end = arr.size() - 1;
 
-    while(start <= end){
-        int mid = start + (end - start)/2;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
 
-        if(arr[mid] >= ele){
+        if (arr[mid] >= ele)
+        {
             ans = mid;
 
             end = mid - 1;
-        }else{
-            start = mid+1;
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
 
@@ -1712,21 +1716,70 @@ int lowerBound(vector<int> arr, int ele)
 int upperBound(vector<int> arr, int ele)
 {
     int ans = -1;
-    int start = 0 , end = arr.size()-1;
+    int start = 0, end = arr.size() - 1;
 
-    while(start <= end){
-        int mid = start + (end - start)/2;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
 
-        if(arr[mid] > ele){
+        if (arr[mid] > ele)
+        {
             ans = mid;
 
             end = mid - 1;
-        }else{
-            start = mid+1;
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
 
     return ans;
+}
+
+// Search Element in a Rotated Sorted Array
+int searchInRotatedSOrtedArray(vector<int> arr, int target)
+{
+    int start = 0, end = arr.size() - 1;
+
+    while (start <= end)
+    {
+        int mid = (end + start) / 2;
+
+        if (arr[mid] == target)
+        {
+            return mid;
+        }
+        else if (arr[start] <= arr[mid])
+        {
+            // Left half SOrted
+            if (arr[start] <= target && target <= arr[mid])
+            {
+                // Target present in left half
+                end = mid - 1;
+            }
+            else
+            {
+                // Target in right half
+                start = mid + 1;
+            }
+        }
+        else
+        {
+            // Right half sorted
+            if (arr[mid] <= target && target <= arr[end])
+            {
+                // Target in right half
+                start = mid + 1;
+            }
+            else
+            {
+                // Target in left half
+                end = mid - 1;
+            }
+        }
+    }
+    return -1;
 }
 
 int main()
@@ -1809,7 +1862,8 @@ int main()
     // cout << floor({3, 5, 8, 15, 19}, 9);
     // cout<<ceil({3, 4, 4, 7, 8, 10} , 9);
     // cout<<lowerBound({3, 5, 8, 15, 19} , 9);
-    cout<<upperBound({3, 5, 8, 15, 19} , 9);
+    // cout << upperBound({3, 5, 8, 15, 19}, 9);
+    cout << searchInRotatedSOrtedArray({7, 8, 9, 1, 2, 3, 4, 5, 6}, 1);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
