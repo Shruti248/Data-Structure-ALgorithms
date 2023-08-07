@@ -99,29 +99,50 @@ public:
 
     node *reverseKNodes(node *head, int k)
     {
-        node *dummy = new node(0);
-        dummy->next = head;
-        node *prev = dummy;
-        node *end = dummy;
+        // node *dummy = new node(0);
+        // dummy->next = head;
+        // node *prev = dummy;
+        // node *end = dummy;
 
-        while (end->next != NULL)
-        {
-            for (int i = 0; i < k && end != NULL; i++)
-            {
-                end = end->next;
-            }
-            if (end == NULL)
-                break;
-            node *next = end->next;
-            end->next = NULL;
-            node *start = prev->next;
-            prev->next = reverse(start);
-            start->next = next;
-            prev = start;
-            end = prev;
+        // while (end->next != NULL)
+        // {
+        //     for (int i = 0; i < k && end != NULL; i++)
+        //     {
+        //         end = end->next;
+        //     }
+        //     if (end == NULL)
+        //         break;
+        //     node *next = end->next;
+        //     end->next = NULL;
+        //     node *start = prev->next;
+        //     prev->next = reverse(start);
+        //     start->next = next;
+        //     prev = start;
+        //     end = prev;
+        // }
+
+        // return dummy->next;
+
+        node* prev = NULL;
+        node* curr = head;
+        node* nxt;
+        int count = 0;
+
+        while(curr != NULL && count != k){
+            nxt = curr->next;
+            curr->next = prev;
+
+            prev = curr;
+            curr = nxt;
+
+            count++;
         }
 
-        return dummy->next;
+        if(nxt != NULL){
+            head->next = reverseKNodes(nxt->next , k);
+        }
+
+        return prev;
     }
 
     // At a particular position propvided , cycle will be formed..
