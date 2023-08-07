@@ -1497,6 +1497,53 @@ vector<int> firstNegative(vector<int> arr , int k){
 
 }
 
+int countOccurencesOfAnagram(string txt, string pat){
+    unordered_map<char , int> mp;
+
+    for(int i = 0 ; i<pat.length() ; i++){
+        mp[pat[i]]++;
+    }
+
+    int i = 0 , j = 0;
+    int count = mp.size();
+    int ans = 0;
+    int k = pat.size();
+
+    while(j < txt.size()){
+
+        if(mp.find(txt[j]) != mp.end()){
+            mp[txt[j]]--;
+
+            if(mp[txt[j]] ==  0){
+                count--;
+            }
+        }
+
+
+        if(j-i+1 < k){
+            j++;
+        }else if(j-i+1 == k){
+            if(count == 0){
+                ans++;
+            }
+
+            if(mp.find(txt[i]) != mp.end()){
+                mp[txt[i]]++;
+
+                if(mp[txt[i]] == 1){
+                    count++;
+                }
+            }
+
+            i++;
+            j++;
+        }
+
+    }
+
+    return ans;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -1570,11 +1617,12 @@ int main()
     // vector<int> ans = majorityEleNBy3Times({11,33,33,11,33,11});
 
     // cout << maxSubarraySumofSizeK({1, 2, 3, 4, 5}, 2);
-    vector<int> ans = firstNegative({-2 , 2 , 3 , 3 , -5} , 2);
+    // vector<int> ans = firstNegative({-2 , 2 , 3 , 3 , -5} , 2);
+    cout<<countOccurencesOfAnagram("forxxorfxdofr" , "for");
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }
