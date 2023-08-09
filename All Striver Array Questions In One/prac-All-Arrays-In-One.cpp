@@ -2064,6 +2064,24 @@ string sortCharactersByFreq(string str){
 
 }
 
+int coinChange(vector<int> denominations , int amount){
+    int minCoin = 0;
+
+    sort(denominations.begin() , denominations.end() , greater<int>());
+
+    for(int i = 0 ;i<denominations.size() ; i++){
+        if(amount == 0){
+            break;
+        }
+        while(denominations[i] <= amount){
+            minCoin++;
+            amount -= denominations[i];
+        }
+    }
+
+    return minCoin;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2151,7 +2169,8 @@ int main()
     // cout << numberOfRotations({66, 67, 7, 10, 14, 19, 27, 33, 36, 40, 44, 54, 60});
     // cout<<searchSingleEleUsingBinarySearch({1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6});
     // cout << peakEle({1, 2, 1, 3, 5, 6, 4});
-    cout<<sortCharactersByFreq("geeksforgeeks");
+    // cout<<sortCharactersByFreq("geeksforgeeks");
+    cout<<coinChange({ 1, 2, 5, 10, 20, 50, 100, 500, 1000} , 121);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
