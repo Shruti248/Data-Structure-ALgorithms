@@ -2015,7 +2015,7 @@ int peakEle(vector<int> arr)
         {
             return mid;
         }
-        else if (arr[mid-1] < arr[mid])
+        else if (arr[mid - 1] < arr[mid])
         {
             // Left half increasing
             start = mid + 1;
@@ -2033,11 +2033,14 @@ int peakEle(vector<int> arr)
 // Bruet Force
 // Time Complexity: O(n2)
 // Auxiliary Space: O(n)
-int countFreq(string str , char s){
+int countFreq(string str, char s)
+{
     int count = 0;
 
-    for(int i = 0 ; i<str.length() ; i++){
-        if(str[i] == s){
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (str[i] == s)
+        {
             count++;
         }
     }
@@ -2045,41 +2048,94 @@ int countFreq(string str , char s){
     return count;
 }
 
-string sortCharactersByFreq(string str){
-    vector<pair<int , char>> p;
+string sortCharactersByFreq(string str)
+{
+    vector<pair<int, char>> p;
 
-    for(int i = 0 ; i<str.length() ; i++){
-        p.push_back({countFreq(str , str[i]) , str[i]});
+    for (int i = 0; i < str.length(); i++)
+    {
+        p.push_back({countFreq(str, str[i]), str[i]});
     }
 
-    sort(p.begin() , p.end());
+    sort(p.begin(), p.end());
 
     string ans = "";
 
-    for(int i = 0 ; i<p.size() ; i++){
+    for (int i = 0; i < p.size(); i++)
+    {
         ans += p[i].second;
     }
 
     return ans;
-
 }
 
-int coinChange(vector<int> denominations , int amount){
+int coinChange(vector<int> denominations, int amount)
+{
     int minCoin = 0;
 
-    sort(denominations.begin() , denominations.end() , greater<int>());
+    sort(denominations.begin(), denominations.end(), greater<int>());
 
-    for(int i = 0 ;i<denominations.size() ; i++){
-        if(amount == 0){
+    for (int i = 0; i < denominations.size(); i++)
+    {
+        if (amount == 0)
+        {
             break;
         }
-        while(denominations[i] <= amount){
+        while (denominations[i] <= amount)
+        {
             minCoin++;
             amount -= denominations[i];
         }
     }
 
     return minCoin;
+}
+
+// Fractional Knapsack Problem
+// Item : {val , wt}
+
+struct Item
+{
+    int value;
+    int weight;
+};
+
+bool comp(Item a, Item b)
+{
+    double r1 = (double)a.value / (double)a.weight;
+    double r2 = (double)b.value / (double)b.weight;
+
+    return r1 > r2;
+}
+
+int fractionalKnapsack(Item item[], int W, int n)
+{
+
+    // SOrt decresing val/wt
+    sort(item, item + n, comp);
+
+    int profit = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (W == 0)
+        {
+            break;
+        }
+
+        if (item[i].weight <= W)
+        {
+            profit += item[i].value;
+            W -= item[i].weight;
+        }
+        else if (item[i].weight > W)
+        {
+            profit += (int)((item[i].value * (double)W) / item[i].weight);
+            W = 0;
+        }
+    }
+
+    return profit;
 }
 
 int main()
@@ -2170,7 +2226,9 @@ int main()
     // cout<<searchSingleEleUsingBinarySearch({1, 1, 2, 2, 3, 3, 4, 5, 5, 6, 6});
     // cout << peakEle({1, 2, 1, 3, 5, 6, 4});
     // cout<<sortCharactersByFreq("geeksforgeeks");
-    cout<<coinChange({ 1, 2, 5, 10, 20, 50, 100, 500, 1000} , 121);
+    // cout<<coinChange({ 1, 2, 5, 10, 20, 50, 100, 500, 1000} , 121);
+    Item arr[3] = { {100,20},{60,10},{120,30} };
+    cout << fractionalKnapsack(arr, 50, 3);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
