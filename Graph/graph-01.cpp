@@ -133,31 +133,30 @@ public:
 // When some nodes are not connected : Disconnected graph
 
 // given : Source Node : 0
-vector<int> bfsTraversal(int V/**No of nodes*/ , vector<int> adj[] /**List of edges*/){
-    vector<int> result;
-    queue<int> q;
 
+// BFS Traversal
+vector<int> BFSTraversal(vector<int> adj[] , int V /** no od nodes*/){
+    int vis[V] = {0};
+    vis[0] = 1;
+    queue<int> q;
     q.push(0);
 
-    int visited[V] = {0};
-
-    visited[0] = 1;
-
+    vector<int> bfs;
     while(!q.empty()){
         int node = q.front();
         q.pop();
-        result.push_back(node);
 
-        for(auto a : adj[node]){
-            if(!visited[a]){
-                q.push(a);
-                visited[a] = 1;
+        bfs.push_back(node);
+
+        for(auto it : adj[node]){
+            if(!vis[it]){
+                vis[it] = 1;
+                q.push(it);
             }
         }
     }
 
-    return result;
-
+    return bfs;
 }
 
 int main()
