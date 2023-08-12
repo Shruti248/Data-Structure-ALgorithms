@@ -28,7 +28,6 @@ Node *insertBST(Node *root, int val)
     }
     else
     {
-        // val>root->data
         root->right = insertBST(root->right, val);
     }
 
@@ -45,6 +44,31 @@ void inorder(Node *root)
     inorder(root->left);
     cout << root->data << " ";
     inorder(root->right);
+}
+
+void preorderTraversal(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+    cout << root->data << " ";
+    preorderTraversal(root->left);
+    preorderTraversal(root->right);
+}
+
+void postorderTraversal(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+
+
+    postorderTraversal(root->left);
+    postorderTraversal(root->right);
+    cout << root->data << " ";
 }
 
 // SEARCH IN BST  : MAjor Operation
@@ -77,7 +101,10 @@ Node *searchInBST(Node *root, int key)
 // CASE 1 : Leaf Node --> delete directly : Free from memory
 // Case 2 : Node has 1 child --> replace the node with child & delete the node
 // CASE 3 : Node has 2 children
-// Steps 1 : Find the inorder successor : Replace the node with inorder successor : delet the node
+// Steps 1 : Find the inorder successor : Replace the node with inorder successor : delet the node : That si Find the min from the right tree
+// ORRRR FInd teh max from the left subtree
+
+
 
 Node *inorderSucc(Node *root)
 {
@@ -719,16 +746,19 @@ void computeNumberFromSubarray(vector<int> arr, int k)
 // O(n2)
 // We are returing the starting index where palindrome exists
 
-bool isPalindrome(int n){
-    int temp = n , number = 0;
+bool isPalindrome(int n)
+{
+    int temp = n, number = 0;
 
     // Calculates reverse of a number
-    while(temp > 0){
-        number = number*10 + temp%10;
-        temp = temp/10;
+    while (temp > 0)
+    {
+        number = number * 10 + temp % 10;
+        temp = temp / 10;
     }
 
-    if(number == n){
+    if (number == n)
+    {
         return true;
     }
 
@@ -757,7 +787,7 @@ int findPalindromicSubarray(vector<int> arr, int k)
 
         if (isPalindrome(num))
         {
-            return j-k+1;
+            return j - k + 1;
         }
     }
 
@@ -768,81 +798,101 @@ int findPalindromicSubarray(vector<int> arr, int k)
 // Perfect Number is a number if it is equal to the sum of its proper divisior except for the number itself
 // Eg : Num = 6  proper divisor = [1 , 2 , 3] & 1 + 2 + 3 == 6
 
-//See video Apna College
+// See video Apna College
 
-int maxSum(int arr[] , int n , int k){
-    if(n < k){
+int maxSum(int arr[], int n, int k)
+{
+    if (n < k)
+    {
         return -1;
     }
 
     int res = 0;
-    for(int i = 0 ; i<k ; i++){
+    for (int i = 0; i < k; i++)
+    {
         res += arr[i];
     }
 
     int sum = res;
 
-    for(int i = k ; i<n ; i++){
-        sum += arr[i] - arr[i-k];
-        res = max(res , sum);
+    for (int i = k; i < n; i++)
+    {
+        sum += arr[i] - arr[i - k];
+        res = max(res, sum);
     }
 
     return res;
 }
 
-bool isNumberPerfect(int n){
+bool isNumberPerfect(int n)
+{
     int sum = 1;
 
     // FOr divisors
-    for(int i = 2 ; i<sqrt(n) ; i++){
-        if(n%i == 0){
-            if(i == n/i){
+    for (int i = 2; i < sqrt(n); i++)
+    {
+        if (n % i == 0)
+        {
+            if (i == n / i)
+            {
                 sum += i;
-            }else{
-                sum += i+n/i;
+            }
+            else
+            {
+                sum += i + n / i;
             }
         }
     }
 
-    if(sum == n && n!= 1){
+    if (sum == n && n != 1)
+    {
         return true;
     }
     return false;
 }
 
-int maxNumberOfPerfects(int arr[] , int n , int k){
-    for(int i = 0 ; i<n ; i++){
-        if(isNumberPerfect(arr[i])){
+int maxNumberOfPerfects(int arr[], int n, int k)
+{
+    for (int i = 0; i < n; i++)
+    {
+        if (isNumberPerfect(arr[i]))
+        {
             arr[i] = 1;
-        }else{
+        }
+        else
+        {
             arr[i] = 0;
         }
     }
 
-    return maxSum(arr , n , k);
+    return maxSum(arr, n, k);
 }
-
 
 int main()
 {
-    // Node *root = NULL;
-    // root = insertBST(root , 5);
-    // insertBST(root , 1);
-    // insertBST(root , 3);
-    // insertBST(root , 4);
-    // insertBST(root , 2);
-    // insertBST(root , 7);
+    Node *root = NULL;
+    root = insertBST(root , 5);
+    insertBST(root , 1);
+    insertBST(root , 3);
+    insertBST(root , 4);
+    insertBST(root , 2);
+    insertBST(root , 7);
 
     // Inorder traversal of BST is always in increaisng order....
     // Prinnt inorder
     // inorder(root);
+    // cout<<endl;
+    // preorderTraversal(root);
+    // cout<<endl;
+    // postorderTraversal(root);
+    // cout<<endl;
 
-    Node *root = new Node(4);
-    root->left = new Node(5);
-    root->left->left = new Node(1);
-    root->left->right = new Node(3);
-    root->right = new Node(2);
-    root->right->right = new Node(6);
+    // Node *root = new Node(4);
+    // root->left = new Node(5);
+    // root->left->left = new Node(1);
+    // root->left->right = new Node(3);
+    // root->right = new Node(2);
+    // root->right->right = new Node(6);
 
     // if (searchInBST(root, 7))
     // {
@@ -927,12 +977,12 @@ int main()
     // vector<int> arr = {2 , 3, 5, 1, 1, 5};
     // cout<<findPalindromicSubarray(arr , 4);
 
-    int arr[] = {28 , 2 , 3 , 6 , 4 , 96 , 99 , 8218 , 24};
+    // int arr[] = {28, 2, 3, 6, 4, 96, 99, 8218, 24};
 
-    int k = 4;
-    int n = 8;
+    // int k = 4;
+    // int n = 8;
 
-    cout<<maxNumberOfPerfects(arr , n , k);
+    // cout << maxNumberOfPerfects(arr, n, k);
 
     return 0;
 }
