@@ -2279,7 +2279,81 @@ int kokoEatingBananasUsingBS(vector<int> piles, int h)
         }
         else
         {
-            start = mid+1;
+            start = mid + 1;
+        }
+    }
+
+    return start;
+}
+
+// Minimum days to make M bouquets
+
+bool isPossible(vector<int> arr, int day, int m, int k)
+{
+    int count = 0;
+    int noOfBloomingDays = 0;
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] <= day)
+        {
+            count++;
+        }
+        else
+        {
+            noOfBloomingDays += count / k;
+            count = 0;
+        }
+    }
+
+    noOfBloomingDays += count / k;
+    return noOfBloomingDays >= m;
+}
+
+int minDays(vector<int> arr, int m, int k)
+{
+    if (m * k > arr.size())
+    {
+        return -1;
+    }
+
+    int mn = *min_element(arr.begin(), arr.end());
+    int mx = *max_element(arr.begin(), arr.end());
+
+    for (int i = mn; i <= mx; i++)
+    {
+        if (isPossible(arr, i, m, k))
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int minDaysBS(vector<int> arr, int m, int k)
+{
+    if (m * k > arr.size())
+    {
+        return -1;
+    }
+
+    int mn = *min_element(arr.begin(), arr.end());
+    int mx = *max_element(arr.begin(), arr.end());
+
+    int start = mn;
+    int end = mx;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+
+        if (isPossible(arr, mid, m, k))
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
 
@@ -2380,7 +2454,9 @@ int main()
     // cout << sqrtNum(28);
     // cout << sqrtUsingBS(37);
     // cout << nthRoot(3, 27);
-    cout << kokoEatingBananasUsingBS({7, 15, 6, 3}, 8);
+    // cout << kokoEatingBananasUsingBS({7, 15, 6, 3}, 8);
+    // cout<<minDays({7, 7, 7, 7, 13, 11, 12, 7} , 2 , 3);
+    cout << minDaysBS({7, 7, 7, 7, 13, 11, 12, 7}, 2, 3);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
