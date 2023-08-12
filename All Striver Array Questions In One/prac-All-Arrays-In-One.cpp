@@ -2142,7 +2142,7 @@ int fractionalKnapsack(Item item[], int W, int n)
 
 // Brute force ; Linear Search -- O(N)
 // inbuilt FUnction sqrt - O(Logn)
-//BS : O(Logn)
+// BS : O(Logn)
 int sqrtNum(int num)
 {
     int ans = INT_MIN;
@@ -2173,19 +2173,63 @@ int sqrtUsingBS(int num)
 
     while (start <= end)
     {
-        int mid = start + (end-start)/2;
+        int mid = start + (end - start) / 2;
 
-        if(mid*mid == num){
+        if (mid * mid == num)
+        {
             return mid;
-        }else if(mid*mid > num){
-            end = mid-1;
-        }else{
-            ans = max(ans , mid);
-            start = mid+1;
+        }
+        else if (mid * mid > num)
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            ans = max(ans, mid);
+            start = mid + 1;
         }
     }
 
     return ans;
+}
+
+// Nth Root of a Number using Binary Search
+// Exact answer not comming due to integer differences -- see the stdout
+int nthRoot(int n, int num)
+{
+    if (num == 0)
+    {
+        return 0;
+    }
+
+    if (n == 1)
+    {
+        return num;
+    }
+
+    int start = 0;
+    int end = num;
+
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+
+        cout << start<<" "<<mid<<" " <<end<<" "<<pow(mid, n) << endl;
+        if (pow(mid, n) == num)
+        {
+            return mid;
+        }
+        else if (pow(mid, n) < num)
+        {
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
+        }
+    }
+
+    return -1;
 }
 
 int main()
@@ -2280,7 +2324,8 @@ int main()
     // Item arr[3] = { {100,20},{60,10},{120,30} };
     // cout << fractionalKnapsack(arr, 50, 3);
     // cout << sqrtNum(28);
-    cout << sqrtUsingBS(37);
+    // cout << sqrtUsingBS(37);
+    cout << nthRoot(3, 27);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
