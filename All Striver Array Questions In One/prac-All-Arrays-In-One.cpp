@@ -2138,6 +2138,56 @@ int fractionalKnapsack(Item item[], int W, int n)
     return profit;
 }
 
+// Finding Sqrt of a number using Binary Search
+
+// Brute force ; Linear Search -- O(N)
+// inbuilt FUnction sqrt - O(Logn)
+//BS : O(Logn)
+int sqrtNum(int num)
+{
+    int ans = INT_MIN;
+
+    for (int i = 0; i < num; i++)
+    {
+        if (i * i == num)
+        {
+            ans = i;
+            return ans;
+        }
+        if (i * i > num)
+        {
+            break;
+        }
+        ans = max(ans, i);
+    }
+
+    return ans;
+}
+
+int sqrtUsingBS(int num)
+{
+    int ans = INT_MIN;
+
+    int start = 0;
+    int end = num;
+
+    while (start <= end)
+    {
+        int mid = start + (end-start)/2;
+
+        if(mid*mid == num){
+            return mid;
+        }else if(mid*mid > num){
+            end = mid-1;
+        }else{
+            ans = max(ans , mid);
+            start = mid+1;
+        }
+    }
+
+    return ans;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2227,8 +2277,10 @@ int main()
     // cout << peakEle({1, 2, 1, 3, 5, 6, 4});
     // cout<<sortCharactersByFreq("geeksforgeeks");
     // cout<<coinChange({ 1, 2, 5, 10, 20, 50, 100, 500, 1000} , 121);
-    Item arr[3] = { {100,20},{60,10},{120,30} };
-    cout << fractionalKnapsack(arr, 50, 3);
+    // Item arr[3] = { {100,20},{60,10},{120,30} };
+    // cout << fractionalKnapsack(arr, 50, 3);
+    // cout << sqrtNum(28);
+    cout << sqrtUsingBS(37);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
