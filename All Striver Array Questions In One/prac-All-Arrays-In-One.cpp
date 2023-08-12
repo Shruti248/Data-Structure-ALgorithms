@@ -2214,7 +2214,7 @@ int nthRoot(int n, int num)
     {
         int mid = (start + end) / 2;
 
-        cout << start<<" "<<mid<<" " <<end<<" "<<pow(mid, n) << endl;
+        cout << start << " " << mid << " " << end << " " << pow(mid, n) << endl;
         if (pow(mid, n) == num)
         {
             return mid;
@@ -2230,6 +2230,60 @@ int nthRoot(int n, int num)
     }
 
     return -1;
+}
+
+// Koko Eating Bananas
+
+// Linear Serach
+int kokoEatingBananas(vector<int> piles, int h)
+{
+    int mx = *max_element(piles.begin(), piles.end());
+
+    for (int i = 1; i < mx; i++)
+    {
+        int hoursTaken = 0;
+        for (int j = 0; j < piles.size(); j++)
+        {
+            hoursTaken += ceil((double)piles[j] / (double)i);
+        }
+
+        if (hoursTaken <= h)
+        {
+            return i;
+        }
+    }
+
+    return mx;
+}
+
+int kokoEatingBananasUsingBS(vector<int> piles, int h)
+{
+    int mx = *max_element(piles.begin(), piles.end());
+
+    int start = 1;
+    int end = mx;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+
+        int hoursTaken = 0;
+        for (int j = 0; j < piles.size(); j++)
+        {
+            hoursTaken += ceil((double)piles[j] / (double)mid);
+        }
+
+        if (hoursTaken <= h)
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid+1;
+        }
+    }
+
+    return start;
 }
 
 int main()
@@ -2325,7 +2379,8 @@ int main()
     // cout << fractionalKnapsack(arr, 50, 3);
     // cout << sqrtNum(28);
     // cout << sqrtUsingBS(37);
-    cout << nthRoot(3, 27);
+    // cout << nthRoot(3, 27);
+    cout << kokoEatingBananasUsingBS({7, 15, 6, 3}, 8);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
