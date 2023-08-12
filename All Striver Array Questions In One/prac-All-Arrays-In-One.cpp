@@ -2360,6 +2360,58 @@ int minDaysBS(vector<int> arr, int m, int k)
     return start;
 }
 
+// Find the Smallest Divisor Given a Threshold
+
+int smallestDivisor(vector<int> arr, int limit)
+{
+    int mx = *max_element(arr.begin(), arr.end());
+
+    for (int i = 1; i <= mx; i++)
+    {
+
+        int sum = 0;
+        for (int j = 0; j < arr.size(); j++)
+        {
+            sum += ceil((double)(arr[j]) / (double)(i));
+        }
+
+        if (sum <= limit)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int smallestDivisorBS(vector<int> arr, int limit)
+{
+    int mx = *max_element(arr.begin(), arr.end());
+
+    int start = 1;
+    int end = mx;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start)/2;
+
+        int sum = 0;
+        for (int j = 0; j < arr.size(); j++)
+        {
+            sum += ceil((double)(arr[j]) / (double)(mid));
+        }
+
+        if (sum <= limit)
+        {
+            end = mid-1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return start;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2456,7 +2508,9 @@ int main()
     // cout << nthRoot(3, 27);
     // cout << kokoEatingBananasUsingBS({7, 15, 6, 3}, 8);
     // cout<<minDays({7, 7, 7, 7, 13, 11, 12, 7} , 2 , 3);
-    cout << minDaysBS({7, 7, 7, 7, 13, 11, 12, 7}, 2, 3);
+    // cout << minDaysBS({7, 7, 7, 7, 13, 11, 12, 7}, 2, 3);
+    // cout << smallestDivisor({1, 2, 3, 4, 5}, 8);
+    cout << smallestDivisorBS({1, 2, 3, 4, 5}, 8);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
