@@ -2539,6 +2539,54 @@ int aggressiveCows(vector<int> arr , int k){
     return end;
 }
 
+// Allocate Minimum Number of Pages
+int isPossible(vector<int> arr , int books){
+    int count = 1;
+    int curr = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        if(curr + arr[i] <= books){
+            curr += arr[i];
+        }else{
+            count++;
+            curr = arr[i];
+        }
+    }
+
+    return count;
+}
+
+
+int allocateBooks(vector<int> arr , int k){
+
+    if(k > arr.size()){
+        return -1;
+    }
+
+    int mx = *max_element(arr.begin() , arr.end());
+    int sum  = 0;
+
+    for(int i = 0 ; i<arr.size() ; i++){
+        sum += arr[i];
+    }
+
+    int start = mx;
+    int end = sum;
+
+    while(start <= end){
+        int mid = start + (end - start)/2;
+
+        if(isPossible(arr , mid) <= k){
+            end = mid-1;
+        }else{
+            start = mid+1;
+        }
+    }
+
+    return start;
+}
+
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2640,7 +2688,8 @@ int main()
     // cout << smallestDivisorBS({1, 2, 3, 4, 5}, 8);
     // cout << leastCapacity({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 1);
     // cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
-    cout<<aggressiveCows({4,2,1,3,6} , 2);
+    // cout<<aggressiveCows({4,2,1,3,6} , 2);
+    cout<<allocateBooks({12, 34, 67, 90} , 2);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
