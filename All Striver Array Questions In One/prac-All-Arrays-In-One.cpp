@@ -2586,6 +2586,13 @@ int allocateBooks(vector<int> arr , int k){
     return start;
 }
 
+// Split Array – Largest Sum
+// Same as alllocate Books
+int splitArray(vector<int> arr , int k){
+    return allocateBooks(arr , k);
+}
+
+
 
 int main()
 {
@@ -2689,7 +2696,8 @@ int main()
     // cout << leastCapacity({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 1);
     // cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
     // cout<<aggressiveCows({4,2,1,3,6} , 2);
-    cout<<allocateBooks({12, 34, 67, 90} , 2);
+    // cout<<allocateBooks({12, 34, 67, 90} , 2);
+    cout<<splitArray({1,2,3,4,5} , 3);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
