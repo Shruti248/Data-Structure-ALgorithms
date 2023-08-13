@@ -2598,6 +2598,45 @@ int splitArray(vector<int> arr , int k){
 // BOOK ALLOCATIOn -- SPLIT ARRY -- PAINTERS PARTITION -- ALL SAME
 // MIN(MAX)
 
+//Median of Two Sorted Arrays of different sizes
+
+// Brute FOrce : Merge 2 arrays -- find median
+
+// We want the middle elements - if even
+// else only 1 middle element - if odd
+// Therefore maintain the counter when selecting the elements from the array & do not push in any dat astructure
+
+
+double medianOf2SortedArrays(vector<int> arr1 , vector<int> arr2){
+    int totalSize = arr1.size() + arr2.size();
+    int middle = totalSize/2;
+
+    int i = 0 , j = 0;
+
+    int prev , curr;
+
+    int count = 0;
+
+    while(count <= middle){
+        prev = curr;
+
+        if(i < arr1.size() && (j >= arr2.size() || arr1[i] < arr2[j])){
+            curr = arr1[i];
+            i++;
+        }else{
+            curr = arr2[j];
+            j++;
+        }
+        count++;
+    }
+
+    if(totalSize%2 == 1){
+        return curr;
+    }
+
+    return (prev + curr)/2.0;
+}
+
 
 
 int main()
@@ -2703,7 +2742,8 @@ int main()
     // cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
     // cout<<aggressiveCows({4,2,1,3,6} , 2);
     // cout<<allocateBooks({12, 34, 67, 90} , 2);
-    cout<<splitArray({1,2,3,4,5} , 3);
+    // cout<<splitArray({1,2,3,4,5} , 3);
+    cout<<medianOf2SortedArrays({2 , 4 , 6 } , {1 , 3 , 5});
 
     // for (int i = 0; i < ans.size(); i++)
     // {
