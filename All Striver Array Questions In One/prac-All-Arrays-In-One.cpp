@@ -2393,7 +2393,7 @@ int smallestDivisorBS(vector<int> arr, int limit)
 
     while (start <= end)
     {
-        int mid = start + (end - start)/2;
+        int mid = start + (end - start) / 2;
 
         int sum = 0;
         for (int j = 0; j < arr.size(); j++)
@@ -2403,13 +2403,100 @@ int smallestDivisorBS(vector<int> arr, int limit)
 
         if (sum <= limit)
         {
-            end = mid-1;
-        }else{
-            start = mid+1;
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
 
     return start;
+}
+
+// Least Capacity to Ship Packages within D Days
+
+int findDays(vector<int> arr, int capacity)
+{
+    int days = 1;
+    int curr = 0;
+    for (int i = 0; i < arr.size(); i++)
+    {
+
+        if (curr + arr[i] <= capacity)
+        {
+            curr += arr[i];
+        }
+        else
+        {
+            days += 1;
+            curr = arr[i];
+        }
+    }
+
+    return days;
+}
+
+int leastCapacity(vector<int> arr, int d)
+{
+    int start = *max_element(arr.begin(), arr.end());
+
+    int sum = 0;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        sum += arr[i];
+    }
+
+    int end = sum;
+
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+
+        if (findDays(arr, mid) <= d)
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
+        }
+    }
+
+    return start;
+}
+
+
+// kth Missing Positive Number
+int kthMissingPositiveNumber(vector<int> arr, int k)
+{
+    int positiveNums = 1;
+    int count = 0;
+
+    int i = 0;
+
+    while (i < arr.size())
+    {
+        if (positiveNums != arr[i])
+        {
+            count++;
+
+            if (count == k)
+            {
+                return positiveNums;
+            }
+        }
+        else
+        {
+            i++; // Move to the next element in the array
+        }
+
+        positiveNums++;
+    }
+
+    // If we haven't found k missing positive numbers, we can calculate the kth missing positive number
+    return positiveNums + k - count - 1;
 }
 
 int main()
@@ -2510,7 +2597,9 @@ int main()
     // cout<<minDays({7, 7, 7, 7, 13, 11, 12, 7} , 2 , 3);
     // cout << minDaysBS({7, 7, 7, 7, 13, 11, 12, 7}, 2, 3);
     // cout << smallestDivisor({1, 2, 3, 4, 5}, 8);
-    cout << smallestDivisorBS({1, 2, 3, 4, 5}, 8);
+    // cout << smallestDivisorBS({1, 2, 3, 4, 5}, 8);
+    // cout << leastCapacity({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 1);
+    cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
