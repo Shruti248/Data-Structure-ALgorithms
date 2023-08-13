@@ -2592,6 +2592,12 @@ int splitArray(vector<int> arr , int k){
     return allocateBooks(arr , k);
 }
 
+// Painters Partition Problem
+// Same
+
+// BOOK ALLOCATIOn -- SPLIT ARRY -- PAINTERS PARTITION -- ALL SAME
+// MIN(MAX)
+
 
 
 int main()
