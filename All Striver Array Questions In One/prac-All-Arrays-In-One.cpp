@@ -2499,6 +2499,46 @@ int kthMissingPositiveNumber(vector<int> arr, int k)
     return positiveNums + k - count - 1;
 }
 
+// Aggressive Cows : Detailed Solution
+
+bool canPlaceCows(vector<int> arr , int d , int k){
+    int count = 0;
+
+    for(int i = 1 ; i<arr.size() ; i++){
+        if(arr[i] - arr[i-1] <= d){
+            count++;
+
+            if(count == k){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+int aggressiveCows(vector<int> arr , int k){
+    sort(arr.begin() , arr.end());
+
+    int mx = arr[arr.size() - 1];
+    int mn = arr[0];
+
+    int start = 1;
+    int end = mx-mn;
+
+    while(start <= end){
+        int mid = start + (end - start)/2;
+
+        if(canPlaceCows(arr , mid , k)){
+            start = mid+1;
+        }else{
+            end = mid-1;
+        }
+    }
+
+    return end;
+}
+
 int main()
 {
     // freq({2 , 2 , 4 , 2 , 6 , 6 });
@@ -2599,7 +2639,8 @@ int main()
     // cout << smallestDivisor({1, 2, 3, 4, 5}, 8);
     // cout << smallestDivisorBS({1, 2, 3, 4, 5}, 8);
     // cout << leastCapacity({1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, 1);
-    cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
+    // cout<<kthMissingPositiveNumber({4 , 7 , 9 , 10} , 4);
+    cout<<aggressiveCows({4,2,1,3,6} , 2);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
