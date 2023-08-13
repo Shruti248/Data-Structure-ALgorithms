@@ -2467,7 +2467,6 @@ int leastCapacity(vector<int> arr, int d)
     return start;
 }
 
-
 // kth Missing Positive Number
 int kthMissingPositiveNumber(vector<int> arr, int k)
 {
@@ -2501,14 +2500,18 @@ int kthMissingPositiveNumber(vector<int> arr, int k)
 
 // Aggressive Cows : Detailed Solution
 
-bool canPlaceCows(vector<int> arr , int d , int k){
+bool canPlaceCows(vector<int> arr, int d, int k)
+{
     int count = 0;
 
-    for(int i = 1 ; i<arr.size() ; i++){
-        if(arr[i] - arr[i-1] <= d){
+    for (int i = 1; i < arr.size(); i++)
+    {
+        if (arr[i] - arr[i - 1] <= d)
+        {
             count++;
 
-            if(count == k){
+            if (count == k)
+            {
                 return true;
             }
         }
@@ -2517,22 +2520,27 @@ bool canPlaceCows(vector<int> arr , int d , int k){
     return false;
 }
 
-int aggressiveCows(vector<int> arr , int k){
-    sort(arr.begin() , arr.end());
+int aggressiveCows(vector<int> arr, int k)
+{
+    sort(arr.begin(), arr.end());
 
     int mx = arr[arr.size() - 1];
     int mn = arr[0];
 
     int start = 1;
-    int end = mx-mn;
+    int end = mx - mn;
 
-    while(start <= end){
-        int mid = start + (end - start)/2;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
 
-        if(canPlaceCows(arr , mid , k)){
-            start = mid+1;
-        }else{
-            end = mid-1;
+        if (canPlaceCows(arr, mid, k))
+        {
+            start = mid + 1;
+        }
+        else
+        {
+            end = mid - 1;
         }
     }
 
@@ -2540,14 +2548,19 @@ int aggressiveCows(vector<int> arr , int k){
 }
 
 // Allocate Minimum Number of Pages
-int isPossible(vector<int> arr , int books){
+int isPossible(vector<int> arr, int books)
+{
     int count = 1;
     int curr = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
-        if(curr + arr[i] <= books){
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (curr + arr[i] <= books)
+        {
             curr += arr[i];
-        }else{
+        }
+        else
+        {
             count++;
             curr = arr[i];
         }
@@ -2556,30 +2569,36 @@ int isPossible(vector<int> arr , int books){
     return count;
 }
 
+int allocateBooks(vector<int> arr, int k)
+{
 
-int allocateBooks(vector<int> arr , int k){
-
-    if(k > arr.size()){
+    if (k > arr.size())
+    {
         return -1;
     }
 
-    int mx = *max_element(arr.begin() , arr.end());
-    int sum  = 0;
+    int mx = *max_element(arr.begin(), arr.end());
+    int sum = 0;
 
-    for(int i = 0 ; i<arr.size() ; i++){
+    for (int i = 0; i < arr.size(); i++)
+    {
         sum += arr[i];
     }
 
     int start = mx;
     int end = sum;
 
-    while(start <= end){
-        int mid = start + (end - start)/2;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
 
-        if(isPossible(arr , mid) <= k){
-            end = mid-1;
-        }else{
-            start = mid+1;
+        if (isPossible(arr, mid) <= k)
+        {
+            end = mid - 1;
+        }
+        else
+        {
+            start = mid + 1;
         }
     }
 
@@ -2588,8 +2607,9 @@ int allocateBooks(vector<int> arr , int k){
 
 // Split Array – Largest Sum
 // Same as alllocate Books
-int splitArray(vector<int> arr , int k){
-    return allocateBooks(arr , k);
+int splitArray(vector<int> arr, int k)
+{
+    return allocateBooks(arr, k);
 }
 
 // Painters Partition Problem
@@ -2598,7 +2618,7 @@ int splitArray(vector<int> arr , int k){
 // BOOK ALLOCATIOn -- SPLIT ARRY -- PAINTERS PARTITION -- ALL SAME
 // MIN(MAX)
 
-//Median of Two Sorted Arrays of different sizes
+// Median of Two Sorted Arrays of different sizes
 
 // Brute FOrce : Merge 2 arrays -- find median
 
@@ -2606,38 +2626,102 @@ int splitArray(vector<int> arr , int k){
 // else only 1 middle element - if odd
 // Therefore maintain the counter when selecting the elements from the array & do not push in any dat astructure
 
-
-double medianOf2SortedArrays(vector<int> arr1 , vector<int> arr2){
+double medianOf2SortedArrays(vector<int> arr1, vector<int> arr2)
+{
     int totalSize = arr1.size() + arr2.size();
-    int middle = totalSize/2;
+    int middle = totalSize / 2;
 
-    int i = 0 , j = 0;
+    int i = 0, j = 0;
 
-    int prev , curr;
+    int prev, curr;
 
     int count = 0;
 
-    while(count <= middle){
+    while (count <= middle)
+    {
         prev = curr;
 
-        if(i < arr1.size() && (j >= arr2.size() || arr1[i] < arr2[j])){
+        if (i < arr1.size() && (j >= arr2.size() || arr1[i] < arr2[j]))
+        {
             curr = arr1[i];
             i++;
-        }else{
+        }
+        else
+        {
             curr = arr2[j];
             j++;
         }
         count++;
     }
 
-    if(totalSize%2 == 1){
+    if (totalSize % 2 == 1)
+    {
         return curr;
     }
 
-    return (prev + curr)/2.0;
+    return (prev + curr) / 2.0;
 }
 
+// Kth element of 2 sorted arrays
+int kthEle(vector<int> arr1, vector<int> arr2, int k)
+{
+    int totalSize = arr1.size() + arr2.size();
 
+    if (k <= 0 || k > totalSize)
+    {
+        return -1; // Invalid k value
+    }
+
+    int i = 0, j = 0;
+    int count = 0;
+
+    while (i < arr1.size() && j < arr2.size())
+    {
+        if (arr1[i] < arr2[j])
+        {
+            count++;
+            if (count == k)
+            {
+                return arr1[i];
+            }
+            i++;
+        }
+        else
+        {
+            count++;
+            if (count == k)
+            {
+                return arr2[j];
+            }
+            j++;
+        }
+    }
+
+    // If we reach here, it means one of the arrays has been exhausted.
+    // We can continue from the remaining elements of the other array.
+
+    while (i < arr1.size())
+    {
+        count++;
+        if (count == k)
+        {
+            return arr1[i];
+        }
+        i++;
+    }
+
+    while (j < arr2.size())
+    {
+        count++;
+        if (count == k)
+        {
+            return arr2[j];
+        }
+        j++;
+    }
+
+    return -1;
+}
 
 int main()
 {
@@ -2743,7 +2827,8 @@ int main()
     // cout<<aggressiveCows({4,2,1,3,6} , 2);
     // cout<<allocateBooks({12, 34, 67, 90} , 2);
     // cout<<splitArray({1,2,3,4,5} , 3);
-    cout<<medianOf2SortedArrays({2 , 4 , 6 } , {1 , 3 , 5});
+    // cout << medianOf2SortedArrays({2, 4, 6}, {1, 3, 5});
+    cout<<kthEle({2,3,6,7,9} , {1,4,8,10} , 5);
 
     // for (int i = 0; i < ans.size(); i++)
     // {
