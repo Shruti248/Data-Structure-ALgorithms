@@ -2723,38 +2723,101 @@ int kthEle(vector<int> arr1, vector<int> arr2, int k)
     return -1;
 }
 
-
 // Heap Sort
-void heapify(vector<int> &arr , int n , int i){
+void heapify(vector<int> &arr, int n, int i)
+{
     int largest = i;
 
-    int left = 2*i + 1;
-    int right = 2*i + 2;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
 
-    if(left < n && arr[left] < arr[largest]){
+    if (left < n && arr[left] < arr[largest])
+    {
         largest = left;
     }
 
-    if(right < n && arr[right] > arr[largest]){
+    if (right < n && arr[right] > arr[largest])
+    {
         largest = right;
     }
 
-    if(largest != i){
-        swap(arr[largest] , arr[i]);
-        heapify(arr , n , largest);
+    if (largest != i)
+    {
+        swap(arr[largest], arr[i]);
+        heapify(arr, n, largest);
     }
 }
 
-void heapSort(vector<int> &arr){
+void heapSort(vector<int> &arr)
+{
     int n = arr.size();
 
-    for(int i = n/2-1 ; i>=0 ; i--){
-        heapify(arr , n ,i);
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(arr, n, i);
     }
 
-    for(int i = n-1 ; i>=0 ; i--){
-        swap(arr[0] , arr[i]);
-        heapify(arr , i , 0);
+    for (int i = n - 1; i >= 0; i--)
+    {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+void oneToN(int N)
+{
+    if (N == 0)
+    {
+        return;
+    }
+
+    oneToN(N - 1);
+    cout << N << " ";
+}
+
+vector<int> reverseArray(vector<int> arr)
+{
+
+    int i = 0, j = arr.size() - 1;
+
+    while (i <= j)
+    {
+        swap(arr[i], arr[j]);
+        i++;
+        j--;
+    }
+
+    return arr;
+}
+
+int secondLargest(vector<int> arr)
+{
+    int mx = INT_MIN;
+    int mx2 = INT_MIN;
+
+    for (int i = 0; i < arr.size(); i++)
+    {
+        if (arr[i] > mx)
+        {
+            mx2 = mx;
+            mx = arr[i];
+        }
+
+    }
+    return mx2;
+}
+
+vector<int> moveAllZeroes(vector<int> arr){
+    int i = 0 , j = 0;
+
+    while(j < arr.size()){
+        while(arr[j] != 0){
+            j++;
+        }
+
+        swap(arr[i] , arr[j]);
+        i++;
+        j++;
     }
 }
 
@@ -2864,13 +2927,18 @@ int main()
     // cout<<splitArray({1,2,3,4,5} , 3);
     // cout << medianOf2SortedArrays({2, 4, 6}, {1, 3, 5});
     // cout<<kthEle({2,3,6,7,9} , {1,4,8,10} , 5);
-    vector<int> ans = {3 , 5 , 2 , 6 , 8};
+    // vector<int> ans = {3 , 5 , 2 , 6 , 8};
 
-    heapSort(ans);
+    // heapSort(ans);
 
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout << ans[i] << " ";
-    }
+    // oneToN(5);
+
+    // vector<int> ans = reverseArray({1, 2, 3, 4, 5});
+    cout << secondLargest({1, 2, 3});
+
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout << ans[i] << " ";
+    // }
     return 0;
 }

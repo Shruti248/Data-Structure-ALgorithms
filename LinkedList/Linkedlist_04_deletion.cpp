@@ -1,39 +1,45 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-class Node{
-    public:
-        int data;
-        Node* next;
+class Node
+{
+public:
+    int data;
+    Node *next;
 };
 
-void DeleteFirst(Node* head_ref){
-    if(head_ref != NULL) {
-    
-    //1. if head is not null, create a
-    //   temp node pointing to head
-    Node* temp = head_ref;
+void DeleteFirst(Node *head_ref)
+{
+    if (head_ref != NULL)
+    {
 
-    //2. move head to next of head
-    head_ref = head_ref->next; 
+        // 1. if head is not null, create a
+        //    temp node pointing to head
+        Node *temp = head_ref;
 
-    //3. delete temp node
-    free(temp); 
- 
+        // 2. move head to next of head
+        head_ref = head_ref->next;
+
+        // 3. delete temp node
+        free(temp);
+    }
 }
 
-void traversal(Node* n){
-    while(n!= NULL){
-        cout<<n->data<<endl;
+void traversal(Node *n)
+{
+    while (n != NULL)
+    {
+        cout << n->data << endl;
         n = n->next;
     }
 }
 
-int main(){
+int main()
+{
 
-    Node* head = NULL;
-    Node* second = NULL;
-    Node* third = NULL;
+    Node *head = NULL;
+    Node *second = NULL;
+    Node *third = NULL;
 
     head = new Node();
     second = new Node();
@@ -50,5 +56,5 @@ int main(){
 
     DeleteFirst(head);
     traversal(head);
-    return 0 ;
+    return 0;
 }

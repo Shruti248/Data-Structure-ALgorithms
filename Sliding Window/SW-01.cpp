@@ -354,7 +354,6 @@ int longestSustringWithNoRepeatingCharacters(string arr)
 }
 
 // Pick Toys
-
 int pickToys(vector<int> arr)
 {
     int i = 0, j = 0;
@@ -392,7 +391,6 @@ int pickToys(vector<int> arr)
 }
 
 // Minimum Window Substring
-
 int minWindowSubstring(string s, string p)
 {
     int i = 0, j = 0;

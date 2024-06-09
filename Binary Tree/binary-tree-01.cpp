@@ -668,7 +668,6 @@ void addRightBoundary(Node *root, vector<int> &ans)
         ans.push_back(temp[i]);
     }
 }
-
 vector<int> boundaryTraversal(Node *root)
 {
     vector<int> ans;

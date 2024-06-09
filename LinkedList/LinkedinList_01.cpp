@@ -24,14 +24,14 @@ int main()
 
 	/* Three blocks have been allocated dynamically.
 	We have pointers to these three blocks as head,
-	second and third	
+	second and third
 	head		 second		 third
 		|			 |			 |
 		|			 |			 |
 	+---+-----+	 +----+----+	 +----+----+
 	| # | # |	 | # | # |	 | # | # |
 	+---+-----+	 +----+----+	 +----+----+
-	
+
 # represents any random value.
 Data is random because we haven’t assigned
 anything yet */
@@ -50,7 +50,7 @@ anything yet */
 		|			 |			 |
 	+---+---+	 +----+----+	 +-----+----+
 	| 1 | o----->| # | # |	 | # | # |
-	+---+---+	 +----+----+	 +-----+----+	
+	+---+---+	 +----+----+	 +-----+----+
 */
 
 	// assign data to second node
@@ -63,7 +63,7 @@ anything yet */
 	block (block pointed by second). And next
 	pointer of the second block points to the third
 	block. So all three blocks are linked.
-	
+
 	head		 second		 third
 		|			 |			 |
 		|			 |			 |
@@ -81,17 +81,17 @@ anything yet */
 
 	We have the linked list ready.
 
-		head	
+		head
 			|
 			|
 		+---+---+	 +---+---+	 +----+------+
 		| 1 | o----->| 2 | o-----> | 3 | NULL |
-		+---+---+	 +---+---+	 +----+------+	
-	
-	
+		+---+---+	 +---+---+	 +----+------+
+
+
 	Note that only the head is sufficient to represent
 	the whole list. We can traverse the complete
 	list by following the next pointers. */
 
 	return 0;
-}\
+}

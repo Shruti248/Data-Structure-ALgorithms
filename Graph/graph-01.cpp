@@ -135,6 +135,8 @@ public:
 // given : Source Node : 0
 
 // BFS Traversal
+// Time Complexity: O(N) + O(2E),
+// Space Complexity: O(3N) ~ O(N)
 vector<int> BFSTraversal(vector<int> adj[] , int V /** no od nodes*/){
     int vis[V] = {0};
     vis[0] = 1;
@@ -158,6 +160,9 @@ vector<int> BFSTraversal(vector<int> adj[] , int V /** no od nodes*/){
 
     return bfs;
 }
+
+// DFS Traversal : Recursion + Backtracking
+// Stack
 
 int main()
 {

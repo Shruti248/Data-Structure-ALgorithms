@@ -29,7 +29,7 @@
 // PROBLEM 1 : 0 1 KnapSack (choice & optimal(max))(identification)
 // same problem variation :
 // Subset Sum ,
-//  Equal sum partition ,
+// Equal sum partition ,
 // count of subset sum ,
 // min subset sum diff ,
 // target sum ,
@@ -211,12 +211,16 @@ bool isSubsetSumTopDown(int arr[], int X, int n)
         for (int j = 0; j < X + 1; j++)
         {
 
-            if (i == 0)
+            if (i == 0){
                 t[i][j] = false;
-            if (j == 0)
+            continue;
+            }
+            if (j == 0){
                 t[i][j] = true;
+            continue;
+            }
 
-            else if (arr[i - 1] <= j)
+            if (arr[i - 1] <= j)
             {
                 t[i][j] = t[i - 1][j - arr[i - 1]] || t[i - 1][j];
             }
@@ -562,7 +566,7 @@ int coinChangeII(int coin[], int sum, int n)
         for (int j = 0; j < sum + 1; j++)
         {
 
-             if (j == 0)
+            if (j == 0)
             {
                 // if sum = 0 , then min coin needed is 0
                 t[i][j] = 0;
@@ -578,9 +582,9 @@ int coinChangeII(int coin[], int sum, int n)
             {
                 // We need t0 initialize the second row as well for this question
                 // use INT_MAX-1 , wehere even if we have coins , it is not possible to compute the sum with the available coin
-                if (j % coin[i-1] == 0)
+                if (j % coin[i - 1] == 0)
                 {
-                    t[i][j] = j / coin[i-1];
+                    t[i][j] = j / coin[i - 1];
                 }
                 else
                 {

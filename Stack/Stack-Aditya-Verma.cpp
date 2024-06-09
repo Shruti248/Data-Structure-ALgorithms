@@ -594,19 +594,19 @@ int getminEle(){
 
 int main()
 {
-    // vector<int> arr = {2, 1, 5, 6, 2, 3};
+    vector<int> arr = {2, 1, 5, 6, 2, 3};
     // vector<int> ans = nextLargestElement(arr);
     // vector<int> ans = nearestGreaterToLeft(arr);
     // vector<int> ans = nearestSmallerToLeft(arr);
     // vector<int> ans = nearestSmallerToRight(arr);
 
-    // vector<int> ans = stockSpan(arr);
+    vector<int> ans = stockSpan(arr);
     // cout << maxAreaHistogram(arr);
 
-    // for (int i = 0; i < ans.size(); i++)
-    // {
-    //     cout << ans[i] << " ";
-    // }
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
 
     // int arr[4][4] = {
     //     { 0, 1, 1, 0 },

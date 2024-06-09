@@ -906,8 +906,8 @@ int main()
 
     // node* newHead = s.removeDuplicatesFromSortedList(head);
     // node *newHead = s.removeDuplicatesfromUnsortedList(head);
-    node *newHead = s.sortListOfZeroOneTwo(head);
-    s.display(newHead);
+    // node *newHead = s.sortListOfZeroOneTwo(head);
+    // s.display(newHead);
 
     return 0;
 }

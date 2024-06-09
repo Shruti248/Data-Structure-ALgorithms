@@ -63,10 +63,9 @@ int LCSTabulation(string x, string y, int xlen, int ylen)
             if (i == 0 || j == 0)
             {
                 t[i][j] = 0;
-                continue;
             }
 
-            if (x[i - 1] == y[j - 1])
+            else if (x[i - 1] == y[j - 1])
                 t[i][j] = 1 + t[i - 1][j - 1];
             else
                 t[i][j] = max(t[i][j - 1], t[i - 1][j]);
@@ -86,6 +85,7 @@ int LCSubstring(string x, string y, int xlen, int ylen)
 {
 
     int t[xlen + 1][ylen + 1];
+    int mx = INT_MIN;
 
     for (int i = 0; i < xlen + 1; i++)
     {
@@ -98,7 +98,10 @@ int LCSubstring(string x, string y, int xlen, int ylen)
             }
 
             if (x[i - 1] == y[j - 1])
+            {
                 t[i][j] = 1 + t[i - 1][j - 1];
+                mx = max(mx, t[i][j]);
+            }
             else
                 // Make length 0 - if discontinous
                 t[i][j] = 0;
@@ -106,14 +109,14 @@ int LCSubstring(string x, string y, int xlen, int ylen)
     }
 
     // Find max length from table
-    int mx = INT_MIN;
-    for (int i = 0; i < xlen + 1; i++)
-    {
-        for (int j = 0; j < ylen + 1; j++)
-        {
-            mx = max(mx, t[i][j]);
-        }
-    }
+    // int mx = INT_MIN;
+    // for (int i = 0; i < xlen + 1; i++)
+    // {
+    //     for (int j = 0; j < ylen + 1; j++)
+    //     {
+    //         mx = max(mx, t[i][j]);
+    //     }
+    // }
 
     return mx;
 }
@@ -140,8 +143,7 @@ string printLCS(string x, string y, int xlen, int ylen)
             if (x[i - 1] == y[j - 1])
                 t[i][j] = 1 + t[i - 1][j - 1];
             else
-                // Make length 0 - if discontinous
-                t[i][j] = 0;
+                t[i][j] = max(t[i-1][j] , t[i][j-1]);
         }
     }
 
@@ -403,28 +405,30 @@ bool sequencePatternMatching(string x, string y, int xlen, int ylen)
 }
 
 // Minimum number of insertion in a string to make a palindrome
-int minInsertionToMakeAPalindrome(string x ,int xlen){
-    return xlen-LPS(x , xlen);
+int minInsertionToMakeAPalindrome(string x, int xlen)
+{
+    return xlen - LPS(x, xlen);
 }
 
-
 // Longest Increasing Subsequence
-int LIS(vector<int> x){
+int LIS(vector<int> x)
+{
     int n = x.size();
 
-    vector<int> t(n , 1);
+    vector<int> t(n, 1);
     int maxLength = 1;
 
-    for(int i = 1 ; i<n ; i++){
-        for(int j = 0 ; j<i ; j++){
-            if(x[i] > x[j])
-                t[i] = max(t[i] , t[j]+1);
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (x[i] > x[j])
+                t[i] = max(t[i], t[j] + 1);
         }
-        maxLength = max(maxLength , t[i]);
+        maxLength = max(maxLength, t[i]);
     }
 
     return maxLength;
-
 }
 
 int main()
@@ -456,6 +460,6 @@ int main()
 
     // cout << sequencePatternMatching(x, y, 3, 6);
 
-    cout<<minInsertionToMakeAPalindrome(x , 7);
+    cout << minInsertionToMakeAPalindrome(x, 7);
     return 0;
 }
